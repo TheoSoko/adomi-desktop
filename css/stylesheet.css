@@ -1,0 +1,11 @@
+@font-face { font-family: Lato; src: url('../ressources/Font/Lato-Regular.ttf'); } 
+@font-face { font-family: Lato; font-weight: bold; src: url('../ressources/Font/Lato-Bold.ttf');}
+@font-face { font-family: Lato; font-weight: lighter; src: url('../ressources/Font/Lato-Light.ttf');}
+
+#navbar_all {
+    background-color: #9EDEF3;
+}
+p, h1, h2, span, a, li {
+    font-family: 'Lato';
+    font-weight: bold;
+}   
