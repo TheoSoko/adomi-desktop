@@ -9,3 +9,8 @@ p, h1, h2, span, a, li {
     font-family: 'Lato';
     font-weight: bold;
 }   
+
+#plop {
+    margin-left: 70;
+    margin-right: 100;
+}
