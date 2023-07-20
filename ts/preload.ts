@@ -3,8 +3,8 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('exposed', {
     ping: () => ipcRenderer.invoke('ping'),
-    gopher: () => ipcRenderer.invoke('gopher'),
     localRessources: ipcRenderer.invoke('localRessources'),
+    searchClients: () => ipcRenderer.invoke('searchClients'),
 })
 
 

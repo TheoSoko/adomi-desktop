@@ -1,3 +1,6 @@
+console.log("navbar_include script loaded")
+
+
 let navbar = fetch("../html/navbar.html")
     .then(async (res) => {
         const navbar = await res.text()

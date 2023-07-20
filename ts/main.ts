@@ -1,12 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-import { getGopher } from './backend/requests'
 import path from "path"
+import { searchClients } from "./backend/requests"
 
 
 const createWindow = () => {
-    ipcMain.handle('gopher', getGopher)
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
+    ipcMain.handle('searchClients', searchClients)
 
     const win = new BrowserWindow({
         width: 800,

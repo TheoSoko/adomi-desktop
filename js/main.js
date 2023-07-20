@@ -4,12 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const { app, BrowserWindow, ipcMain } = require('electron');
-const requests_1 = require("./backend/requests");
 const path_1 = __importDefault(require("path"));
+const requests_1 = require("./backend/requests");
 const createWindow = () => {
-    ipcMain.handle('gopher', requests_1.getGopher);
     ipcMain.handle('ping', () => 'pong');
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
+    ipcMain.handle('searchClients', requests_1.searchClients);
     const win = new BrowserWindow({
         width: 800,
         height: 600,
