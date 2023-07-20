@@ -4,7 +4,10 @@ const { contextBridge, ipcRenderer } = require('electron')
 contextBridge.exposeInMainWorld('exposed', {
     ping: () => ipcRenderer.invoke('ping'),
     localRessources: ipcRenderer.invoke('localRessources'),
-    searchClients: () => ipcRenderer.invoke('searchClients'),
+    searchClients: (query: string, page: number) => {
+        //console.log(" args from preload thing \n", query, " ",page)
+        return ipcRenderer.invoke('searchClients', query, page)
+    }
 })
 
 

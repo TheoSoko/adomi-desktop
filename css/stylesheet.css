@@ -31,7 +31,8 @@ p, h1, h2, span, a, li {
 .searchbar {
     border-radius: 8px;
     border-width: 1.5px;
-    padding: 3px 20px 5px
+    padding: 3px 32px 5px 18px;
+    width: 220px;
 }
 
 .search_btn {
@@ -42,4 +43,26 @@ p, h1, h2, span, a, li {
 
 input[type="search"]::-webkit-clear-button {
     display: none;
+}
+
+.navbar{
+    padding-top: 6.5px;
+    padding-bottom: 6.5px;
+}
+
+#navbar_items_right{
+    margin-left: 510px;
+}
+
+.nav_item_compressed{
+    margin-right: -60;
+    margin-left: -150;
+}
+
+.navbar-brand{
+    margin-bottom: 3.2px
+}
+
+.nav-link{
+    font-size: 18.3px;
 }
