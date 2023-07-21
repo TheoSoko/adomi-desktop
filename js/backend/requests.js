@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchClients = void 0;
-const searchClients = async (event, query, page) => {
+exports.searchProfiles = void 0;
+const apiBase = "http://localhost:8000";
+const searchProfiles = async (event, role, query, page) => {
     //console.log("query to send : ", "http://localhost:8000/customers/search?q="+query+"&page="+page)
-    let res = await fetch("http://localhost:8000/customers/search?q=" + query + "&page=" + page)
+    let res = await fetch(apiBase + "/" + role + "/search?q=" + query + "&page=" + page)
         .catch(err => {
         console.log("err from fetch", err);
     });
@@ -20,7 +21,6 @@ const searchClients = async (event, query, page) => {
         //console.log('http err, resolve with array')
         return Promise.resolve([false, await res.json()]);
     }
-    //console.log('http success, resolve with array')
     return Promise.resolve([true, await res.json()]);
 };
-exports.searchClients = searchClients;
+exports.searchProfiles = searchProfiles;

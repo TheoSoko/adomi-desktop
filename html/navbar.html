@@ -3,7 +3,8 @@
         <a class="navbar-brand text-light fs-3 ms-3 ps-2" href="./home.html">
             A-Do-Mi
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -14,12 +15,24 @@
             </ul>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbar_items_right">
                 <li class="nav-item">
-                    <a class="nav-link text-white mx-4 " href="./search_profile.html">Trouver un profil</a>
+                    <button class="nav-link text-white mx-4" id="search_profile" >Trouver un
+                        profil
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white mx-4 " href="#">Créer un client / AV </a>
+                    <a class="nav-link text-white mx-4" id="create_profile" href="#">Créer un client / AV </a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+
+<div id="search_div_modal" style="border-radius: 10px; border: 2px solid black; 
+                                    padding: 5px 13px; align-items: center; justify-content: center;
+                                    position: absolute; left: 797.925px; top: 95px;
+                                    display: none;"
+                                >
+    <a style="margin-block-end: 5px; text-decoration: none; color: black; color: none; display: block" href="./search_profile.html">Trouver un client</a>
+    <a style="margin-block-end: 6px; text-decoration: none; color: black; display: block" href="./search_profile.html">Trouver un Auxiliaire</a>
+</div>

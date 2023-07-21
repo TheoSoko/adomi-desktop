@@ -1,12 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 import path from "path"
-import { searchClients } from "./backend/requests"
+import { searchProfiles } from "./backend/requests"
 
 
 const createWindow = () => {
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
-    ipcMain.handle('searchClients', searchClients)
+    ipcMain.handle('searchProfiles', searchProfiles)
 
     const win = new BrowserWindow({
         width: 800,
