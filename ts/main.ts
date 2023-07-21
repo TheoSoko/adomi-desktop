@@ -9,6 +9,15 @@ interface UserLog {
     password: string
 }
 
+interface Payload{
+    status: number,
+    data:{
+        id: number,
+        token: string
+        message: string
+    }
+}
+
 const createWindow = () => {
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
@@ -36,23 +45,24 @@ app.whenReady().then(() => {
         if (process.platform !== 'darwin') app.quit()
     })
 
-    ipcMain.on('form-data', (event:any, arg:UserLog)=>{
+    ipcMain.handle('form-data', async (event:any, arg:UserLog)=>{
+        return userSignIn(arg).then((response: Payload | any) => {
 
-        userSignIn(arg);
+            if(response.statusText === "OK"){
+
+                return getProfile().then(async (result) => {
+                    await storageSettings.set("user", {data: result})
+                    return true
+                })
+            }
+            else{
+                return response.message
+            }
+        })        
     })
 
-    if(storageSettings.has('id') && storageSettings.has('token')){
+    const profile = storageSettings.get('user.data').then((profile:UserProfile)=>profile)
 
-        storageSettings.get('id.data').then((value:string)=>{
-
-            const userData = getProfile(value).then((data)=>{
-                ipcMain.handle('profileData', ()=>data)
-            })
-
-        }).catch((err:any)=>console.log(err))
-    }
-    else{
-        return false
-    }
+    ipcMain.handle('getUserProfile', ()=>profile)
 })
 

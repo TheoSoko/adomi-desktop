@@ -31,17 +31,19 @@ app.whenReady().then(() => {
         if (process.platform !== 'darwin')
             app.quit();
     });
-    ipcMain.on('form-data', (event, arg) => {
-        (0, requests_2.userSignIn)(arg);
+    ipcMain.handle('form-data', async (event, arg) => {
+        return (0, requests_2.userSignIn)(arg).then((response) => {
+            if (response.statusText === "OK") {
+                return (0, requests_2.getProfile)().then(async (result) => {
+                    await storageSettings.set("user", { data: result });
+                    return true;
+                });
+            }
+            else {
+                return response.message;
+            }
+        });
     });
-    if (storageSettings.has('id') && storageSettings.has('token')) {
-        storageSettings.get('id.data').then((value) => {
-            const userData = (0, requests_2.getProfile)(value).then((data) => {
-                ipcMain.handle('profileData', () => data);
-            });
-        }).catch((err) => console.log(err));
-    }
-    else {
-        return false;
-    }
+    const profile = storageSettings.get('user.data').then((profile) => profile);
+    ipcMain.handle('getUserProfile', () => profile);
 });

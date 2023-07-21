@@ -37,9 +37,12 @@ interface UserLog {
 }
 
 interface Payload{
+    status: number,
+    statusText: string
     data:{
         id: number,
         token: string
+        message: string
     }
 }
 
@@ -55,30 +58,32 @@ interface UserProfile{
     city: string
 }
 
-export function userSignIn(login: UserLog){
+export async function userSignIn(login: UserLog){
 
-    axios.post('http://localhost:8000/sign-in', login)
+    return axios.post('http://localhost:8000/sign-in', login)
         .then((response:Payload) => {
-
-            setDataStorage(response.data.id.toString(), response.data.token).then((storageData)=>{
-                console.log(`Local storage id : ${storageData.id}\nLocal storage token : ${storageData.token}`);
-                const testData = getProfile(storageData.id).then((data:UserProfile)=>{
-                    console.log(data)
-                    //redirection (window.location marche pas)
+            if (response.status < 200 || response.status > 299) {
+                return setDataStorage(response.data.id.toString(), response.data.token).then((storageData)=>{
+                    return response;
+                }
                 
-                })
+                ).catch((err?:any) => {console.warn(err)})
             }
-            ).catch((err?:any) => {console.warn(err)})
+            else{
+                return response
+            }
         })
         .catch((err?:any) => {
-            console.warn(err)
+
+            let errObj = {status: err.response.status, statusText: err.response.statusText, message: err.response.data.message}
+            return errObj
         })
 }
 
 async function setDataStorage(id:string, token:string){
 
     storageSettings.unsetSync();
-    storageSettings.get('id.data').then((value:string)=>console.log('localStorage id after unset: ' + value))
+    // storageSettings.get('id.data').then((value:string)=>console.log('localStorage id after unset: ' + value))
 
     await storageSettings.set('id', {data : id});
     await storageSettings.set('token', {data: token});
@@ -90,11 +95,33 @@ async function setDataStorage(id:string, token:string){
     return storageObj
 }
 
-export async function getProfile(userId: string){
+export async function getProfile(){
+    
+    // console.log("Step 2 : getProfile");
+
+    if(storageSettings.has('id') && storageSettings.has('token')){
+
+        return storageSettings.get('id.data').then((value:string)=>{
+
+            return fetchProfileData(value).then((data)=>{
+                // console.log("step fetchProfileData")
+                return data;
+            })
+        }).catch((err:any)=> {
+            console.log(err)
+            return false;
+        })
+    }else{
+        console.log('err storage')
+        return false;
+    }
+}
+
+async function fetchProfileData(userId:string){
 
     const data = await fetch(`http://localhost:8000/users/${userId}`);
     const json = await data.json();
-
+    //try catch
     if(data.ok){
         return json
     }

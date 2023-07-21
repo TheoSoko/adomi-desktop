@@ -12,7 +12,8 @@ contextBridge.exposeInMainWorld('exposed', {
 
 
 contextBridge.exposeInMainWorld('submitForm', {
-    sendFormData: (formData: string[]) => ipcRenderer.send('form-data', formData),
+    sendFormData: (formData: string[]) => ipcRenderer.invoke('form-data', formData),
+    getUserProfile: () => ipcRenderer.invoke('getUserProfile')
 })
 
 contextBridge.exposeInMainWorld('profileDataTest', {
