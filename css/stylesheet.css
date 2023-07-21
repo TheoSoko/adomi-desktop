@@ -45,6 +45,34 @@ input[type="search"]::-webkit-clear-button {
     display: none;
 }
 
+.conteneur_form{
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginForm{
+    min-height: 40%;
+    width: 30%;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    margin-top: 2rem;
+}
+
+#loginForm div{
+    width: 90%;
+    margin-bottom: 1.7rem;
+    display: flex;
+    justify-content: space-around;
+}
+
 .navbar{
     padding-top: 6.5px;
     padding-bottom: 6.5px;

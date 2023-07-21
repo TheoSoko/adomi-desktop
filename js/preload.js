@@ -8,6 +8,12 @@ contextBridge.exposeInMainWorld('exposed', {
         return ipcRenderer.invoke('searchClients', query, page);
     }
 });
+contextBridge.exposeInMainWorld('submitForm', {
+    sendFormData: (formData) => ipcRenderer.send('form-data', formData),
+});
+contextBridge.exposeInMainWorld('profileDataTest', {
+    profileData: () => ipcRenderer.invoke('profileData')
+});
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello");
     if (element)

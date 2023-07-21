@@ -1,7 +1,13 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-import path from "path"
+const storageSettings = require('electron-settings');
 import { searchClients } from "./backend/requests"
+import path from "path"
+import { userSignIn, getProfile } from './backend/requests'
 
+interface UserLog {
+    username: string,
+    password: string
+}
 
 const createWindow = () => {
     ipcMain.handle('ping', () => 'pong')
@@ -29,5 +35,24 @@ app.whenReady().then(() => {
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') app.quit()
     })
+
+    ipcMain.on('form-data', (event:any, arg:UserLog)=>{
+
+        userSignIn(arg);
+    })
+
+    if(storageSettings.has('id') && storageSettings.has('token')){
+
+        storageSettings.get('id.data').then((value:string)=>{
+
+            const userData = getProfile(value).then((data)=>{
+                ipcMain.handle('profileData', ()=>data)
+            })
+
+        }).catch((err:any)=>console.log(err))
+    }
+    else{
+        return false
+    }
 })
 

@@ -4,8 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const { app, BrowserWindow, ipcMain } = require('electron');
-const path_1 = __importDefault(require("path"));
+const storageSettings = require('electron-settings');
 const requests_1 = require("./backend/requests");
+const path_1 = __importDefault(require("path"));
+const requests_2 = require("./backend/requests");
 const createWindow = () => {
     ipcMain.handle('ping', () => 'pong');
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
@@ -29,4 +31,17 @@ app.whenReady().then(() => {
         if (process.platform !== 'darwin')
             app.quit();
     });
+    ipcMain.on('form-data', (event, arg) => {
+        (0, requests_2.userSignIn)(arg);
+    });
+    if (storageSettings.has('id') && storageSettings.has('token')) {
+        storageSettings.get('id.data').then((value) => {
+            const userData = (0, requests_2.getProfile)(value).then((data) => {
+                ipcMain.handle('profileData', () => data);
+            });
+        }).catch((err) => console.log(err));
+    }
+    else {
+        return false;
+    }
 });

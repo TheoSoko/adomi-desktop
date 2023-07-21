@@ -11,6 +11,15 @@ contextBridge.exposeInMainWorld('exposed', {
 })
 
 
+contextBridge.exposeInMainWorld('submitForm', {
+    sendFormData: (formData: string[]) => ipcRenderer.send('form-data', formData),
+})
+
+contextBridge.exposeInMainWorld('profileDataTest', {
+    profileData: () => ipcRenderer.invoke('profileData')
+})
+
+
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello")
     if (element) element.innerText = "Hello from the other side"
