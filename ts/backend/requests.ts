@@ -62,20 +62,19 @@ export async function userSignIn(login: UserLog){
 
     return axios.post('http://localhost:8000/sign-in', login)
         .then((response:Payload) => {
-            if (response.status < 200 || response.status > 299) {
-                return setDataStorage(response.data.id.toString(), response.data.token).then((storageData)=>{
-                    return response;
-                }
-                
-                ).catch((err?:any) => {console.warn(err)})
+            if (response.status >= 200 || response.status <= 299) {
+                return setDataStorage(response.data.id.toString(), response.data.token).
+                    then(()=>{
+                        return response;})
+                    .catch((err?:any) => {console.warn(err)
+                    })
             }
             else{
                 return response
             }
         })
-        .catch((err?:any) => {
-
-            let errObj = {status: err.response.status, statusText: err.response.statusText, message: err.response.data.message}
+        .catch((err:any) => {
+            const errObj = {status: err.response.status, statusText: err.response.statusText, message: err.response.data.message}
             return errObj
         })
 }
@@ -83,8 +82,6 @@ export async function userSignIn(login: UserLog){
 async function setDataStorage(id:string, token:string){
 
     storageSettings.unsetSync();
-    // storageSettings.get('id.data').then((value:string)=>console.log('localStorage id after unset: ' + value))
-
     await storageSettings.set('id', {data : id});
     await storageSettings.set('token', {data: token});
 
@@ -96,15 +93,11 @@ async function setDataStorage(id:string, token:string){
 }
 
 export async function getProfile(){
-    
-    // console.log("Step 2 : getProfile");
 
     if(storageSettings.has('id') && storageSettings.has('token')){
-
         return storageSettings.get('id.data').then((value:string)=>{
 
             return fetchProfileData(value).then((data)=>{
-                // console.log("step fetchProfileData")
                 return data;
             })
         }).catch((err:any)=> {
@@ -118,14 +111,19 @@ export async function getProfile(){
 }
 
 async function fetchProfileData(userId:string){
+    
+    try{
+        const data = await fetch(`http://localhost:8000/users/${userId}`);
+        const json = await data.json();
 
-    const data = await fetch(`http://localhost:8000/users/${userId}`);
-    const json = await data.json();
-    //try catch
-    if(data.ok){
-        return json
+        if(data.ok){
+            return json
+        }
+        else{
+            return false
+        }
     }
-    else{
-        return false
+    catch(err){
+        console.warn(err)
     }
 }

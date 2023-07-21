@@ -29,24 +29,27 @@ exports.searchClients = searchClients;
 async function userSignIn(login) {
     return axios.post('http://localhost:8000/sign-in', login)
         .then((response) => {
-        if (response.status < 200 || response.status > 299) {
-            return setDataStorage(response.data.id.toString(), response.data.token).then((storageData) => {
+        if (response.status >= 200 || response.status <= 299) {
+            return setDataStorage(response.data.id.toString(), response.data.token).
+                then(() => {
                 return response;
-            }).catch((err) => { console.warn(err); });
+            })
+                .catch((err) => {
+                console.warn(err);
+            });
         }
         else {
             return response;
         }
     })
         .catch((err) => {
-        let errObj = { status: err.response.status, statusText: err.response.statusText, message: err.response.data.message };
+        const errObj = { status: err.response.status, statusText: err.response.statusText, message: err.response.data.message };
         return errObj;
     });
 }
 exports.userSignIn = userSignIn;
 async function setDataStorage(id, token) {
     storageSettings.unsetSync();
-    // storageSettings.get('id.data').then((value:string)=>console.log('localStorage id after unset: ' + value))
     await storageSettings.set('id', { data: id });
     await storageSettings.set('token', { data: token });
     let storageObj = { id, token };
@@ -55,11 +58,9 @@ async function setDataStorage(id, token) {
     return storageObj;
 }
 async function getProfile() {
-    // console.log("Step 2 : getProfile");
     if (storageSettings.has('id') && storageSettings.has('token')) {
         return storageSettings.get('id.data').then((value) => {
             return fetchProfileData(value).then((data) => {
-                // console.log("step fetchProfileData")
                 return data;
             });
         }).catch((err) => {
@@ -74,13 +75,17 @@ async function getProfile() {
 }
 exports.getProfile = getProfile;
 async function fetchProfileData(userId) {
-    const data = await fetch(`http://localhost:8000/users/${userId}`);
-    const json = await data.json();
-    //try catch
-    if (data.ok) {
-        return json;
+    try {
+        const data = await fetch(`http://localhost:8000/users/${userId}`);
+        const json = await data.json();
+        if (data.ok) {
+            return json;
+        }
+        else {
+            return false;
+        }
     }
-    else {
-        return false;
+    catch (err) {
+        console.warn(err);
     }
 }

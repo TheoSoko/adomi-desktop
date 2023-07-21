@@ -20,16 +20,10 @@ interface UserLog {
     password: string
 }
 
-//  function  getProfileData(){
-//     const response = (<any>window).profileDataTest.profileData
-//     return response
-// }
-
 submitBtn.addEventListener('click', function(e){
     e.preventDefault();
 
     if(usernameInput.value.length && passwordInput.value.length){
-
         let formData:UserLog = {username: usernameInput.value, password: passwordInput.value};
         (<any>window).submitForm.sendFormData(formData).then((data: boolean | string) => {
 
@@ -40,7 +34,7 @@ submitBtn.addEventListener('click', function(e){
                 errMess.innerText = "";
                 (<any>window).location.href = "../html/page_profil.html";
             }
-            return true
+            // return true
         }).catch((err:any)=>{console.log(err)})
     }
     else{

@@ -61,8 +61,9 @@ app.whenReady().then(() => {
         })        
     })
 
-    const profile = storageSettings.get('user.data').then((profile:UserProfile)=>profile)
-
-    ipcMain.handle('getUserProfile', ()=>profile)
+        if(storageSettings.has('user')){
+            const profile = storageSettings.get('user.data').then((profile:UserProfile)=>profile)
+            ipcMain.handle('getUserProfile', ()=>profile)
+        }
 })
 
