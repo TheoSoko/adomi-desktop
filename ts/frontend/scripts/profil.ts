@@ -1,9 +1,11 @@
-const userCard = document.getElementById("userCard") as HTMLInputElement;
+const userCard = document.getElementById("userTable") as HTMLInputElement;
 let userCardText = "";
 
 (<any>window).submitForm.getUserProfile().then((profile:string[])=>{
     for (let data in profile){
-        userCardText +=  `<p>${data} : ${profile[data]}</p>`
+        if(data !== 'id'){
+            userCardText +=  `<tr><td><b>${data}</b></td><td>${profile[data]}</td></tr>`
+        }
     }
     userCard.innerHTML = userCardText
 });

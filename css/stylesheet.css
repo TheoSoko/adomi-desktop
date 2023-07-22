@@ -26,6 +26,15 @@ p, h1, h2, span, a, li {
     align-items: center;
 }
 
+#userTable{
+    width: 35%;
+    margin: 5rem auto;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start; */
+}
+
 /*.search_div{}*/
 
 .searchbar {
