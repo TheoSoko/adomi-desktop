@@ -45,25 +45,25 @@ app.whenReady().then(() => {
         if (process.platform !== 'darwin') app.quit()
     })
 
-    ipcMain.handle('form-data', async (event:any, arg:UserLog)=>{
+    ipcMain.handle('form-data', async (event:any, arg:UserLog) => {
         return userSignIn(arg).then((response: Payload | any) => {
-
-            if(response.statusText === "OK"){
-
+            if (response.statusText === "OK") {
                 return getProfile().then(async (result) => {
                     await storageSettings.set("user", {data: result})
                     return true
                 })
             }
-            else{
+            else {
                 return response.message
             }
         })        
     })
 
-        if(storageSettings.has('user')){
-            const profile = storageSettings.get('user.data').then((profile:UserProfile)=>profile)
-            ipcMain.handle('getUserProfile', ()=>profile)
-        }
+    
+    if (storageSettings.has('user')) {
+        const profile = storageSettings.get('user.data').then((profile:UserProfile)=>profile)
+        ipcMain.handle('getUserProfile', ()=>profile)
+    }
+    
 })
 

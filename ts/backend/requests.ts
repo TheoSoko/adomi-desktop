@@ -70,7 +70,7 @@ export async function userSignIn(login: UserLog){
                     .catch((err?:any) => {console.warn(err)
                     })
             }
-            else{
+            else {
                 return response
             }
         })
@@ -93,38 +93,37 @@ async function setDataStorage(id:string, token:string){
     return storageObj
 }
 
-export async function getProfile(){
+export async function getProfile() {
 
-    if(storageSettings.has('id') && storageSettings.has('token')){
-        return storageSettings.get('id.data').then((value:string)=>{
-
-            return fetchProfileData(value).then((data)=>{
+    if (storageSettings.has('id') && storageSettings.has('token')) {
+        return storageSettings.get('id.data').then((value:string) => {
+            return fetchProfileData(value).then((data) => {
                 return data;
             })
         }).catch((err:any)=> {
             console.log(err)
             return false;
         })
-    }else{
+    } else {
         console.log('err storage')
         return false;
     }
 }
 
 async function fetchProfileData(userId:string){
-    
-    try{
+    try { 
         const data = await fetch(`http://localhost:8000/users/${userId}`);
         const json = await data.json();
 
-        if(data.ok){
+        if (data.ok) {
             return json
         }
-        else{
+        else {
             return false
         }
+
     }
-    catch(err){
+    catch(err) {
         console.warn(err)
     }
 }
