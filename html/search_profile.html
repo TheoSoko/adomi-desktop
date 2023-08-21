@@ -13,19 +13,28 @@
 </head>
 
 <body>
-
     <div class="centering_div">
         <h1 class="title">Trouver un profil</h1>
-        <div class="search_div">
-            <!-- <div><label for="name">Chercher un client</label></div> -->
-            <input type="search" id="search_person_input" class="searchbar" placeholder="Chercher un client" name="search">
-            <button type="submit" required class="search_btn" id="search_btn"><i class="fa fa-search"></i></button>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="search_div col-8">
+                <!-- <div><label for="name">Chercher un client</label></div> -->
+                <input type="search" id="search_person_input" class="searchbar" placeholder="Chercher un client" name="search">
+                <button type="submit" required class="search_btn" id="search_btn"><i class="fa fa-search"></i></button>
+            </div>
+            <div class="col-2">
+                <select id="client_carer_toggle">
+                    <option class="toggle_option">Clients</option>
+                    <option class="toggle_option">Auxilaire</option>
+                </select>
+            </div>
         </div>
     </div>
   
-    <div id="client_list">
+    <div class="row" id="client_list">
 
     </div>
+    
 </body>
 
 <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>

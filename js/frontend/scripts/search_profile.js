@@ -25,6 +25,13 @@ async function sendInput() {
         clientsDiv.insertAdjacentHTML("afterbegin", `<p>Nous n'avons trouvé aucun client, désolé</p>`);
     }
     for (const client of clients) {
-        clientsDiv.insertAdjacentHTML("afterbegin", `<p>${client.first_name}</p>`);
+        clientsDiv.insertAdjacentHTML("afterbegin", `
+            <div class="col-3 col-lg-2 search_result">
+                <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
+                <p class="search_result_text">${client.phone}</p>
+                <p class="search_result_text">${client.city}</p>
+                <a id="client_profile_link" href="./client_profile.html">Profile</a>
+            </div>
+        `);
     }
 }
