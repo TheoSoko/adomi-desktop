@@ -109,16 +109,28 @@ input[type="search"]::-webkit-clear-button {
     margin-left: -150;
 }
 */
-.navbar-brand{
+.navbar-brand {
     margin-bottom: 3.2px
 }
 
-.nav-link{
+.nav-link {
     font-size: 18.3px;
 }
 
-#search_profile{
+#search_profile {
     background-color: #ffffff00;
     border: none;
     font-weight: bold;
+}
+
+#search_div_modal {
+    border-radius: 10px; 
+    border: 2px solid black; 
+    padding: 5px 13px; 
+    align-items: center; 
+    justify-content: center;
+    position: absolute; 
+    left: 797.925px; 
+    top: 95px;
+    display: none;
 }

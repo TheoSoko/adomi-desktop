@@ -11,7 +11,7 @@ const requests_2 = require("./backend/requests");
 const createWindow = () => {
     ipcMain.handle('ping', () => 'pong');
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
-    ipcMain.handle('searchProfiles', requests_1.searchProfiles);
+    ipcMain.handle('searchProfiles', requests_2.searchProfiles);
     const win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -32,9 +32,9 @@ app.whenReady().then(() => {
             app.quit();
     });
     ipcMain.handle('form-data', async (event, arg) => {
-        return (0, requests_2.userSignIn)(arg).then((response) => {
+        return (0, requests_1.userSignIn)(arg).then((response) => {
             if (response.statusText === "OK") {
-                return (0, requests_2.getProfile)().then(async (result) => {
+                return (0, requests_1.getProfile)().then(async (result) => {
                     await storageSettings.set("user", { data: result });
                     return true;
                 });
