@@ -7,7 +7,7 @@ const apiBase = "http://localhost:8000"
 
 export const searchProfiles = async (event: unknown, role: "customers"|"carers", query: string, page: string): Promise<[boolean, (User[]|apiError)]> => {
     //console.log("query to send : ", "http://localhost:8000/customers/search?q="+query+"&page="+page)
-
+    
     let res = await fetch(apiBase+"/"+role+"/search?q="+query+"&page="+page)
         .catch(err => {
             console.log("err from fetch", err)
@@ -28,7 +28,6 @@ export const searchProfiles = async (event: unknown, role: "customers"|"carers",
         //console.log('http err, resolve with array')
         return Promise.resolve([false, await res.json()])
     }
-
     return Promise.resolve([true, await res.json()])
 }
 

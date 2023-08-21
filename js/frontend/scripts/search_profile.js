@@ -4,7 +4,8 @@ let searchInput = document.getElementById("search_person_input");
 searchInput.addEventListener("keydown", (e) => e.key == "Enter" && sendInput());
 let searchBtn = document.getElementById("search_btn");
 searchBtn.addEventListener("click", (e) => sendInput());
-const role = "customers";
+// "customers"|"carers"
+const role = document.getElementById("client_carer_toggle").value;
 async function sendInput() {
     let input = document.getElementById("search_person_input");
     if (!input)

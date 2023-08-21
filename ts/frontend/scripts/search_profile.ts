@@ -19,7 +19,8 @@ searchInput.addEventListener("keydown", (e) => e.key == "Enter" && sendInput())
 let searchBtn = document.getElementById("search_btn") as HTMLElement
 searchBtn.addEventListener("click", (e) => sendInput())
 
-const role = "customers"
+// "customers"|"carers"
+const role = (document.getElementById("client_carer_toggle") as HTMLSelectElement).value
 
 async function sendInput(){
     let input = document.getElementById("search_person_input") as HTMLInputElement
@@ -41,7 +42,7 @@ async function sendInput(){
 
     if (clients.length == 0) {
         clientsDiv.insertAdjacentHTML("afterbegin",
-        `<p>Nous n'avons trouvé aucun client, désolé</p>`)
+        `<p>Nous n'avons trouvé aucun ${role}, désolé</p>`)
     }
 
     for (const client of clients){
