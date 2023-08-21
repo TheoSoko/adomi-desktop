@@ -27,13 +27,11 @@ let navbar = fetch("../html/navbar.html")
 
         const profileSearchPos = document.querySelector('#search_profile')?.getBoundingClientRect().left as number
         
-
         //if (!profileSearchPos) return
         //if (ismallWindow) return
 
-        searchDiv.style.left = profileSearchPos + (isBigWindow ? 0 : -5 ) + "px"
-        searchDiv.style.top = (isBigWindow ? "79px" : "95px")
-
+        searchDiv.style.left = profileSearchPos - (isBigWindow ? 9 : 18 ) + "px"
+        searchDiv.style.top = (/*isBigWindow ? "79px" : */"95px")
         searchDiv.style.display = "block"
 
         const profileCreatePos =  document.querySelector('#create_profile')?.getBoundingClientRect().left
@@ -41,9 +39,13 @@ let navbar = fetch("../html/navbar.html")
     
 
     window.addEventListener("click", (e) => {
-        if ((e.target as any).id == "search_profile" ){
+        if ((e.target as Element).id == "search_profile" && window.innerWidth >= 992){
             modalForNav()
         }
+    })
+
+    window.addEventListener("resize", (e) => {
+        document.getElementById("search_div_modal")!.style.display = "none"
     })
 
 
