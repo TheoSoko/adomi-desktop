@@ -6,14 +6,14 @@ searchInput.addEventListener("keydown", (e) => e.key == "Enter" && sendInput())
 let searchBtn = document.getElementById("search_btn") as HTMLElement
 searchBtn.addEventListener("click", (e) => sendInput())
 
-
+const role = "customers"
 
 async function sendInput(){
     let input = document.getElementById("search_person_input") as HTMLInputElement
     if (!input) return
     if (input.value.length == 0) return
 
-    let res = await (window as any).exposed.searchClients(input.value, 1)
+    let res = await (window as any).exposed.searchProfiles(role, input.value, 1)
 
     if (!res) return
     if (res[0] == false) {

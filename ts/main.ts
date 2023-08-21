@@ -1,8 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
-import { searchClients } from "./backend/requests"
-import path from "path"
 import { userSignIn, getProfile } from './backend/requests'
+import path from "path"
+import { searchProfiles } from "./backend/requests"
 
 interface UserLog {
     username: string,
@@ -21,7 +21,7 @@ interface Payload{
 const createWindow = () => {
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
-    ipcMain.handle('searchClients', searchClients)
+    ipcMain.handle('searchProfiles', searchProfiles)
 
     const win = new BrowserWindow({
         width: 800,
