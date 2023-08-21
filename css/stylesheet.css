@@ -26,6 +26,15 @@ p, h1, h2, span, a, li {
     align-items: center;
 }
 
+#userTable{
+    width: 35%;
+    margin: 5rem auto;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start; */
+}
+
 /*.search_div{}*/
 
 .searchbar {
@@ -45,24 +54,71 @@ input[type="search"]::-webkit-clear-button {
     display: none;
 }
 
+.conteneur_form{
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginForm{
+    min-height: 40%;
+    width: 30%;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    margin-top: 2rem;
+}
+
+#loginForm div{
+    width: 90%;
+    margin-bottom: 1.7rem;
+    display: flex;
+    justify-content: space-around;
+}
+
 .navbar{
     padding-top: 6.5px;
     padding-bottom: 6.5px;
 }
 
-#navbar_items_right{
-    margin-left: 510px;
+@media (min-width: 800px){
+    #navbar_items_right{
+        margin-left: 510px;
+    }
 }
 
+@media  (min-width: 992px) and (max-width: 1170px){
+    .nav-item{
+        width: 150px;
+    }
+    #navbar_items_right{
+        margin-left: 300px;
+    }
+
+}
+
+/*
 .nav_item_compressed{
     margin-right: -60;
     margin-left: -150;
 }
-
+*/
 .navbar-brand{
     margin-bottom: 3.2px
 }
 
 .nav-link{
     font-size: 18.3px;
+}
+
+#search_profile{
+    background-color: #ffffff00;
+    border: none;
+    font-weight: bold;
 }
