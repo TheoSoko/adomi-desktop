@@ -134,3 +134,54 @@ input[type="search"]::-webkit-clear-button {
     top: 95px;
     display: none;
 }
+
+.missionCard {
+    border: 1px solid black;
+    border-radius:10px;
+    width:300px;
+    min-width:300px;
+    margin: 40px 20px;
+    padding:10px;
+    text-align: center;
+}
+
+.missionCardAdresse {
+    width:200px;
+    display: inline-block;
+}
+.missionCardAdresse .p {
+    margin:0;
+}
+
+.missionCardButton{
+    width:50px;
+    display:inline-block;
+}
+
+.missionCard .btn{
+    text-align:right;
+}
+
+.row-missions {
+    margin: 20px 30px;
+}
+
+.missionCardContributeur {
+    font-size: 18px;
+}
+.missionCardHoraire{
+    font-size: 18px;
+}
+
+.text-jours{
+    font-size: 30px;
+}
+
+
+.div-cards{
+    display:flex;
+}
+
+.container-flex {
+    display:flex;
+}

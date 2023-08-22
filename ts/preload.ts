@@ -21,6 +21,7 @@ contextBridge.exposeInMainWorld('profileDataTest', {
 })
 
 
+
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello")
     if (element) element.innerText = "Hello from the other side"
