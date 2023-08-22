@@ -73,5 +73,3 @@ function modalForNav(){
 
 
 
-
-

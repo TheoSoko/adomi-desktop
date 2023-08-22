@@ -12,6 +12,8 @@ const createWindow = () => {
     ipcMain.handle('ping', () => 'pong');
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
     ipcMain.handle('searchProfiles', requests_2.searchProfiles);
+    ipcMain.handle('mainDirPath', () => __dirname);
+
     const win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -36,8 +38,10 @@ app.whenReady().then(() => {
         return (0, requests_1.userSignIn)(arg).then((response) => {
             if (response.statusText === "OK") {
                 return (0, requests_1.getProfile)().then(async (result) => {
+
                     storageSettings.unsetSync();
                     connectionStatus = true;
+
                     await storageSettings.set("user", { data: result });
                     return true;
                 });

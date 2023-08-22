@@ -7,7 +7,7 @@ const apiBase = "http://localhost:8000"
 
 export const searchProfiles = async (event: unknown, role: "customers"|"carers", query: string, page: string): Promise<[boolean, (User[]|apiError)]> => {
     //console.log("query to send : ", "http://localhost:8000/customers/search?q="+query+"&page="+page)
-
+    
     let res = await fetch(apiBase+"/"+role+"/search?q="+query+"&page="+page)
         .catch(err => {
             console.log("err from fetch", err)
@@ -28,7 +28,6 @@ export const searchProfiles = async (event: unknown, role: "customers"|"carers",
         //console.log('http err, resolve with array')
         return Promise.resolve([false, await res.json()])
     }
-
     return Promise.resolve([true, await res.json()])
 }
 
@@ -70,7 +69,7 @@ export async function userSignIn(login: UserLog){
                     .catch((err?:any) => {console.warn(err)
                     })
             }
-            else{
+            else {
                 return response
             }
         })
@@ -95,19 +94,18 @@ async function setDataStorage(id:string, token:string, connectStatus: boolean){
     return storageObj
 }
 
-export async function getProfile(){
+export async function getProfile() {
 
-    if(storageSettings.has('id') && storageSettings.has('token')){
-        return storageSettings.get('id.data').then((value:string)=>{
-
-            return fetchProfileData(value).then((data)=>{
+    if (storageSettings.has('id') && storageSettings.has('token')) {
+        return storageSettings.get('id.data').then((value:string) => {
+            return fetchProfileData(value).then((data) => {
                 return data;
             })
         }).catch((err:any)=> {
             console.log(err)
             return false;
         })
-    }else{
+    } else {
         console.log('err storage')
         return false;
     }
@@ -120,19 +118,19 @@ export async function userSignOut() {
 }
 
 async function fetchProfileData(userId:string){
-    
-    try{
+    try { 
         const data = await fetch(`http://localhost:8000/users/${userId}`);
         const json = await data.json();
 
-        if(data.ok){
+        if (data.ok) {
             return json
         }
-        else{
+        else {
             return false
         }
+
     }
-    catch(err){
+    catch(err) {
         console.warn(err)
     }
 }

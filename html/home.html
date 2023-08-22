@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
-    <link href="../ressources/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="../css/stylesheet.css" rel="stylesheet" type="text/css" >
-    <title>main</title>
+    <script type="module" src="../js/frontend/scripts/header.js"></script>
 </head>
 
 <body>
-    <div id ="main_div">
-        <h1 id="vorld">Hello vorld!</h1>
+    <div id="main_div">
+        <h1 class="mt-4 pt-4" id="vorld">Bienvenue</h1>
+        <h2 class="mt-3 pt-1">Monsieur employé</h2>
+        <p class="mt-5 mb-4 pt-2 fs-5">Ci dessous les dernières demandes : </p>
+    </div>
+    <div class="row" id="client_list">
+        <div class="col-3 search_result">
+            <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
+            <p class="search_result_text">${client.phone}</p>
+            <p class="search_result_text">${client.post_code} ${client.city}</p>
+            <a id="client_profile_link" href="./client_profile.html?profileId=1">Profile</a>
+        </div>
+        <div class="col-3 search_result">
+            <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
+            <p class="search_result_text">${client.phone}</p>
+            <p class="search_result_text">${client.post_code} ${client.city}</p>
+            <a id="client_profile_link" href="./client_profile.html?profileId=1">Profile</a>
+        </div>
+        <div class="col-3 search_result">
+            <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
+            <p class="search_result_text">${client.phone}</p>
+            <p class="search_result_text">${client.post_code} ${client.city}</p>
+            <a id="client_profile_link" href="./client_profile.html?profileId=1">Profile</a>
+        </div>
     </div>
 </body>
 
+<script type="text/javascript"> var exports = {}; </script>
 <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
-<script src="../js/frontend/scripts/navbar_include.js"></script>
+<script type="module" src="../js/frontend/scripts/navbar_include.js"></script>
 
 </html>

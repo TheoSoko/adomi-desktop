@@ -22,6 +22,8 @@ const createWindow = () => {
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
     ipcMain.handle('searchProfiles', searchProfiles)
+    ipcMain.handle('mainDirPath', () => __dirname)
+
 
     const win = new BrowserWindow({
         width: 800,
@@ -47,11 +49,9 @@ app.whenReady().then(() => {
         if (process.platform !== 'darwin') app.quit()
     })
 
-    ipcMain.handle('form-data', async (event:any, arg:UserLog)=>{
+    ipcMain.handle('form-data', async (event:any, arg:UserLog) => {
         return userSignIn(arg).then((response: Payload | any) => {
-
-            if(response.statusText === "OK"){
-
+            if (response.statusText === "OK") {
                 return getProfile().then(async (result) => {
 
                     storageSettings.unsetSync();
@@ -60,7 +60,7 @@ app.whenReady().then(() => {
                     return true
                 })
             }
-            else{
+            else {
                 return response.message
             }
         })        
