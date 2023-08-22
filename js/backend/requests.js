@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchMissions = exports.fetchProfileData = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
+exports.fetchMissions = exports.userSignOut = exports.fetchProfileData = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
+
 const axios = require('axios');
 const storageSettings = require('electron-settings');
 const apiBase = "http://localhost:8000";
@@ -30,7 +31,7 @@ async function userSignIn(login) {
     return axios.post('http://localhost:8000/sign-in', login)
         .then((response) => {
         if (response.status >= 200 || response.status <= 299) {
-            return setDataStorage(response.data.id.toString(), response.data.token).
+            return setDataStorage(response.data.id.toString(), response.data.token, true).
                 then(() => {
                 return response;
             })
@@ -48,10 +49,11 @@ async function userSignIn(login) {
     });
 }
 exports.userSignIn = userSignIn;
-async function setDataStorage(id, token) {
-    storageSettings.unsetSync();
+async function setDataStorage(id, token, connectStatus) {
+    await storageSettings.unsetSync();
     await storageSettings.set('id', { data: id });
     await storageSettings.set('token', { data: token });
+  
     let storageObj = { id, token };
     storageSettings.get('id.data').then((value) => storageObj.id = value);
     storageSettings.get('token.data').then((value) => storageObj.token = value);
@@ -97,6 +99,24 @@ async function fetchMissions(event, userId, role) {
     });
     if (!data) {
         return Promise.reject("Erreur à la requête HTTP");
+
+async function userSignOut() {
+    //On vide totalement le localStorage
+    await storageSettings.unsetSync();
+    return true;
+}
+exports.userSignOut = userSignOut;
+
+async function fetchProfileData(userId) {
+    try {
+        const data = await fetch(`http://localhost:8000/users/${userId}`);
+        const json = await data.json();
+        if (data.ok) {
+            return json;
+        }
+        else {
+            return false;
+        }
     }
     if (data.status != 200) {
         return [false, await data.json()];

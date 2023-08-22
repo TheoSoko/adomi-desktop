@@ -15,8 +15,12 @@ contextBridge.exposeInMainWorld('submitForm', {
     sendFormData: (formData) => ipcRenderer.invoke('form-data', formData),
     getUserProfile: () => ipcRenderer.invoke('getUserProfile')
 });
-contextBridge.exposeInMainWorld('profileDataTest', {
-    profileData: () => ipcRenderer.invoke('profileData')
+contextBridge.exposeInMainWorld('exposeProfileData', {
+    profileData: () => ipcRenderer.invoke('profileData'),
+    connectionStatus: () => ipcRenderer.invoke('connectionStatus')
+});
+contextBridge.exposeInMainWorld('userLogout', {
+    logout: () => ipcRenderer.invoke('logout')
 });
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello");

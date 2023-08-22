@@ -63,7 +63,7 @@ export async function userSignIn(login: UserLog){
     return axios.post('http://localhost:8000/sign-in', login)
         .then((response:Payload) => {
             if (response.status >= 200 || response.status <= 299) {
-                return setDataStorage(response.data.id.toString(), response.data.token).
+                return setDataStorage(response.data.id.toString(), response.data.token, true).
                     then(()=>{
                         return response;})
                     .catch((err?:any) => {console.warn(err)
@@ -79,11 +79,13 @@ export async function userSignIn(login: UserLog){
         })
 }
 
-async function setDataStorage(id:string, token:string){
+async function setDataStorage(id:string, token:string, connectStatus: boolean){
 
-    storageSettings.unsetSync();
+    await storageSettings.unsetSync();
     await storageSettings.set('id', {data : id});
     await storageSettings.set('token', {data: token});
+    await storageSettings.set('connectStatus', {data: connectStatus});
+
 
     let storageObj = {id, token};
     storageSettings.get('id.data').then((value:string)=>storageObj.id = value)
@@ -120,12 +122,13 @@ export async function fetchProfileData(event: wtf, userId: string){
         if (!data){
             return Promise.reject("Erreur à la requête HTTP")
         }
-
-        if (data.status != 200){
-            return  [false, await data.json()]
-        }
-        return [true, await data.json()]
+  
+export async function userSignOut() {
+    //On vide totalement le localStorage
+    await storageSettings.unsetSync();
+    return true
 }
+
 
 export async function fetchMissions(event: wtf, userId: string, role: "client"|"carer"|"employee"){
         const data = await fetch(`http://localhost:8000/users/${userId}/missions?role=${role}`)

@@ -7,5 +7,5 @@ let userCardText = "";
             userCardText +=  `<tr><td><b>${data}</b></td><td>${profile[data]}</td></tr>`
         }
     }
-    userCard.innerHTML = userCardText
+    userCard.innerHTML = userCardText;
 });
