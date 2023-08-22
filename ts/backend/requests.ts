@@ -64,7 +64,7 @@ export async function userSignIn(login: UserLog){
     return axios.post('http://localhost:8000/sign-in', login)
         .then((response:Payload) => {
             if (response.status >= 200 || response.status <= 299) {
-                return setDataStorage(response.data.id.toString(), response.data.token).
+                return setDataStorage(response.data.id.toString(), response.data.token, true).
                     then(()=>{
                         return response;})
                     .catch((err?:any) => {console.warn(err)
@@ -80,11 +80,13 @@ export async function userSignIn(login: UserLog){
         })
 }
 
-async function setDataStorage(id:string, token:string){
+async function setDataStorage(id:string, token:string, connectStatus: boolean){
 
-    storageSettings.unsetSync();
+    await storageSettings.unsetSync();
     await storageSettings.set('id', {data : id});
     await storageSettings.set('token', {data: token});
+    await storageSettings.set('connectStatus', {data: connectStatus});
+
 
     let storageObj = {id, token};
     storageSettings.get('id.data').then((value:string)=>storageObj.id = value)
@@ -109,6 +111,12 @@ export async function getProfile(){
         console.log('err storage')
         return false;
     }
+}
+
+export async function userSignOut() {
+    //On vide totalement le localStorage
+    await storageSettings.unsetSync();
+    return true
 }
 
 async function fetchProfileData(userId:string){

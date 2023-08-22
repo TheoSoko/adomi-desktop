@@ -1,6 +1,6 @@
 const usernameInput = document.querySelector("[name='username']") as HTMLInputElement;
 const passwordInput = document.querySelector("[name='password']")  as HTMLInputElement;
-const submitBtn = document.getElementById("submitButton") as HTMLElement;
+const loginFormBtn = document.getElementById("submitButton") as HTMLElement;
 const errMess = document.getElementById("errMess") as HTMLElement;
 
 interface UserProfile{
@@ -20,7 +20,7 @@ interface UserLog {
     password: string
 }
 
-submitBtn.addEventListener('click', function(e){
+loginFormBtn.addEventListener('click', function(e){
     e.preventDefault();
 
     if(usernameInput.value.length && passwordInput.value.length){

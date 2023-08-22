@@ -89,7 +89,7 @@ input[type="search"]::-webkit-clear-button {
 
 @media (min-width: 800px){
     #navbar_items_right{
-        margin-left: 510px;
+        margin-left: 450px;
     }
 }
 

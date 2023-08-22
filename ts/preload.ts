@@ -1,6 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
-
 contextBridge.exposeInMainWorld('exposed', {
     ping: () => ipcRenderer.invoke('ping'),
     localRessources: ipcRenderer.invoke('localRessources'),
@@ -16,11 +15,14 @@ contextBridge.exposeInMainWorld('submitForm', {
     getUserProfile: () => ipcRenderer.invoke('getUserProfile')
 })
 
-contextBridge.exposeInMainWorld('profileDataTest', {
-    profileData: () => ipcRenderer.invoke('profileData')
+contextBridge.exposeInMainWorld('exposeProfileData', {
+    profileData: () => ipcRenderer.invoke('profileData'),
+    connectionStatus: () => ipcRenderer.invoke('connectionStatus')
 })
 
-
+contextBridge.exposeInMainWorld('userLogout', {
+    logout: ()=>ipcRenderer.invoke('logout')
+})
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello")
     if (element) element.innerText = "Hello from the other side"
