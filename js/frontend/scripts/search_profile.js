@@ -4,8 +4,10 @@ let searchInput = document.getElementById("search_person_input");
 searchInput.addEventListener("keydown", (e) => e.key == "Enter" && sendInput());
 let searchBtn = document.getElementById("search_btn");
 searchBtn.addEventListener("click", (e) => sendInput());
-const role = "customers";
 async function sendInput() {
+    const role = document.getElementById("client_carer_toggle").value;
+    let clientsDiv = document.getElementById("client_list");
+    clientsDiv.innerHTML = ""; // clear the div
     let input = document.getElementById("search_person_input");
     if (!input)
         return;
@@ -15,22 +17,21 @@ async function sendInput() {
     if (!res)
         return;
     if (res[0] == false) {
-        console.log(res[1]);
+        const err = res[1];
+        document.getElementsByClassName("error_message")[0].innerHTML = "Erreur " + err.statusCode + ", " + err.message;
         return;
     }
     const clients = res[1];
-    let clientsDiv = document.getElementById("client_list");
-    clientsDiv.innerHTML = ""; // clear the div
     if (clients.length == 0) {
-        clientsDiv.insertAdjacentHTML("afterbegin", `<p>Nous n'avons trouvé aucun client, désolé</p>`);
+        clientsDiv.insertAdjacentHTML("afterbegin", `<p>Nous n'avons trouvé aucun ${role}, désolé</p>`);
     }
     for (const client of clients) {
         clientsDiv.insertAdjacentHTML("afterbegin", `
             <div class="col-3 col-lg-2 search_result">
                 <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
                 <p class="search_result_text">${client.phone}</p>
-                <p class="search_result_text">${client.city}</p>
-                <a id="client_profile_link" href="./client_profile.html">Profile</a>
+                <p class="search_result_text">${client.post_code} ${client.city}</p>
+                <a id="client_profile_link" href="./client_profile.html?profileId=${client.id}">Profile</a>
             </div>
         `);
     }

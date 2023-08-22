@@ -1,6 +1,10 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 console.log("navbar_include script loaded");
-let navbar = fetch("../html/navbar.html")
+const path = await window.exposed.mainDirPath();
+console.log("path of main: ", path);
+console.log("path: ", path + "../html/navbar.html");
+fetch(path + "/../html/navbar.html")
     .then(async (res) => {
     const navbar = await res.text();
     //var parser = new DOMParser();
