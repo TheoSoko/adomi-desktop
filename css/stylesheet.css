@@ -86,10 +86,19 @@ input[type="search"]::-webkit-clear-button {
     padding-top: 6.5px;
     padding-bottom: 6.5px;
 }
-
+/*
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 0px !important ;
+    padding-left: 0px !important ; 
+}
+.navbar-expand-lg .navbar-nav .nav-item {
+    padding-right: 0px !important ;
+    padding-left: 0px !important ; 
+}
+*/
 @media  (min-width: 992px) /*and (max-width: 1170px)*/{
     .nav-item {
-        width: 150px;
+        /*min-width: 150px;*/
     }
     #navbar_items_right {
         margin-left: 165px;

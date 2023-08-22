@@ -96,7 +96,7 @@ export async function getProfile() {
 
     if (storageSettings.has('id') && storageSettings.has('token')) {
         return storageSettings.get('id.data').then((value:string) => {
-            return fetchProfileData(value).then((data) => {
+            return fetchProfileData(0, value).then((data) => {
                 return data;
             })
         }).catch((err:any)=> {
@@ -109,20 +109,37 @@ export async function getProfile() {
     }
 }
 
-async function fetchProfileData(userId:string){
-    try { 
-        const data = await fetch(`http://localhost:8000/users/${userId}`);
-        const json = await data.json();
-
-        if (data.ok) {
-            return json
+type wtf = unknown
+export async function fetchProfileData(event: wtf, userId: string){
+        const data = await fetch(`http://localhost:8000/users/${userId}`)
+            .catch(err => {
+                console.log(err)
+                return null;
+            })
+        
+        if (!data){
+            return Promise.reject("Erreur à la requête HTTP")
         }
-        else {
-            return false
+
+        if (data.status != 200){
+            return  [false, await data.json()]
+        }
+        return [true, await data.json()]
+}
+
+export async function fetchMissions(event: wtf, userId: string, role: "client"|"carer"|"employee"){
+        const data = await fetch(`http://localhost:8000/users/${userId}/missions?role=${role}`)
+            .catch(err => {
+                console.log(err)
+                return null
+            })
+        
+        if (!data){
+            return Promise.reject("Erreur à la requête HTTP")
         }
 
-    }
-    catch(err) {
-        console.warn(err)
-    }
+        if (data.status != 200){
+            return  [false, await data.json()]
+        }
+        return [true, await data.json()]
 }

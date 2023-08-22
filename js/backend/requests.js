@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
+exports.fetchMissions = exports.fetchProfileData = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
 const axios = require('axios');
 const storageSettings = require('electron-settings');
 const apiBase = "http://localhost:8000";
@@ -60,7 +60,7 @@ async function setDataStorage(id, token) {
 async function getProfile() {
     if (storageSettings.has('id') && storageSettings.has('token')) {
         return storageSettings.get('id.data').then((value) => {
-            return fetchProfileData(value).then((data) => {
+            return fetchProfileData(0, value).then((data) => {
                 return data;
             });
         }).catch((err) => {
@@ -74,18 +74,33 @@ async function getProfile() {
     }
 }
 exports.getProfile = getProfile;
-async function fetchProfileData(userId) {
-    try {
-        const data = await fetch(`http://localhost:8000/users/${userId}`);
-        const json = await data.json();
-        if (data.ok) {
-            return json;
-        }
-        else {
-            return false;
-        }
+async function fetchProfileData(event, userId) {
+    const data = await fetch(`http://localhost:8000/users/${userId}`)
+        .catch(err => {
+        console.log(err);
+        return null;
+    });
+    if (!data) {
+        return Promise.reject("Erreur à la requête HTTP");
     }
-    catch (err) {
-        console.warn(err);
+    if (data.status != 200) {
+        return [false, await data.json()];
     }
+    return [true, await data.json()];
 }
+exports.fetchProfileData = fetchProfileData;
+async function fetchMissions(event, userId, role) {
+    const data = await fetch(`http://localhost:8000/users/${userId}/missions?role=${role}`)
+        .catch(err => {
+        console.log(err);
+        return null;
+    });
+    if (!data) {
+        return Promise.reject("Erreur à la requête HTTP");
+    }
+    if (data.status != 200) {
+        return [false, await data.json()];
+    }
+    return [true, await data.json()];
+}
+exports.fetchMissions = fetchMissions;
