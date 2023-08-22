@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-
-exports.userSignOut = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
+exports.fetchMissions = exports.userSignOut = exports.fetchProfileData = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
 
 const axios = require('axios');
 const storageSettings = require('electron-settings');
@@ -63,7 +62,7 @@ async function setDataStorage(id, token, connectStatus) {
 async function getProfile() {
     if (storageSettings.has('id') && storageSettings.has('token')) {
         return storageSettings.get('id.data').then((value) => {
-            return fetchProfileData(value).then((data) => {
+            return fetchProfileData(0, value).then((data) => {
                 return data;
             });
         }).catch((err) => {
@@ -77,6 +76,29 @@ async function getProfile() {
     }
 }
 exports.getProfile = getProfile;
+async function fetchProfileData(event, userId) {
+    const data = await fetch(`http://localhost:8000/users/${userId}`)
+        .catch(err => {
+        console.log(err);
+        return null;
+    });
+    if (!data) {
+        return Promise.reject("Erreur à la requête HTTP");
+    }
+    if (data.status != 200) {
+        return [false, await data.json()];
+    }
+    return [true, await data.json()];
+}
+exports.fetchProfileData = fetchProfileData;
+async function fetchMissions(event, userId, role) {
+    const data = await fetch(`http://localhost:8000/users/${userId}/missions?role=${role}`)
+        .catch(err => {
+        console.log(err);
+        return null;
+    });
+    if (!data) {
+        return Promise.reject("Erreur à la requête HTTP");
 
 async function userSignOut() {
     //On vide totalement le localStorage
@@ -96,7 +118,9 @@ async function fetchProfileData(userId) {
             return false;
         }
     }
-    catch (err) {
-        console.warn(err);
+    if (data.status != 200) {
+        return [false, await data.json()];
     }
+    return [true, await data.json()];
 }
+exports.fetchMissions = fetchMissions;

@@ -7,10 +7,10 @@ contextBridge.exposeInMainWorld('exposed', {
     searchProfiles: (role: string, query: string, page: number) => {
         //console.log(" args from preload thing \n", query, " ",page)
         return ipcRenderer.invoke('searchProfiles', role, query, page)
-    }
-    
+    },
+    fetchProfileData: (id: number) => ipcRenderer.invoke('fetchProfileData', id),
+    fetchMissions: (userId: string, role: "client"|"carer"|"employee") => ipcRenderer.invoke('fetchMissions', userId, role),
 })
-
 
 contextBridge.exposeInMainWorld('submitForm', {
     sendFormData: (formData: string[]) => ipcRenderer.invoke('form-data', formData),

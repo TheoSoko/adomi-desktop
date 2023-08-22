@@ -39,8 +39,7 @@ window.exposeProfileData.connectionStatus().then((value) => {
 }).catch((err) => { console.log(err); });
 
 const path = await window.exposed.mainDirPath();
-console.log("path of main: ", path);
-console.log("path: ", path + "../html/navbar.html");
+//console.log("path: ", path + "../html/navbar.html")
 fetch(path + "/../html/navbar.html")
     .then(async (res) => {
     const navbar = await res.text();

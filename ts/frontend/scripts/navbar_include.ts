@@ -5,6 +5,7 @@ interface Window {
     userLogout : any
 }
 
+
 window.exposeProfileData.connectionStatus().then((value:boolean)=> {
 
     const connectionStatus = value;
@@ -18,7 +19,7 @@ window.exposeProfileData.connectionStatus().then((value:boolean)=> {
             document.body.insertAdjacentHTML("afterbegin", navbar)
             let btnConnection = document.getElementById("btn_connect") as HTMLElement;
 
-            if(connectionStatus){
+            if (connectionStatus){
 
                 let btnProfile = document.getElementById('btn_profil') as HTMLElement;
                 btnProfile.style.display = 'block'
