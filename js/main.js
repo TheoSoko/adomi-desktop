@@ -12,6 +12,7 @@ const createWindow = () => {
     ipcMain.handle('ping', () => 'pong');
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
     ipcMain.handle('searchProfiles', requests_2.searchProfiles);
+    ipcMain.handle('mainDirPath', () => __dirname);
     const win = new BrowserWindow({
         width: 800,
         height: 600,

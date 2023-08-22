@@ -190,3 +190,15 @@ input[type="search"]::-webkit-clear-button {
     border: none;
     font-weight: bold;
 }
+
+.error_message {
+    color: red;
+    font-size: 18;
+    margin-top: 30px;
+    text-align: center;
+}
+
+#main_div{
+    justify-content: center;
+    text-align: center;
+}

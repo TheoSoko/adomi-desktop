@@ -22,6 +22,8 @@ const createWindow = () => {
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
     ipcMain.handle('searchProfiles', searchProfiles)
+    ipcMain.handle('mainDirPath', () => __dirname)
+
 
     const win = new BrowserWindow({
         width: 800,

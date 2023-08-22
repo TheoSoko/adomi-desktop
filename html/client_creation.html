@@ -1,60 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="../ressources/bootstrap-5.0.2-dist/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="../css/stylesheet.css" rel="stylesheet" type="text/css" >
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Ajouter un client</h1>
-    <div class="contanier d-flex justify-content-center">
+<head>
+    <script type="module" src="../js/frontend/scripts/header.js"></script>
+    <script type="text/javascript"> var exports = {}; </script>
+    <title>Client creation</title>
+</head>
+
+<body>
+  <h1>Ajouter un client</h1>
+  <div class="contanier d-flex justify-content-center">
     <form for="Client-Form">
       <div class="form-row justify-content-center">
         <div class="form-group col-6">
           <label for="nom">Nom :</label>
           <input type="text" class="form-control" id="Nom" required />
-        <div class="form-group col-md-6">
-          <label for="prenom">Prenom :</label>
-          <input type="text" class="form-control" id="Prenom" required />
+          <div class="form-group col-md-6">
+            <label for="prenom">Prenom :</label>
+            <input type="text" class="form-control" id="Prenom" required />
+          </div>
         </div>
-      </div>
-      <div class="form-group justify-content-center">
-        <label for="utilisateur">Nom d’utilisateur :</label>
-        <input type="text" class="form-control" id="utilisateur" required />
-      </div>
-      <div class="form-group justify-content-center">
-        <label for="email">Adresse mail :</label>
-        <input type="text" class="form-control" id="email" required />
-      </div>
-      <div class="form-group justify-content-center">
-        <label for="tele">Téléphone :</label>
-        <input type="text" class="form-control" id="tele" required />
-      </div>
-      <div class="form-row justify-content-center">
-        <div class="form-group col-md-6">
-          <label for="num">Num :</label>
-          <input type="text" class="form-control" id="Num" required />
+        <div class="form-group justify-content-center">
+          <label for="utilisateur">Nom d’utilisateur :</label>
+          <input type="text" class="form-control" id="utilisateur" required />
         </div>
-        <div class="form-group col-md-6 justify-content-center">
-          <label for="rue">Rue :</label>
-          <input type="text" class="form-control" id="rue" required />
+        <div class="form-group justify-content-center">
+          <label for="email">Adresse mail :</label>
+          <input type="text" class="form-control" id="email" required />
         </div>
-      </div>
-      <div class="form-row justify-content-center">
-        <div class="form-group col-md-6">
-          <label for="ville">Ville :</label>
-          <input type="text" class="form-control" id="ville" required />
+        <div class="form-group justify-content-center">
+          <label for="tele">Téléphone :</label>
+          <input type="text" class="form-control" id="tele" required />
         </div>
-        <div class="form-group col-md-6 justify-content-center">
-          <label for="Codepostal">Code postal :</label>
-          <input type="text" class="form-control" id="Codepostal" required />
+        <div class="form-row justify-content-center">
+          <div class="form-group col-md-6">
+            <label for="num">Num :</label>
+            <input type="text" class="form-control" id="Num" required />
+          </div>
+          <div class="form-group col-md-6 justify-content-center">
+            <label for="rue">Rue :</label>
+            <input type="text" class="form-control" id="rue" required />
+          </div>
         </div>
+        <div class="form-row justify-content-center">
+          <div class="form-group col-md-6">
+            <label for="ville">Ville :</label>
+            <input type="text" class="form-control" id="ville" required />
+          </div>
+          <div class="form-group col-md-6 justify-content-center">
+            <label for="Codepostal">Code postal :</label>
+            <input type="text" class="form-control" id="Codepostal" required />
+          </div>
         </div>
       </div>
       <div class="justify-content-center">
@@ -62,7 +58,9 @@
       </div>
     </form>
   </div>
-  </body>
-  <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="../js/frontend/scripts/navbar_include.js"></script>
+</body>
+<script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js"
+  crossorigin="anonymous"></script>
+<script type="module" src="../js/frontend/scripts/navbar_include.js"></script>
+
 </html>
