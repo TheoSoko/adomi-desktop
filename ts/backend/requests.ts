@@ -113,16 +113,23 @@ export async function getProfile() {
 
 type wtf = unknown
 export async function fetchProfileData(event: wtf, userId: string){
-        const data = await fetch(`http://localhost:8000/users/${userId}`)
-            .catch(err => {
-                console.log(err)
-                return null;
-            })
-        
-        if (!data){
-            return Promise.reject("Erreur à la requête HTTP")
-        }
+    const data = await fetch(`http://localhost:8000/users/${userId}`)
+        .catch(err => {
+            console.log(err)
+        })
+    
+    if (!data){
+        return Promise.reject("Erreur à la requête HTTP")
+    }
+
+    if (data.status != 200){
+        return [false, await data.json()]
+    }
+
+    return [true, await data.json()]
+}
   
+
 export async function userSignOut() {
     //On vide totalement le localStorage
     await storageSettings.unsetSync();

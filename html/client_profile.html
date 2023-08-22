@@ -27,6 +27,7 @@
 
     document.getElementById("missions_button").href=`./missions.html?profileId=${profileId}&role=client`
 
+    console.log(profileId)
     const res = await window.exposed.fetchProfileData(profileId)
 
     if (res[0] == false){

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchMissions = exports.userSignOut = exports.fetchProfileData = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
-
 const axios = require('axios');
 const storageSettings = require('electron-settings');
 const apiBase = "http://localhost:8000";
@@ -53,7 +52,7 @@ async function setDataStorage(id, token, connectStatus) {
     await storageSettings.unsetSync();
     await storageSettings.set('id', { data: id });
     await storageSettings.set('token', { data: token });
-  
+    await storageSettings.set('connectStatus', { data: connectStatus });
     let storageObj = { id, token };
     storageSettings.get('id.data').then((value) => storageObj.id = value);
     storageSettings.get('token.data').then((value) => storageObj.token = value);
@@ -80,7 +79,6 @@ async function fetchProfileData(event, userId) {
     const data = await fetch(`http://localhost:8000/users/${userId}`)
         .catch(err => {
         console.log(err);
-        return null;
     });
     if (!data) {
         return Promise.reject("Erreur à la requête HTTP");
@@ -88,9 +86,16 @@ async function fetchProfileData(event, userId) {
     if (data.status != 200) {
         return [false, await data.json()];
     }
+    console.log("data");
     return [true, await data.json()];
 }
 exports.fetchProfileData = fetchProfileData;
+async function userSignOut() {
+    //On vide totalement le localStorage
+    await storageSettings.unsetSync();
+    return true;
+}
+exports.userSignOut = userSignOut;
 async function fetchMissions(event, userId, role) {
     const data = await fetch(`http://localhost:8000/users/${userId}/missions?role=${role}`)
         .catch(err => {
@@ -99,24 +104,6 @@ async function fetchMissions(event, userId, role) {
     });
     if (!data) {
         return Promise.reject("Erreur à la requête HTTP");
-
-async function userSignOut() {
-    //On vide totalement le localStorage
-    await storageSettings.unsetSync();
-    return true;
-}
-exports.userSignOut = userSignOut;
-
-async function fetchProfileData(userId) {
-    try {
-        const data = await fetch(`http://localhost:8000/users/${userId}`);
-        const json = await data.json();
-        if (data.ok) {
-            return json;
-        }
-        else {
-            return false;
-        }
     }
     if (data.status != 200) {
         return [false, await data.json()];
