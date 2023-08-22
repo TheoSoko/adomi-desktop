@@ -13,6 +13,7 @@ const createWindow = () => {
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
     ipcMain.handle('searchProfiles', requests_2.searchProfiles);
     ipcMain.handle('mainDirPath', () => __dirname);
+
     const win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -24,6 +25,7 @@ const createWindow = () => {
 };
 app.whenReady().then(() => {
     createWindow();
+    let connectionStatus = false;
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0)
             createWindow();
@@ -36,6 +38,10 @@ app.whenReady().then(() => {
         return (0, requests_1.userSignIn)(arg).then((response) => {
             if (response.statusText === "OK") {
                 return (0, requests_1.getProfile)().then(async (result) => {
+
+                    storageSettings.unsetSync();
+                    connectionStatus = true;
+
                     await storageSettings.set("user", { data: result });
                     return true;
                 });
@@ -49,4 +55,12 @@ app.whenReady().then(() => {
         const profile = storageSettings.get('user.data').then((profile) => profile);
         ipcMain.handle('getUserProfile', () => profile);
     }
+    //La valeur de connectionStatus change passe de false à true si la connexion est réussie
+    ipcMain.handle('connectionStatus', () => connectionStatus);
+    //déconnexion
+    ipcMain.handle('logout', async () => {
+        return (0, requests_1.userSignOut)().then(() => {
+            connectionStatus = false;
+        });
+    });
 });

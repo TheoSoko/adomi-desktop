@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
-import { userSignIn, getProfile } from './backend/requests'
+import { userSignIn, getProfile, userSignOut } from './backend/requests'
 import path from "path"
 import { searchProfiles } from "./backend/requests"
 
@@ -39,6 +39,8 @@ const createWindow = () => {
 app.whenReady().then(() => {
     createWindow()
 
+    let connectionStatus = false;
+
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
@@ -51,6 +53,9 @@ app.whenReady().then(() => {
         return userSignIn(arg).then((response: Payload | any) => {
             if (response.statusText === "OK") {
                 return getProfile().then(async (result) => {
+
+                    storageSettings.unsetSync();
+                    connectionStatus = true;
                     await storageSettings.set("user", {data: result})
                     return true
                 })
@@ -61,11 +66,20 @@ app.whenReady().then(() => {
         })        
     })
 
-    
-    if (storageSettings.has('user')) {
+    if(storageSettings.has('user')){
+
         const profile = storageSettings.get('user.data').then((profile:UserProfile)=>profile)
         ipcMain.handle('getUserProfile', ()=>profile)
     }
-    
+
+    //La valeur de connectionStatus change passe de false à true si la connexion est réussie
+    ipcMain.handle('connectionStatus', ()=>connectionStatus)
+
+    //déconnexion
+    ipcMain.handle('logout', async ()=>{
+        return userSignOut().then(()=>{
+            connectionStatus = false;
+        })   
+    });
 })
 

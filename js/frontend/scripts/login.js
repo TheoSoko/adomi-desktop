@@ -1,9 +1,9 @@
 "use strict";
 const usernameInput = document.querySelector("[name='username']");
 const passwordInput = document.querySelector("[name='password']");
-const submitBtn = document.getElementById("submitButton");
+const loginFormBtn = document.getElementById("submitButton");
 const errMess = document.getElementById("errMess");
-submitBtn.addEventListener('click', function (e) {
+loginFormBtn.addEventListener('click', function (e) {
     e.preventDefault();
     if (usernameInput.value.length && passwordInput.value.length) {
         let formData = { username: usernameInput.value, password: passwordInput.value };

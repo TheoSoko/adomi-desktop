@@ -87,12 +87,17 @@ input[type="search"]::-webkit-clear-button {
     padding-bottom: 6.5px;
 }
 
+@media (min-width: 800px){
+    #navbar_items_right{
+        margin-left: 450px;
+      
 @media  (min-width: 992px) /*and (max-width: 1170px)*/{
     .nav-item {
         width: 150px;
     }
     #navbar_items_right {
         margin-left: 165px;
+
     }
 }
 
