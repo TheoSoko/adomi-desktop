@@ -89,28 +89,25 @@ input[type="search"]::-webkit-clear-button {
 
 /*
 Pour override bootstrap
-.navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 0px !important ;
-    padding-left: 0px !important ; 
-}
-.navbar-expand-lg .navbar-nav .nav-item {
-    padding-right: 0px !important ;
-    padding-left: 0px !important ; 
-}
 */
 
+.navbar-expand-lg #navbar_items_right {
+
+}
+
+/*
 @media (min-width: 800px){
     #navbar_items_right{
         margin-left: 450px;
     }
 }
 
-@media  (min-width: 992px) /*and (max-width: 1170px)*/{
+@media  (min-width: 992px) {
     .nav-item {
-        /*min-width: 150px;*/
+        min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR 
     }
     #navbar_items_right {
-        margin-left: 165px;
+        margin-left: 120px;  CA AUSSI 
 
     }
 }
@@ -132,6 +129,9 @@ Pour override bootstrap
         margin-left: 620px;
     }
 }
+*/
+
+
 
 /*
 .nav_item_compressed{
