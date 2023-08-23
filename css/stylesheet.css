@@ -267,6 +267,7 @@ Pour override bootstrap
 
 .div-cards{
     display:flex;
+    justify-content: space-around;
 }
 
 .container-flex {

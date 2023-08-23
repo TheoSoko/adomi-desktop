@@ -33,10 +33,6 @@ interface missionInterface {
     recurence: string
 }
 
-interface missionsInterface {
-    
-}
-
 const missions: Array<missionInterface> = [
     {
         id: 1,
@@ -94,8 +90,6 @@ const missions: Array<missionInterface> = [
         recurence:"bi-weekly"
     }
 ]
-
-
 
 
 missions.forEach(mission => {
