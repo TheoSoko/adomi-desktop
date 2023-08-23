@@ -80,12 +80,10 @@ export async function userSignIn(login: UserLog){
 }
 
 async function setDataStorage(id:string, token:string, connectStatus: boolean){
-
     await storageSettings.unsetSync();
     await storageSettings.set('id', {data : id});
     await storageSettings.set('token', {data: token});
     await storageSettings.set('connectStatus', {data: connectStatus});
-
 
     let storageObj = {id, token};
     storageSettings.get('id.data').then((value:string)=>storageObj.id = value)
@@ -95,16 +93,14 @@ async function setDataStorage(id:string, token:string, connectStatus: boolean){
 }
 
 export async function getProfile() {
-
     if (storageSettings.has('id') && storageSettings.has('token')) {
-        return storageSettings.get('id.data').then((value:string) => {
-            return fetchProfileData(0, value).then((data) => {
-                return data;
-            })
-        }).catch((err:any)=> {
-            console.log(err)
-            return false;
-        })
+        const id = await storageSettings.get('id.data')
+        const profile = await fetchProfileData(0, id)
+        if (profile[0] == false){
+            console.log("err at getProfile / fetchProfileData", profile[1])
+            return false
+        }
+        return profile[1]
     } else {
         console.log('err storage')
         return false;
@@ -112,7 +108,7 @@ export async function getProfile() {
 }
 
 type wtf = unknown
-export async function fetchProfileData(event: wtf, userId: string){
+export async function fetchProfileData(event: wtf, userId: string): Promise<[boolean, (User[]|apiError)]>{
     const data = await fetch(`http://localhost:8000/users/${userId}`)
         .catch(err => {
             console.log(err)

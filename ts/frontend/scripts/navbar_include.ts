@@ -17,11 +17,11 @@ window.exposeProfileData.connectionStatus().then((value:boolean)=> {
                 //var parser = new DOMParser();
                 //var parsedNav = parser.parseFromString(navbar, 'text/html');
             document.body.insertAdjacentHTML("afterbegin", navbar)
-            let btnConnection = document.getElementById("btn_connect") as HTMLElement;
 
             if (connectionStatus){
-
+                console.log("connectionStatus")
                 let btnProfile = document.getElementById('btn_profil') as HTMLElement;
+                let btnConnection = document.getElementById("btn_connect") as HTMLElement;
                 btnProfile.style.display = 'block'
                 btnConnection.textContent = "Déconnexion"
                 btnConnection.setAttribute('href', "../html/home.html");

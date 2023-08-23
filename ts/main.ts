@@ -24,7 +24,6 @@ const createWindow = () => {
     ipcMain.handle('mainDirPath', () => __dirname)
     ipcMain.handle('fetchProfileData', fetchProfileData)
     ipcMain.handle("fetchMissions", fetchMissions)
-
     
     const win = new BrowserWindow({
         width: 800,
@@ -54,7 +53,6 @@ app.whenReady().then(() => {
         return userSignIn(arg).then((response: Payload | any) => {
             if (response.statusText === "OK") {
                 return getProfile().then(async (result) => {
-
                     storageSettings.unsetSync();
                     connectionStatus = true;
                     await storageSettings.set("user", {data: result})
@@ -64,13 +62,11 @@ app.whenReady().then(() => {
             else {
                 return response.message
             }
-        })        
+        })
     })
 
-    if(storageSettings.has('user')){
-
-        const profile = storageSettings.get('user.data').then((profile:UserProfile)=>profile)
-        ipcMain.handle('getUserProfile', ()=>profile)
+    if (storageSettings.has('user')) {
+        ipcMain.handle('getUserProfile', () => storageSettings.get('user.data'))
     }
 
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie

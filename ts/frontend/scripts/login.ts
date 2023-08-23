@@ -32,7 +32,7 @@ loginFormBtn.addEventListener('click', function(e){
             }
             else{
                 errMess.innerText = "";
-                (<any>window).location.href = "../html/page_profil.html";
+                (<any>window).location.href = "../html/profile_page.html";
             }
             // return true
         }).catch((err:any)=>{console.log(err)})
