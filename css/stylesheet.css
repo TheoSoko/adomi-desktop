@@ -87,20 +87,50 @@ input[type="search"]::-webkit-clear-button {
     padding-bottom: 6.5px;
 }
 
+/*
+Pour override bootstrap
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 0px !important ;
+    padding-left: 0px !important ; 
+}
+.navbar-expand-lg .navbar-nav .nav-item {
+    padding-right: 0px !important ;
+    padding-left: 0px !important ; 
+}
+*/
+
 @media (min-width: 800px){
     #navbar_items_right{
-        margin-left: 510px;
+        margin-left: 450px;
     }
 }
 
-@media  (min-width: 992px) and (max-width: 1170px){
-    .nav-item{
-        width: 150px;
+@media  (min-width: 992px) /*and (max-width: 1170px)*/{
+    .nav-item {
+        /*min-width: 150px;*/
     }
-    #navbar_items_right{
+    #navbar_items_right {
+        margin-left: 165px;
+
+    }
+}
+
+@media (min-width: 1170px){
+    #navbar_items_right {
         margin-left: 300px;
     }
+}
 
+@media (min-width: 1280px){
+    #navbar_items_right {
+        margin-left: 420px;
+    }
+}
+
+@media (min-width: 1430px){
+    #navbar_items_right {
+        margin-left: 620px;
+    }
 }
 
 /*
@@ -123,7 +153,13 @@ input[type="search"]::-webkit-clear-button {
     font-weight: bold;
 }
 
-#search_div_modal {
+#create_profile {
+    background-color: #ffffff00;
+    border: none;
+    font-weight: bold;
+}
+
+#creation_dropdown_modal {
     border-radius: 10px; 
     border: 2px solid black; 
     padding: 5px 13px; 
@@ -133,6 +169,57 @@ input[type="search"]::-webkit-clear-button {
     left: 797.925px; 
     top: 95px;
     display: none;
+}
+
+
+@media (min-width: 1170px){
+    #creation_dropdown_modal {
+        display: none;
+    }
+}
+
+#client_carer_toggle {
+    border-radius: 6px;
+    margin-top: 3px
+}
+
+#client_list {
+    margin-top: 40px;
+    justify-content: space-evenly;
+}
+
+.search_result {
+    border: 2px solid  black;
+    margin-block: 17px;
+    padding-top: 8.5px;
+    padding-bottom: 8.5px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-inline: 5px;
+    text-align: center;
+}
+
+.search_result_text {
+    padding-block: 5px;
+    margin-block: 1px;
+}
+
+#client_profile_link {
+    background-color: #ffffff00;
+    border: none;
+    font-weight: bold;
+}
+
+.error_message {
+    color: red;
+    font-size: 18;
+    margin-top: 30px;
+    text-align: center;
+}
+
+#main_div{
+    justify-content: center;
+    text-align: center;
 }
 
 .missionCard {

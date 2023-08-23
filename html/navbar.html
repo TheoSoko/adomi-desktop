@@ -8,30 +8,36 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0  ms-5 ps-5 ">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0  ms-5 ps-5">
+          
                 <li class="nav-item">
                     <a class="nav-link active text-white " aria-current="page" href="#">Gérer les missions</a>
                 </li>
+                
+                <li class="nav-item" id="btn_profil" style="display:none;">
+                    <a class="nav-link text-white" href="./page_profil.html">Mon profil</a>
+                </li>
             </ul>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbar_items_right">
-                <li class="nav-item">
-                    <button class="nav-link text-white mx-4" id="search_profile" >Trouver un
-                        profil
-                    </button>
+                <li class="nav-item ">
+                    <a class="nav-link text-white mx-4" id="search_profile" href="./search_profile.html">
+                        Trouver un profil
+                    </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ">
                     <a class="nav-link text-white mx-3" href="./missions_carer.html">
                         mission d'un carer
                     </a>
                 </li>
                 <li class="nav-item">
-
-                    <a class="nav-link text-white mx-3" href="./client_creation.html">
+                    <button class="nav-link text-white mx-4" id="create_profile">
                         Créer un client / AV
-                    </a>
+                    </button>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link text-white mx-4 " href="./sign_in.html">Connexion</a>
+                    <a class="nav-link text-white mx-3 " href="./sign_in.html" id="btn_connect">Connexion</a>
                 </li>
             </ul>
         </div>
@@ -39,7 +45,11 @@
 </nav>
 
 
-<div id="search_div_modal">
-    <a style="margin-block-end: 5px; text-decoration: none; color: black; color: none; display: block" href="./search_profile.html">Trouver un client</a>
-    <a style="margin-block-end: 6px; text-decoration: none; color: black; display: block" href="./search_profile.html">Trouver un Auxiliaire</a>
+<div id="creation_dropdown_modal">
+    <a style="margin-block-end: 5px; text-decoration: none; color: black; color: none; display: block" href="./client_creation.html">Créer un Client</a>
+    <a style="margin-block-end: 6px; text-decoration: none; color: black; display: block" href="./carer_creation.html">Créer un Auxiliaire</a>
 </div>
+
+<script type="module">
+    const path = await window.exposed.mainDirPath() + "/../html/navbar.html"
+</script>
