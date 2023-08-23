@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-
-exports.userSignOut = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
-
+exports.createNewMission = exports.getMissionActors = exports.userSignOut = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
 const axios = require('axios');
 const storageSettings = require('electron-settings');
 const apiBase = "http://localhost:8000";
@@ -54,7 +52,7 @@ async function setDataStorage(id, token, connectStatus) {
     await storageSettings.unsetSync();
     await storageSettings.set('id', { data: id });
     await storageSettings.set('token', { data: token });
-  
+    await storageSettings.set('connectStatus', { data: connectStatus });
     let storageObj = { id, token };
     storageSettings.get('id.data').then((value) => storageObj.id = value);
     storageSettings.get('token.data').then((value) => storageObj.token = value);
@@ -64,6 +62,7 @@ async function getProfile() {
     if (storageSettings.has('id') && storageSettings.has('token')) {
         return storageSettings.get('id.data').then((value) => {
             return fetchProfileData(value).then((data) => {
+                console.log(data);
                 return data;
             });
         }).catch((err) => {
@@ -77,14 +76,37 @@ async function getProfile() {
     }
 }
 exports.getProfile = getProfile;
-
 async function userSignOut() {
     //On vide totalement le localStorage
     await storageSettings.unsetSync();
     return true;
 }
 exports.userSignOut = userSignOut;
-
+async function getMissionActors() {
+    return axios.get('http://localhost:8000/customers').then(async (response) => {
+        let actorsList = [];
+        const clientList = response.data;
+        actorsList.push(clientList);
+        return axios.get('http://localhost:8000/carers').then(async (response) => {
+            const CarerList = response.data;
+            actorsList.push(CarerList);
+            return actorsList;
+        }).catch((err) => console.warn(err));
+    }).catch((err) => { console.warn(err); });
+}
+exports.getMissionActors = getMissionActors;
+async function createNewMission(mission) {
+    try {
+        // console.log(mission)
+        return axios.post('http://localhost:8000/missions', mission).then((response) => {
+            console.log('insertion réussie');
+        }).catch((err) => console.log(err));
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+exports.createNewMission = createNewMission;
 async function fetchProfileData(userId) {
     try {
         const data = await fetch(`http://localhost:8000/users/${userId}`);

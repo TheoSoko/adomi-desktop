@@ -20,6 +20,12 @@ contextBridge.exposeInMainWorld('exposeProfileData', {
 contextBridge.exposeInMainWorld('userLogout', {
     logout: () => ipcRenderer.invoke('logout')
 });
+contextBridge.exposeInMainWorld('exposeActors', {
+    getActors: () => ipcRenderer.invoke('getActors')
+});
+contextBridge.exposeInMainWorld('createMission', {
+    createNewMission: (formData) => ipcRenderer.invoke('createNewMission', formData)
+});
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello");
     if (element)

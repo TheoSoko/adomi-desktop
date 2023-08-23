@@ -55,7 +55,24 @@ interface UserProfile{
     street_name: string,
     street_number: number,
     post_code: string,
-    city: string
+    city: string,
+    id_role: number,
+    id_agency: number
+}
+
+interface MissionInterface{
+    startDate: string,
+    startHour: string
+    endHour: string,
+    streetName: string,
+    streetNumber: number,
+    postCode: string,
+    city: string,
+    validated: number,
+    idClient: number,
+    idEmployee?: number,
+    idCarer?: number,
+    idRecurence: number
 }
 
 export async function userSignIn(login: UserLog){
@@ -99,6 +116,7 @@ export async function getProfile() {
     if (storageSettings.has('id') && storageSettings.has('token')) {
         return storageSettings.get('id.data').then((value:string) => {
             return fetchProfileData(value).then((data) => {
+                console.log(data)
                 return data;
             })
         }).catch((err:any)=> {
@@ -115,6 +133,35 @@ export async function userSignOut() {
     //On vide totalement le localStorage
     await storageSettings.unsetSync();
     return true
+}
+
+export async function getMissionActors(){
+    return axios.get('http://localhost:8000/customers').then(async (response:any)=>{
+        let actorsList:any = []
+        const clientList = response.data;
+        actorsList.push(clientList);
+
+        return axios.get('http://localhost:8000/carers').then(async (response:any)=>{
+            const CarerList = response.data;
+            actorsList.push(CarerList);
+            return actorsList;
+
+        }).catch((err:any)=>console.warn(err))
+
+    }).catch((err:any)=>{console.warn(err)})
+}
+
+export async function createNewMission(mission:MissionInterface){
+
+    try{
+        // console.log(mission)
+        return axios.post('http://localhost:8000/missions', mission).then((response:any)=>{
+            console.log('insertion réussie')
+        }).catch((err:any)=>console.log(err))
+    }
+    catch(err){
+        console.log(err);
+    }
 }
 
 async function fetchProfileData(userId:string){

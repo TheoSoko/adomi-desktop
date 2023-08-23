@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="module" src="../js/frontend/scripts/header.js"></script>
+    <script type="text/javascript"> var exports = {}; </script>
+    <title>Création de mission</title>
+</head>
+
+<body>
+    <h1 class="text-center mt-4">Créer une nouvelle mission</h1>
+
+    <div class="container">
+
+        <form methodd="post" action="" id="missionForm">
+            <div class="col-12 row justify-content-around">
+                
+                <div class="form-group mt-3 col-2">
+                    <label for="startDate">Date</label>
+                    <input type="date" name="startDate" id="startDate" class="form-control" required>
+                </div>
+
+                <div class="form-group mt-3 col-3">
+                    <label for="startHour">Heure de début</label>
+                    <input type="time" name="startHour" id="startHour" class="form-control" required>
+                </div>
+
+                <div class="form-group mt-3 col-3">
+                    <label for="endHour">Heure de fin</label>
+                    <input type="time" name="endHour" class="form-control" id="endHour" required>
+                    <small id="err_hour" class="text-danger" hidden>Inférieure à l'heure de début !</small>
+                </div>
+
+            </div>
+
+            <div class="col-12 form_bloc_coordonnees">
+                <div class="col-6 row justify-content-around">
+                    <div class="form-group mt-3 col-5">
+                        <label for="streetName">Nom de rue</label>
+                        <input type="text" name="streetName" class="form-control" id="streetName" maxlength="100" required>
+                        <small class="text-danger err_rue" hidden>Nom de rue invalide !</small>
+                    </div>
+
+                    <div class="form-group mt-3 col-5">
+                        <label for="city">Ville</label>
+                        <input type="text" name="city" class="form-control" id="city" maxlength="50" required>
+                        <small class="text-danger err_ville" hidden>Nom de ville invalide !</small>
+                    </div>
+                </div>
+
+                <div class="col-6 row justify-content-around">
+                    <div class="form-group mt-3 col-5">
+                        <label for="streetNumber">Numéro de rue</label>
+                        <input type="text" name="streetNumber" class="form-control" id="streetNumber" maxlength="4" required>
+                        <small class="text-danger err_nb_rue" hidden>Valeur non numérique !</small>
+                    </div>
+
+                    <div class="form-group mt-3 col-5">
+                        <label for="postCode">Code postal</label>
+                        <input type="text" name="postCode" class="form-control" id="postCode" maxlength="5" required>
+                        <small class="text-danger err_postal" hidden>Saisir code à 5 chiffres !</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 row justify-content-around">
+                <div class="form-group mt-3 col-3">
+                    <label for="idClient">Client</label>
+                    <select name="idClient" id="idClient" class="form-control"></select>
+                </div>
+
+                <div class="form-group mt-3 col-3 mx-1">
+                    <label for="idCarer">Carer</label>
+                    <select name="idCarer" id="idCarer" class="form-control"></select>
+                </div>
+
+                <div class="form-group mt-3 col-2">
+                    <label for="recurrence">Récurrence</label>
+                    <select name="recurrence" id="recurrence" class="form-control">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-3 col-3 row justify-content-around">
+                    <div class="col-5">
+                        <label for="validated_true" class="text-center">Validé</label>
+                        <input type="radio" id="validated_true" name="validated" value="1" class="col-8"/>
+                    </div>
+
+                    <div class="col-7">
+                        <label for="validated_false" class="text-center">Non validé</label>
+                        <input type="radio" id="validated_false" name="validated" value="0" class="col-8"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 col-12 row justify-content-around">
+                <button id="btn_mission" class="btn btn-success col-2">Créer</button>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+<script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
+<script type="module" src="../js/frontend/scripts/navbar_include.js"></script>
+<script type="module" src="../js/frontend/scripts/mission_creation.js"></script>
+</html>

@@ -13,7 +13,6 @@ const createWindow = () => {
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
     ipcMain.handle('searchProfiles', requests_2.searchProfiles);
     ipcMain.handle('mainDirPath', () => __dirname);
-
     const win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -38,11 +37,10 @@ app.whenReady().then(() => {
         return (0, requests_1.userSignIn)(arg).then((response) => {
             if (response.statusText === "OK") {
                 return (0, requests_1.getProfile)().then(async (result) => {
-
                     storageSettings.unsetSync();
                     connectionStatus = true;
-
                     await storageSettings.set("user", { data: result });
+                    storageSettings.get('user.data').then((profile) => console.log(profile));
                     return true;
                 });
             }
@@ -52,8 +50,9 @@ app.whenReady().then(() => {
         });
     });
     if (storageSettings.has('user')) {
-        const profile = storageSettings.get('user.data').then((profile) => profile);
-        ipcMain.handle('getUserProfile', () => profile);
+        storageSettings.get('user.data').then((profile) => {
+            ipcMain.handle('getUserProfile', () => profile);
+        });
     }
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie
     ipcMain.handle('connectionStatus', () => connectionStatus);
@@ -61,6 +60,18 @@ app.whenReady().then(() => {
     ipcMain.handle('logout', async () => {
         return (0, requests_1.userSignOut)().then(() => {
             connectionStatus = false;
+        });
+    });
+    ipcMain.handle('getActors', () => {
+        return (0, requests_1.getMissionActors)().then((response) => {
+            return response;
+        });
+    });
+    ipcMain.handle('createNewMission', (event, arg) => {
+        storageSettings.get('user.data').then((user) => {
+            arg.idEmployee = user.id;
+            console.log(arg);
+            return (0, requests_1.createNewMission)(arg);
         });
     });
 });
