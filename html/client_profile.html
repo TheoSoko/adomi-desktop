@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="module" src="../js/frontend/scripts/header.js"></script>
+    <script type="text/javascript"> var exports = {}; </script>
+    <title>Client profile</title>
+</head>
+
+<body>
+    <div class="centering_div">
+        <div id="profileInfo">
+            <h1 class="title">Infos du client</h1>
+            <p>Id : <span id="profileId"></span></p>
+            <p class="error_message"></p>
+        </div>
+        <a class="btn btn-primary btn-lg mt-5" id="missions_button" href="#"> Missions </a>
+    <div>
+</body>
+
+<script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
+<script type="module" src="../js/frontend/scripts/navbar_include.js"></script>
+
+
+<script type="module">
+    const profileId = new URLSearchParams(window.location.search).get("profileId")
+    document.getElementById("profileId").innerText = profileId
+
+    document.getElementById("missions_button").href=`./missions.html?profileId=${profileId}&role=client`
+
+    console.log(profileId)
+    const res = await window.exposed.fetchProfileData(profileId)
+
+    if (res[0] == false){
+        document.getElementsByClassName("error_message")[0].innerText = "Erreur " + res[1].statusCode + ", " + res[1].message;
+    }
+    if (res[0] == true){
+        const profile = res[1]
+        document.getElementById("profileInfo").insertAdjacentHTML('beforeend', `
+            <p>Prénom : <span>${profile.first_name}</span></p>
+            <p>Nom : <span>${profile.last_name}</span></p>
+            <p>username : <span>${profile.user_name}</span></p>
+            <p>email : <span >${profile.email}</span></p>
+            <p>phone : <span >${profile.phone}</span></p>
+        `)
+    }
+
+</script>
+
+</html>

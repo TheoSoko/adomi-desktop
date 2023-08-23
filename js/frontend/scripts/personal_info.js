@@ -15,9 +15,12 @@ submitButton.addEventListener('click', function (e) {
     console.log(nomInput.value);
     if (nomInput.value.length && prenomInput.value.length && utilisateurInput.value.length && emailInput.value.length && teleInput.value.length && rueInput.value.length && villeInput.value.length && codePostalInput.value.length) {
         console.log('condition ok');
-        let inputInfo = { first_name: prenomInput.value, last_name: nomInput.value, user_name: utilisateurInput.value, password: passWordInput.value, email: emailInput.value, phone: teleInput.value, street_name: rueInput.value, street_number: parseInt(numInput.value), post_code: codePostalInput.value, city: villeInput.value };
-        console.log(inputInfo.first_name);
-        window.submitInfo.createCustomer(inputInfo).catch((err) => { console.log(err); });
+        window.submitForm.getUserProfile().then((client) => {
+            console.log(client);
+            let inputInfo = { first_name: prenomInput.value, last_name: nomInput.value, user_name: utilisateurInput.value, password: passWordInput.value, email: emailInput.value, phone: teleInput.value, street_name: rueInput.value, street_number: parseInt(numInput.value), post_code: codePostalInput.value, city: villeInput.value, id_agency: client.id_agency };
+            console.log(inputInfo.first_name);
+            window.submitInfo.createCustomer(inputInfo).catch((err) => { console.log(err); });
+        });
     }
     else {
         console.log("something went wrong");
