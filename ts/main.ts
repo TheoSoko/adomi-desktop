@@ -17,7 +17,7 @@ interface Payload{
     }
 }
 
-const createWindow = () => {
+const createWindow = (connexion: boolean) => {
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
     ipcMain.handle('searchProfiles', searchProfiles)
@@ -33,17 +33,13 @@ const createWindow = () => {
         }
     })
 
-    win.loadFile('./html/home.html')
+    connexion 
+    ? win.loadFile('./html/home.html')
+    : win.loadFile('./html/sign_in.html')
 }
 
 app.whenReady().then(() => {
-    createWindow()
-
     let connectionStatus = false;
-
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
-    })
 
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') app.quit()
@@ -65,9 +61,7 @@ app.whenReady().then(() => {
         })
     })
 
-    if (storageSettings.has('user')) {
-        ipcMain.handle('getUserProfile', () => storageSettings.get('user.data'))
-    }
+    ipcMain.handle('getUserProfile', () => storageSettings.get('user.data'))
 
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie
     ipcMain.handle('connectionStatus', ()=>connectionStatus)
@@ -78,5 +72,12 @@ app.whenReady().then(() => {
             connectionStatus = false;
         })   
     });
+
+
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) createWindow(connectionStatus)
+    })
+
+    createWindow(connectionStatus)
 })
 

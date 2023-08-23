@@ -23,7 +23,7 @@ window.exposeProfileData.connectionStatus().then((value:boolean)=> {
                 let btnProfile = document.getElementById('btn_profil') as HTMLElement;
                 let btnConnection = document.getElementById("btn_connect") as HTMLElement;
                 btnProfile.style.display = 'block'
-                btnConnection.textContent = "Déconnexion"
+                btnConnection.innerText = "Déconnexion"
                 btnConnection.setAttribute('href', "../html/home.html");
 
                 btnConnection.addEventListener("click", ()=>{
