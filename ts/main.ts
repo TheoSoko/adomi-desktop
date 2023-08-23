@@ -1,8 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
-import { userSignIn, getProfile } from './backend/requests'
+import { userSignIn, getProfile, searchProfiles } from './backend/requests'
 import path from "path"
-import { searchProfiles } from "./backend/requests"
+import {clientCreation} from './backend/clientCreation'
 
 interface UserLog {
     username: string,
@@ -16,6 +16,18 @@ interface Payload{
         token: string
         message: string
     }
+}
+interface UserProfileInterface{
+    first_name: string,
+    last_name: string,
+    user_name: string,
+    password: string,
+    email: string,
+    phone: string,
+    street_name: string,
+    street_number: number,
+    post_code: string,
+    city: string
 }
 
 const createWindow = () => {
@@ -65,5 +77,10 @@ app.whenReady().then(() => {
         ipcMain.handle('getUserProfile', ()=>profile)
     }
     
+    ipcMain.handle('input-info', async (event:any, arg:UserProfileInterface)=> { 
+        console.log("input-info");
+        console.log(arg)
+        return clientCreation(arg)
+    })
 })
 

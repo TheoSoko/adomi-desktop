@@ -1,15 +1,10 @@
-const { ipcRenderer} = require('electron');
-
-document.getElementById('Client-Form').addEventListener('submit', (event) => {
-  event.preventDefault();
-  const Nom = document.getElementById('Nom').value;
-  const Prenom = document.getElementById('Prenom').value;
-  const utilisateur = document.getElementById('utilisateur').value;
-  const email = document.getElementById('email').value;
-  const tele = document.getElementById('tele').value;
-  const Num = document.getElementById('Num').value;
-  const rue = document.getElementById('rue').value;
-  const ville = document.getElementById('ville').value;
-  const Codepostal = document.getElementById('Codepostal').value;
-  ipcRenderer.send('form-submission', { Nom, Prenom, utilisateur, email, tele, Num, rue, ville, Codepostal });
-});
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.clientCreation = void 0;
+const axios = require('axios');
+const apiBase = "http://localhost:8000";
+async function clientCreation(personal_info) {
+    console.log(personal_info);
+    return axios.post('http://localhost:8000/customers', personal_info).then(() => console.log('ok'));
+}
+exports.clientCreation = clientCreation;

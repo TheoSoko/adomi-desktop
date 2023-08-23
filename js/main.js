@@ -7,11 +7,11 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const storageSettings = require('electron-settings');
 const requests_1 = require("./backend/requests");
 const path_1 = __importDefault(require("path"));
-const requests_2 = require("./backend/requests");
+const clientCreation_1 = require("./backend/clientCreation");
 const createWindow = () => {
     ipcMain.handle('ping', () => 'pong');
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
-    ipcMain.handle('searchProfiles', requests_2.searchProfiles);
+    ipcMain.handle('searchProfiles', requests_1.searchProfiles);
     const win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -48,4 +48,9 @@ app.whenReady().then(() => {
         const profile = storageSettings.get('user.data').then((profile) => profile);
         ipcMain.handle('getUserProfile', () => profile);
     }
+    ipcMain.handle('input-info', async (event, arg) => {
+        console.log("input-info");
+        console.log(arg);
+        return (0, clientCreation_1.clientCreation)(arg);
+    });
 });

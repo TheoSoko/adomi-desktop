@@ -20,3 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (element)
         element.innerText = "Hello from the other side";
 });
+contextBridge.exposeInMainWorld('submitInfo', {
+    createCustomer: (inputInfo) => ipcRenderer.invoke('input-info', inputInfo),
+    // createCustomer: (inputInfo: UserProfileInterface) => console.log(inputInfo),
+});
