@@ -22,9 +22,11 @@ contextBridge.exposeInMainWorld('exposeProfileData', {
     connectionStatus: () => ipcRenderer.invoke('connectionStatus')
 })
 
+
 contextBridge.exposeInMainWorld('userLogout', {
     logout: ()=>ipcRenderer.invoke('logout')
 })
+
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello")
     if (element) element.innerText = "Hello from the other side"
