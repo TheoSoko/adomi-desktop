@@ -137,7 +137,6 @@ export async function userSignOut() {
 }
 
 
-
 export async function fetchMissions(event: wtf, userId: string, role: "client"|"carer"|"employee"){
         const data = await fetch(`http://localhost:8000/users/${userId}/missions?role=${role}`)
             .catch(err => {
