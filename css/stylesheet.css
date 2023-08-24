@@ -278,7 +278,8 @@ Pour override bootstrap
     border: 1px solid darkgrey;
     border-radius:10px;
     padding:30px;
-    max-width:600px;
+    max-width:700px;
+    min-width:500px;
     width:40%;
     margin-bottom: 4rem;
 }
@@ -292,4 +293,8 @@ Pour override bootstrap
 
 .buttons-affiche p{
     margin:0;
+}
+
+.affiche-mission .text-center{
+    font-size:20px;
 }

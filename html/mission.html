@@ -7,9 +7,9 @@
 </head>
 
 <body>
-    <div class="centering_div" id="profileInfo">
+    <div class="centering_div" id="missionInfo">
         <p class="error_message"></p>
-        <div class="affiche-mission shadow">
+        <!-- <div class="affiche-mission shadow">
             <p>Mission de John Doe</p>
             <p>le Lundi</p>
             <p>de 13:00 à 15:00</p>
@@ -37,7 +37,7 @@
             </div>
             
             
-        </div>
+        </div> -->
 
     </div>
     <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
@@ -75,8 +75,66 @@
         const mission = res[1]
 
         console.log(mission)
+        let d = new Date(mission.startdate)
+        let jour = dayMap[d.getDay()]
+
+        let validated = mission.validated ? "Validé" : "Non validé";
+        let validatedColor = ""
+        if(mission.validated){
+            validatedColor="green"
+        }else{
+            validatedColor = "red"
+        }
+
+        
 
 
+        document.getElementById("missionInfo").insertAdjacentHTML("beforeend",`
+            <div class="affiche-mission shadow">
+                <p class="text-center">Mission de ${mission.client.first_name} ${mission.client.last_name}</p>
+                <p>le ${jour}</p>
+                <p>de ${mission.startHour} à ${mission.endHour}</p>
+                <p id="adresseMission"></p>
+
+                <hr>
+                <p class="text-center">Le client</p>
+                <p>${mission.client.first_name} ${mission.client.last_name}</p>
+                <p>Adresse du client :</p>
+                <p>${mission.client.street_number} ${mission.client.street_name} (${mission.client.post_code} ${mission.client.city})</p>
+                <p>numéro de téléphone : ${mission.client.phone}</p>
+                <p>adresse e-mail : ${mission.client.email}</p>
+
+                <hr>
+
+                <p class="text-center">Auxiliaire de vie en charge</p>
+                <p>${mission.carer.first_name} ${mission.carer.last_name}</p>
+                <p>Adresse de l'Auxiliaire de vie :</p>
+                <p>${mission.carer.street_number} ${mission.carer.street_name} (${mission.carer.post_code} ${mission.carer.city})</p>
+                <p>numéro de téléphone : ${mission.carer.phone}</p>
+                <p>adresse e-mail : ${mission.carer.email}</p>
+
+                <hr>
+                <div class="buttons-affiche">
+                    <p>Etat de la Mission : <span id="validatedState">${validated}</span></p>
+                    <button class="btn btn-warning btn-affiche" id="bouttonModifierMission">Modifier</button>
+                    <button class="btn btn-danger btn-affiche" id="bouttonSupprimerMission">Supprimer</button>
+                </div>
+            </div>
+        `)
+
+        document.getElementById("validatedState").style.color = validatedColor
+
+        let HTMLadresseMission = "";
+        if(mission.streetName = null){
+            document.getElementById("adresseMission").insertAdjacentHTML("beforeend",`
+                À l'adresse : </p>
+                <p> ${mission.streetNumber} ${mission.streetName} (${mission.postCode} ${mission.city})
+            `)
+        }
+
+        if(mission.validated){
+            document.getElementById("bouttonModifierMission").style.visibility = "hidden";
+        }
         
     }
 
