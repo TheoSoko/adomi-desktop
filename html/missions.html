@@ -3,7 +3,7 @@
 <head>
     <script type="module" src="../js/frontend/scripts/header.js"></script>
     <script type="text/javascript"> var exports = {}; </script>
-    <title>Carer profile</title>
+    <title>Missions</title>
 </head>
 
 <body>
@@ -105,20 +105,17 @@
         const missions = res[1]
 
         for (const mission of missions){
-            // console.log(mission);
+            console.log(mission);
 
             const d = new Date(mission.startDate);
             const jour = dayMap[d.getDay()];
-            console.log(role);
 
 
             let nom ="";
             if(role == 'carer'){
                 nom = mission.client.first_name+" "+mission.client.last_name
-                console.log(nom)
             }else if (role == 'client'){
                 nom = mission.carer.first_name+" "+mission.carer.last_name
-                console.log("ici client")
             }
 
             let adresse="";
@@ -141,7 +138,7 @@
                     <p>${localite}</p>
                 </div>
                 <div class="missionCardButton">
-                    <button class="btn btn-info">Voir</button>
+                    <a class="btn btn-info" href="./mission.html?id=${mission.id}" id="mission${mission.id}">Voir</a>
                 </div>
             </div>
             `)

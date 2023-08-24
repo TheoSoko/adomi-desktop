@@ -273,3 +273,23 @@ Pour override bootstrap
 .container-flex {
     display:flex;
 }
+
+.affiche-mission{
+    border: 1px solid darkgrey;
+    border-radius:10px;
+    padding:30px;
+    max-width:600px;
+    width:40%;
+    margin-bottom: 4rem;
+}
+
+.buttons-affiche{
+    margin: 4rem 0;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.buttons-affiche p{
+    margin:0;
+}

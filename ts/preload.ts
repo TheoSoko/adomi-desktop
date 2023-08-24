@@ -22,6 +22,9 @@ contextBridge.exposeInMainWorld('exposeProfileData', {
     connectionStatus: () => ipcRenderer.invoke('connectionStatus')
 })
 
+contextBridge.exposeInMainWorld('exposeMissionData',{
+    getMissionData: (missionId: number) => ipcRenderer.invoke('getMissionData',missionId)
+})
 
 contextBridge.exposeInMainWorld('userLogout', {
     logout: ()=>ipcRenderer.invoke('logout')

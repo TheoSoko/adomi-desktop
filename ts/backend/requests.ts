@@ -149,3 +149,24 @@ export async function fetchMissions(event: wtf, userId: string, role: "client"|"
         }
         return [true, await data.json()]
 }
+
+export async function getMissionData(event: Event, missionId: number){
+    console.log("rentre dans getMissionData")
+    console.log(missionId)
+
+    const data = await fetch(`http://localhost:8000/missions/${missionId}`)
+    .catch(err => {
+        console.log("erreur caught")
+        console.log(err)
+        return null
+    })
+
+    if(!data){
+        return Promise.reject("Erreur à la requête HTTP")
+    }
+
+    if(data.status != 200){
+        return [false, await data.json()]
+    }
+    return [true, await data.json()]
+}
