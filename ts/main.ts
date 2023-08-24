@@ -79,7 +79,7 @@ app.whenReady().then(() => {
                     connectionStatus = true;
                     await storageSettings.set("user", {data: result})
 
-                    storageSettings.get('user.data').then((profile:any)=>console.log(profile))
+                    // storageSettings.get('user.data').then((profile:any)=>console.log(profile))
                     
                     return true
                 })
@@ -90,15 +90,8 @@ app.whenReady().then(() => {
         })
     })
 
-    if(storageSettings.has('user')){
+    ipcMain.handle('getUserProfile', async ()=>await storageSettings.get('user.data'))
 
-        storageSettings.get('user.data').then((profile:UserProfile)=>{
-
-            ipcMain.handle('getUserProfile', ()=>profile)
-            
-        })
-    }
-    ipcMain.handle('getUserProfile', () => storageSettings.get('user.data'))
 
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie
     ipcMain.handle('connectionStatus', ()=>connectionStatus)
@@ -124,10 +117,9 @@ app.whenReady().then(() => {
         })
     })
 
-
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow(connectionStatus)
     })
-
+    createWindow(connectionStatus)
 })
 
