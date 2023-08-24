@@ -7,6 +7,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const storageSettings = require('electron-settings');
 const requests_1 = require("./backend/requests");
 const path_1 = __importDefault(require("path"));
+const clientCreation_1 = require("./backend/clientCreation");
 const createWindow = () => {
     ipcMain.handle('ping', () => 'pong');
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
@@ -60,5 +61,8 @@ app.whenReady().then(() => {
         return (0, requests_1.userSignOut)().then(() => {
             connectionStatus = false;
         });
+    });
+    ipcMain.handle('input-info', async (event, arg) => {
+        return await (0, clientCreation_1.clientCreation)(arg);
     });
 });

@@ -27,7 +27,8 @@ interface UserProfileInterface{
     street_name: string,
     street_number: number,
     post_code: string,
-    city: string
+    city: string,
+    id_agency: number,
 }
 
 const createWindow = () => {
@@ -95,5 +96,9 @@ app.whenReady().then(() => {
             connectionStatus = false;
         })   
     });
+
+    ipcMain.handle('input-info', async (event:any,arg:UserProfileInterface)=>{
+        return await clientCreation(arg)
+    })
 })
 

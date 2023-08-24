@@ -12,7 +12,8 @@ interface UserProfile{
     street_name: string,
     street_number: number,
     post_code: string,
-    city: string
+    city: string,
+    id_agency: number,
 }
 
 interface UserLog {
