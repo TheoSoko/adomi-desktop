@@ -5,6 +5,7 @@ interface Window {
     userLogout : any
 }
 
+
 window.exposeProfileData.connectionStatus().then((value:boolean)=> {
 
     const connectionStatus = value;
@@ -16,13 +17,13 @@ window.exposeProfileData.connectionStatus().then((value:boolean)=> {
                 //var parser = new DOMParser();
                 //var parsedNav = parser.parseFromString(navbar, 'text/html');
             document.body.insertAdjacentHTML("afterbegin", navbar)
-            let btnConnection = document.getElementById("btn_connect") as HTMLElement;
 
-            if(connectionStatus){
-
+            if (connectionStatus){
+                console.log("connectionStatus")
                 let btnProfile = document.getElementById('btn_profil') as HTMLElement;
+                let btnConnection = document.getElementById("btn_connect") as HTMLElement;
                 btnProfile.style.display = 'block'
-                btnConnection.textContent = "Déconnexion"
+                btnConnection.innerText = "Déconnexion"
                 btnConnection.setAttribute('href', "../html/home.html");
 
                 btnConnection.addEventListener("click", ()=>{
@@ -42,7 +43,7 @@ window.exposeProfileData.connectionStatus().then((value:boolean)=> {
         })
 
     window.addEventListener("click", (e) => {
-        if ((e.target as any).id == "search_profile" ){
+        if ((e.target as any).id == "create_profile" ){
             modalForNav()
         }
     })
@@ -50,25 +51,27 @@ window.exposeProfileData.connectionStatus().then((value:boolean)=> {
 
 
 function modalForNav(){
-    let searchDiv = document.getElementById("search_div_modal") as HTMLElement
-    console.log("searchDiv", searchDiv )
-    if (searchDiv.style.display == "block"){
-        searchDiv.style.display = "none"
+    let modal = document.getElementById("creation_dropdown_modal") as HTMLElement
+    console.log("modal", modal)
+    if (modal.style.display == "block"){
+        modal.style.display = "none"
         return
     }
 
     let isBigWindow = window.innerWidth > 1366
     let ismallWindow = window.innerWidth < 992
 
-    const profileSearchPos = document.querySelector('#search_profile')?.getBoundingClientRect().left as number
+    const profileSearchPos = document.querySelector('#create_profile')?.getBoundingClientRect().left as number
 
-    searchDiv.style.left = profileSearchPos + (isBigWindow ? 0 : -5 ) + "px"
-    searchDiv.style.top = (isBigWindow ? "79px" : "95px")
+    modal.style.left = profileSearchPos + (isBigWindow ? 0 : 0 ) + "px"
+    modal.style.top = (isBigWindow ? "79px" : "79px")
 
-    searchDiv.style.display = "block"
+    modal.style.display = "block"
 
     const profileCreatePos =  document.querySelector('#create_profile')?.getBoundingClientRect().left
 }
+
+window.addEventListener("resize", () => document.getElementById("creation_dropdown_modal")!.style.display = "none")
 
 
 

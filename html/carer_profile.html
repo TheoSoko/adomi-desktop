@@ -4,18 +4,19 @@
     <script type="module" src="../js/frontend/scripts/header.js"></script>
     <script type="text/javascript"> var exports = {}; </script>
     <script type="module" src="../js/frontend/scripts/credentials_check.js"></script>
-    <title>Client profile</title>
+    <title>Carer profile</title>
 </head>
 
 <body>
-    <div class="centering_div">
+    <div class="centering_div" id="profileInfo">
         <div id="profileInfo">
-            <h1 class="title">Infos du client</h1>
+            <h1 class="title">Infos de l'auxiliaire</h1>
             <p>Id : <span id="profileId"></span></p>
             <p class="error_message"></p>
         </div>
         <a class="btn btn-primary btn-lg mt-5" id="missions_button" href="#"> Missions </a>
     <div>
+
 </body>
 
 <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
@@ -25,10 +26,9 @@
 <script type="module">
     const profileId = new URLSearchParams(window.location.search).get("profileId")
     document.getElementById("profileId").innerText = profileId
+ 
+    document.getElementById("missions_button").href=`./missions.html?profileId=${profileId}&role=carer`
 
-    document.getElementById("missions_button").href=`./missions.html?profileId=${profileId}&role=client`
-
-    console.log(profileId)
     const res = await window.exposed.fetchProfileData(profileId)
 
     if (res[0] == false){

@@ -87,17 +87,27 @@ input[type="search"]::-webkit-clear-button {
     padding-bottom: 6.5px;
 }
 
+/*
+Pour override bootstrap
+*/
+
+.navbar-expand-lg #navbar_items_right {
+
+}
+
+
 @media (min-width: 800px){
     #navbar_items_right{
-        margin-left: 400px;
+        margin-left: 450px;
     }
 }
-@media  (min-width: 992px) /*and (max-width: 1170px)*/{
+
+@media  (min-width: 992px) {
     .nav-item {
-        width: 150px;
+        /* min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR  */
     }
     #navbar_items_right {
-        margin-left: 165px;
+        /* margin-left: 120px;  CA AUSSI  */
 
     }
 }
@@ -119,6 +129,9 @@ input[type="search"]::-webkit-clear-button {
         /* margin-left: 500px; */
     }
 }
+*/
+
+
 
 /*
 .nav_item_compressed{
@@ -209,19 +222,54 @@ input[type="search"]::-webkit-clear-button {
     text-align: center;
 }
 
-#missionForm{
-    width: 80%;
-    margin: 5rem auto 0rem auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 2rem;
-    background-color: #eaeaea;
-    border-radius: 5px;
+.missionCard {
+    border: 1px solid black;
+    border-radius:10px;
+    width:300px;
+    min-width:300px;
+    margin: 40px 20px;
+    padding:10px;
+    text-align: center;
 }
 
-.form_bloc_coordonnees{
-    display: flex;
-    flex-wrap: wrap;
+.missionCardAdresse {
+    width:200px;
+    display: inline-block;
+}
+.missionCardAdresse .p {
+    margin:0;
+}
+
+.missionCardButton{
+    width:50px;
+    display:inline-block;
+}
+
+.missionCard .btn{
+    text-align:right;
+}
+
+.row-missions {
+    margin: 20px 30px;
+}
+
+.missionCardContributeur {
+    font-size: 18px;
+}
+.missionCardHoraire{
+    font-size: 18px;
+}
+
+.text-jours{
+    font-size: 30px;
+}
+
+
+.div-cards{
+    display:flex;
     justify-content: space-around;
+}
+
+.container-flex {
+    display:flex;
 }

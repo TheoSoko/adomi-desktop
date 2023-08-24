@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="module" src="../js/frontend/scripts/header.js"></script>
+    <script type="text/javascript"> var exports = {}; </script>
+    <script type="module" src="../js/frontend/scripts/credentials_check.js"></script>
+    <title>Carer profile</title>
+</head>
+
+<body>
+    <div class="centering_div" id="profileInfo">
+        <h1 class="title">Missions</h1>
+        <p>Id : <span id="profileId"></span></p>
+        <p>Role de l'utilisateur : <span id="userRole"></span></p>
+        <p class="error_message"></p>
+        <div id="mission_list" class="row justify-content-between ms-3 me-5 pe-5">
+
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Lundi</div>
+            <div class="div-cards" id="container-cards-lundi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Mardi</div>
+            <div class="div-cards" id="container-cards-mardi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Mercredi</div>
+            <div class="div-cards" id="container-cards-mercredi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Jeudi</div>
+            <div class="div-cards" id="container-cards-jeudi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Vendredi</div>
+            <div class="div-cards" id="container-cards-vendredi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Samedi</div>
+            <div class="div-cards" id="container-cards-samedi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Dimanche</div>
+            <div class="div-cards" id="container-cards-dimanche">
+
+            </div>
+        </div>
+    <div>
+
+    <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
+    <script type="module" src="../js/frontend/scripts/navbar_include.js"></script>
+        
+</body>
+
+
+
+<script type="module">
+    const recurenceMap = {
+        1: "hebdomadaire",
+        2: "mensuelle",
+        3: "bi-mensuelle",
+    }
+
+    const dayMap= {
+        1:"lundi",
+        2:"mardi",
+        3:"mercredi",
+        4:"jeudi",
+        5:"vendredi",
+        6:"samedi",
+        7:"dimanche"
+    }
+
+    const profileId = new URLSearchParams(window.location.search).get("profileId")
+    const role = new URLSearchParams(window.location.search).get("role")
+
+    document.getElementById("profileId").innerText = profileId
+    document.getElementById("userRole").innerText = role
+
+    const res = await window.exposed.fetchMissions(profileId, role)
+
+    if (res[0] == false){
+        document.getElementsByClassName("error_message")[0].innerText = "Erreur " + res[1].statusCode + ", " + res[1].message;
+    }
+    if (res[0] == true){
+        const missions = res[1]
+
+        for (const mission of missions){
+            // console.log(mission);
+
+            const d = new Date(mission.startDate);
+            const jour = dayMap[d.getDay()];
+            console.log(role);
+
+
+            let nom ="";
+            if(role == 'carer'){
+                nom = mission.client.first_name+" "+mission.client.last_name
+                console.log(nom)
+            }else if (role == 'client'){
+                nom = mission.carer.first_name+" "+mission.carer.last_name
+                console.log("ici client")
+            }
+
+            let adresse="";
+            let localite="";
+            if(mission.streetName == null ){
+                adresse = mission.client.street_number+" "+mission.client.street_name;
+                localite = mission.client.post_code+" "+mission.client.city;
+            }else{
+                adresse = mission.streetNumber+" "+mission.streetName;
+                localite = mission.postCode+" "+mission.city;
+
+            }
+
+            document.getElementById("container-cards-"+jour).insertAdjacentHTML('beforeend',`
+            <div class="missionCard shadow">
+                <p class="missionCardContributeur">Avec : <b>${nom}</b></p>
+                <p class="missionCardHoraire">De: ${mission.startHour} À: ${mission.endHour}</p>
+                <div class="missionCardAdresse">
+                    <p>${adresse}</p>
+                    <p>${localite}</p>
+                </div>
+                <div class="missionCardButton">
+                    <button class="btn btn-info">Voir</button>
+                </div>
+            </div>
+            `)
+        }
+        
+    }
+
+</script>
+
+</html>
