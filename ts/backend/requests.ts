@@ -55,7 +55,24 @@ interface UserProfile{
     street_name: string,
     street_number: number,
     post_code: string,
-    city: string
+    city: string,
+    id_role: number,
+    id_agency: number
+}
+
+interface MissionInterface{
+    startDate: string,
+    startHour: string
+    endHour: string,
+    streetName: string,
+    streetNumber: number,
+    postCode: string,
+    city: string,
+    validated: number,
+    idClient: number,
+    idEmployee?: number,
+    idCarer?: number,
+    idRecurence: number
 }
 
 export async function userSignIn(login: UserLog){
@@ -132,6 +149,34 @@ export async function userSignOut() {
     return true
 }
 
+export async function getMissionActors(){
+    return axios.get('http://localhost:8000/customers').then(async (response:any)=>{
+        let actorsList:any = []
+        const clientList = response.data;
+        actorsList.push(clientList);
+
+        return axios.get('http://localhost:8000/carers').then(async (response:any)=>{
+            const CarerList = response.data;
+            actorsList.push(CarerList);
+            return actorsList;
+
+        }).catch((err:any)=>console.warn(err))
+
+    }).catch((err:any)=>{console.warn(err)})
+}
+
+export async function createNewMission(mission:MissionInterface){
+
+    try{
+        // console.log(mission)
+        return axios.post('http://localhost:8000/missions', mission).then((response:any)=>{
+            console.log('insertion réussie')
+        }).catch((err:any)=>console.log(err))
+    }
+    catch(err){
+        console.log(err);
+    }
+}
 
 export async function fetchMissions(event: wtf, userId: string, role: "client"|"carer"|"employee"){
         const data = await fetch(`http://localhost:8000/users/${userId}/missions?role=${role}`)

@@ -95,7 +95,7 @@ Pour override bootstrap
 
 }
 
-/*
+
 @media (min-width: 800px){
     #navbar_items_right{
         margin-left: 450px;
@@ -104,29 +104,29 @@ Pour override bootstrap
 
 @media  (min-width: 992px) {
     .nav-item {
-        min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR 
+        /* min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR  */
     }
     #navbar_items_right {
-        margin-left: 120px;  CA AUSSI 
+        /* margin-left: 120px;  CA AUSSI  */
 
     }
 }
 
 @media (min-width: 1170px){
     #navbar_items_right {
-        margin-left: 300px;
+        /* margin-left: 300px; */
     }
 }
 
 @media (min-width: 1280px){
     #navbar_items_right {
-        margin-left: 420px;
+        /* margin-left: 420px; */
     }
 }
 
 @media (min-width: 1430px){
     #navbar_items_right {
-        margin-left: 620px;
+        /* margin-left: 500px; */
     }
 }
 */
