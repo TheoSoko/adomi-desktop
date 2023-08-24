@@ -20,8 +20,8 @@ const list = window.exposeActors.getActors().then((response) => {
     });
     const ValidationBtn = document.getElementById('btn_mission');
     ValidationBtn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        missionFormControl();
+        // e.preventDefault(); 
+        // missionFormControl()
         let startDateVal = startDateInput.value;
         let startHourVal = startHourInput.value;
         let endHourVal = endHourInput.value;
@@ -33,12 +33,13 @@ const list = window.exposeActors.getActors().then((response) => {
         let idClientVal = parseInt(idClientInput.value);
         let idRecurrenceVal = parseInt(recurrenceInput.value);
         const mission = { startDate: startDateVal, startHour: startHourVal, endHour: endHourVal, streetName: streetNameVal, streetNumber: streetNumberVal, postCode: postCodeVal, city: cityVal, validated: validatedVal, idClient: idClientVal, idRecurence: idRecurrenceVal };
-        // window.createMission.createNewMission(mission).then(()=>{
-        //     return true;
-        // })
+        window.createMission.createNewMission(mission).then(() => {
+            return true;
+        });
     });
 });
-document.getElementById("missionForm")?.addEventListener('change', missionFormControl);
+// document.getElementById("missionForm")?.addEventListener('change', missionFormControl)
+//WIP
 function missionFormControl() {
     let startDateVal = startDateInput.value;
     let startHourVal = startHourInput.value;
@@ -51,10 +52,4 @@ function missionFormControl() {
     let idClientVal = parseInt(idClientInput.value);
     let idRecurrenceVal = parseInt(recurrenceInput.value);
     const errHour = document.getElementById('err_hour');
-    if (endHourVal.length > 0) {
-        errHour.style.display = 'block';
-    }
-    else {
-        errHour.style.display = 'none';
-    }
 }
