@@ -133,7 +133,7 @@ async function fillForm() {
             let idCarerVal = parseInt(idCarerInput.value)
             let idRecurrenceVal = parseInt(recurrenceInput.value)
 
-            const mission: MissionInterface = {id: idVal,startDate: startDateVal, startHour: startHourVal, endHour: endHourVal, streetName: streetNameVal, streetNumber: streetNumberVal,postCode: postCodeVal, city: cityVal, validated: validatedVal, idClient: idClientVal,idCarer: idCarerVal idRecurence: idRecurrenceVal}
+            const mission: MissionInterface = {id: idVal,startDate: startDateVal, startHour: startHourVal, endHour: endHourVal, streetName: streetNameVal, streetNumber: streetNumberVal,postCode: postCodeVal, city: cityVal, validated: validatedVal, idClient: idClientVal,idCarer: idCarerVal, idRecurence: idRecurrenceVal}
 
             window.updateMission.updateMission(mission).then(()=>{
                 window.location.href = "./mission.html?id="+idVal
