@@ -298,3 +298,19 @@ Pour override bootstrap
 .affiche-mission .text-center{
     font-size:20px;
 }
+
+#missionForm{
+    width: 80%;
+    margin: 5rem auto 0rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: #eaeaea;
+    border-radius: 5px;
+}
+
+.form_bloc_coordonnees{
+    display: flex;
+    flex-wrap: wrap;
+}

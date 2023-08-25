@@ -41,3 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello")
     if (element) element.innerText = "Hello from the other side"
 })
+
+contextBridge.exposeInMainWorld('updateMission',{
+    updateMission: (formData:(string | number)[])=> ipcRenderer.invoke('updateMission',formData)
+})

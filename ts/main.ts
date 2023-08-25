@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
-import { userSignIn, userSignOut, getProfile, searchProfiles, fetchProfileData, fetchMissions, getMissionActors, createNewMission, getMissionData} from './backend/requests'
+import { userSignIn, userSignOut, getProfile, searchProfiles, fetchProfileData, fetchMissions, getMissionActors, createNewMission, getMissionData, updateMission} from './backend/requests'
 import path from "path"
 
 interface UserProfile{
@@ -115,6 +115,14 @@ app.whenReady().then(() => {
             arg.idEmployee = user.id;
             console.log(arg)
             return createNewMission(arg);
+        })
+    })
+
+    ipcMain.handle('updateMission',(event:any, arg:MissionInterface)=>{
+        storageSettings.get('user.data').then((user:any)=>{
+            arg.idEmployee = user.id;
+            console.log(arg)
+            return updateMission(arg);
         })
     })
 

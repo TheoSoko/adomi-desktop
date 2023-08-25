@@ -95,6 +95,7 @@
                 <p>le ${jour}</p>
                 <p>de ${mission.startHour} à ${mission.endHour}</p>
                 <p id="adresseMission"></p>
+                <p> recurence : ${recurenceMap[mission.recurence.id]}
 
                 <hr>
                 <p class="text-center">Le client</p>
@@ -116,7 +117,7 @@
                 <hr>
                 <div class="buttons-affiche">
                     <p>Etat de la Mission : <span id="validatedState">${validated}</span></p>
-                    <button class="btn btn-warning btn-affiche" id="bouttonModifierMission">Modifier</button>
+                    <a class="btn btn-warning btn-affiche" id="bouttonModifierMission" href="./mission_edit.html?id=${mission.id}">Modifier</a>
                     <button class="btn btn-danger btn-affiche" id="bouttonSupprimerMission">Supprimer</button>
                 </div>
             </div>
@@ -132,7 +133,7 @@
             `)
         }
 
-        if(mission.validated){
+        if(!mission.validated){
             document.getElementById("bouttonModifierMission").style.visibility = "hidden";
         }
         

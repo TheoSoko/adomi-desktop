@@ -61,6 +61,7 @@ interface UserProfile{
 }
 
 interface MissionInterface{
+    id?:number
     startDate: string,
     startHour: string
     endHour: string,
@@ -196,8 +197,6 @@ export async function fetchMissions(event: wtf, userId: string, role: "client"|"
 }
 
 export async function getMissionData(event: Event, missionId: number){
-    console.log("rentre dans getMissionData")
-    console.log(missionId)
 
     const data = await fetch(`http://localhost:8000/missions/${missionId}`)
     .catch(err => {
@@ -214,4 +213,17 @@ export async function getMissionData(event: Event, missionId: number){
         return [false, await data.json()]
     }
     return [true, await data.json()]
+}
+
+export async function updateMission(mission:MissionInterface){
+    console.log("passe dans updateMission desktop")
+    try{
+        // console.log(mission)
+        return axios.patch('http://localhost:8000/missions/'+mission.id, mission).then((response:any)=>{
+            console.log('update réussie')
+        }).catch((err:any)=>console.log(err))
+    }
+    catch(err){
+        console.log(err);
+    }
 }
