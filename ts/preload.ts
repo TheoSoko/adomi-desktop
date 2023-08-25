@@ -19,7 +19,8 @@ contextBridge.exposeInMainWorld('submitForm', {
 
 contextBridge.exposeInMainWorld('exposeProfileData', {
     profileData: () => ipcRenderer.invoke('profileData'),
-    connectionStatus: () => ipcRenderer.invoke('connectionStatus')
+    connectionStatus: () => ipcRenderer.invoke('connectionStatus'),
+    updateProfile : (formData: (string | number)[])=> ipcRenderer.invoke('updateProfile', formData)
 })
 
 
@@ -28,7 +29,9 @@ contextBridge.exposeInMainWorld('userLogout', {
 })
 
 contextBridge.exposeInMainWorld('exposeActors', {
-    getActors: ()=> ipcRenderer.invoke('getActors')
+    getActors: ()=> ipcRenderer.invoke('getActors'),
+    getAgencies: ()=> ipcRenderer.invoke('getAgencies'),
+    getRoles: ()=> ipcRenderer.invoke('getRoles')
 })
 
 contextBridge.exposeInMainWorld('createMission', {

@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
-import { userSignIn, userSignOut, getProfile, searchProfiles, fetchProfileData, fetchMissions, getMissionActors, createNewMission} from './backend/requests'
+import { userSignIn, userSignOut, getProfile, searchProfiles, fetchProfileData, fetchMissions, getMissionActors, createNewMission, getAgenciesList, getRolesList, updateEmployee} from './backend/requests'
 import path from "path"
 
 interface UserProfile{
@@ -12,7 +12,11 @@ interface UserProfile{
     street_name: string,
     street_number: number,
     post_code: string,
-    city: string
+    city: string,
+    id_role: number,
+    id_agency: number
+    role: {label:string},
+    agency: {name: string, adress: string}
 }
 
 interface UserLog {
@@ -109,11 +113,30 @@ app.whenReady().then(() => {
         })
     })
 
+    ipcMain.handle('getRoles', ()=>{
+        return getRolesList().then((response)=>{
+            return response
+        })
+    })
+
+    ipcMain.handle('getAgencies', ()=>{
+        return getAgenciesList().then((response)=>{
+            return response
+        })
+    })
+
     ipcMain.handle('createNewMission', (event:any, arg:MissionInterface)=>{
         storageSettings.get('user.data').then((user:any)=>{
             arg.idEmployee = user.id;
             console.log(arg)
             return createNewMission(arg);
+        })
+    })
+
+    ipcMain.handle('updateProfile', (event:any, arg:UserProfile)=>{
+        storageSettings.get('user.data').then((user:any)=>{
+        console.log(arg)
+            return updateEmployee(user.id, arg);
         })
     })
 
