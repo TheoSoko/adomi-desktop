@@ -33,7 +33,7 @@ loginFormBtn.addEventListener('click', function(e){
             }
             else{
                 errMess.innerText = "";
-                (<any>window).location.href = "../html/client_creation.html";
+                (<any>window).location.href = "../html/profile_page.html";
             }
             // return true
         }).catch((err:any)=>{console.log(err)})

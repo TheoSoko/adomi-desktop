@@ -89,15 +89,12 @@ input[type="search"]::-webkit-clear-button {
 
 /*
 Pour override bootstrap
-.navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 0px !important ;
-    padding-left: 0px !important ; 
-}
-.navbar-expand-lg .navbar-nav .nav-item {
-    padding-right: 0px !important ;
-    padding-left: 0px !important ; 
-}
 */
+
+.navbar-expand-lg #navbar_items_right {
+
+}
+
 
 @media (min-width: 800px){
     #navbar_items_right{
@@ -105,33 +102,36 @@ Pour override bootstrap
     }
 }
 
-@media  (min-width: 992px) /*and (max-width: 1170px)*/{
+@media  (min-width: 992px) {
     .nav-item {
-        /*min-width: 150px;*/
+        /* min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR  */
     }
     #navbar_items_right {
-        margin-left: 165px;
+        /* margin-left: 120px;  CA AUSSI  */
 
     }
 }
 
 @media (min-width: 1170px){
     #navbar_items_right {
-        margin-left: 300px;
+        /* margin-left: 300px; */
     }
 }
 
 @media (min-width: 1280px){
     #navbar_items_right {
-        margin-left: 420px;
+        /* margin-left: 420px; */
     }
 }
 
 @media (min-width: 1430px){
     #navbar_items_right {
-        margin-left: 620px;
+        /* margin-left: 500px; */
     }
 }
+*/
+
+
 
 /*
 .nav_item_compressed{
@@ -220,4 +220,56 @@ Pour override bootstrap
 #main_div{
     justify-content: center;
     text-align: center;
+}
+
+.missionCard {
+    border: 1px solid black;
+    border-radius:10px;
+    width:300px;
+    min-width:300px;
+    margin: 40px 20px;
+    padding:10px;
+    text-align: center;
+}
+
+.missionCardAdresse {
+    width:200px;
+    display: inline-block;
+}
+.missionCardAdresse .p {
+    margin:0;
+}
+
+.missionCardButton{
+    width:50px;
+    display:inline-block;
+}
+
+.missionCard .btn{
+    text-align:right;
+}
+
+.row-missions {
+    margin: 20px 30px;
+}
+
+.missionCardContributeur {
+    font-size: 18px;
+}
+.missionCardHoraire{
+    font-size: 18px;
+}
+
+.text-jours{
+    font-size: 30px;
+}
+
+
+.div-cards{
+    display:flex;
+    justify-content: space-around;
+}
+
+.container-flex {
+    display:flex;
 }

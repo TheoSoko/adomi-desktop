@@ -31,7 +31,7 @@ async function sendInput() {
                 <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
                 <p class="search_result_text">${client.phone}</p>
                 <p class="search_result_text">${client.post_code} ${client.city}</p>
-                <a id="client_profile_link" href="./${role == "customers" ? "client_profile" : "carer_profile"}.html?profileId=${client.id}">Profile</a>
+                <a id="client_profile_link" href="./${role == "customers" ? "client_profile" : "carer_profile"}.html?profileId=${client.id}">Profil</a>
             </div>
         `);
     }

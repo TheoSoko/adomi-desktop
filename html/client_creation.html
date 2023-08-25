@@ -4,60 +4,46 @@
 <head>
     <script type="module" src="../js/frontend/scripts/header.js"></script>
     <script type="text/javascript"> var exports = {}; </script>
+    <script type="module" src="../js/frontend/scripts/credentials_check.js"></script>
     <title>Client creation</title>
 </head>
 
 <body>
-  <h1>Ajouter un client</h1>
-  <div class="contanier d-flex justify-content-center">
-    <form for="Client-Form">
-      <div class="form-row justify-content-center">
-        <div class="form-group col-6">
-          <label for="nom">Nom :</label>
-          <input type="text" class="form-control" id="Nom" name="nom" required />
-          <div class="form-group col-md-6">
-            <label for="prenom">Prenom :</label>
-            <input type="text" class="form-control" id="Prenom" name="prenom" required />
+  <h1>Ajouter un client this one
+  </h1>
+  <div class="contanier d-flex">
+    <form for="Client-Form" class="row g-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="Nom" name="nom" placeholder="Nom" aria-label="Nom" required />
+        </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="Prenom" name="prenom" placeholder="Prenom" aria-label="Prenom" required />
           </div>
+          <div class="col-md-6">
+          <input type="text" class="form-control" id="utilisateur" name="utilisateur" placeholder="Utilisateur" aria-label="Utilisateur" required />
         </div>
-        <div class="form-group justify-content-center">
-          <label for="utilisateur">Nom d’utilisateur :</label>
-          <input type="text" class="form-control" id="utilisateur" name="utilisateur" required />
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="password" name="password" placeholder="Mot de passe" aria-label="Mot de passe"required />
         </div>
-        <div class="form-group justify-content-center">
-          <label for="utilisateur">Mot de passe :</label>
-          <input type="text" class="form-control" id="password" name="password" required />
+        <div class="col-12">
+          <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" aria-label="E-mail" required />
         </div>
-        <div class="form-group justify-content-center">
-          <label for="email">Adresse mail :</label>
-          <input type="text" class="form-control" id="email" name="email" required />
+        <div class="col-12">
+          <input type="text" class="form-control" id="tele" name="tele" placeholder="Telephone" aria-label="Telephone" required />
         </div>
-        <div class="form-group justify-content-center">
-          <label for="tele">Téléphone :</label>
-          <input type="text" class="form-control" id="tele" name="tele" required />
-        </div>
-        <div class="form-row justify-content-center">
-          <div class="form-group col-md-6">
-            <label for="num">Num :</label>
-            <input type="text" class="form-control" id="num" name="num" required />
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="num" name="num" placeholder="Numero" aria-label="Numero" required />
           </div>
-          <div class="form-group col-md-6 justify-content-center">
-            <label for="rue">Rue :</label>
-            <input type="text" class="form-control" id="rue" name="rue" required />
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" aria-label="Rue" required />
           </div>
-        </div>
-        <div class="form-row justify-content-center">
-          <div class="form-group col-md-6">
-            <label for="ville">Ville :</label>
-            <input type="text" class="form-control" id="ville" name="ville" required />
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" aria-label="Ville" required />
           </div>
-          <div class="form-group col-md-6 justify-content-center">
-            <label for="Codepostal">Code postal :</label>
-            <input type="text" class="form-control" id="Codepostal" name="codepostal" required />
-          </div>
-        </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="Codepostal" name="codepostal" placeholder="Code Postal" aria-label="Code Postal" required />
       </div>
-      <div class="justify-content-center">
+      <div class="col-12">
         <button type="submit" class="btn btn-primary">Créer le compte</button>
       </div>
     </form>

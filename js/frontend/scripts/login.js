@@ -13,7 +13,7 @@ loginFormBtn.addEventListener('click', function (e) {
             }
             else {
                 errMess.innerText = "";
-                window.location.href = "../html/client_creation.html";
+                window.location.href = "../html/profile_page.html";
             }
             // return true
         }).catch((err) => { console.log(err); });

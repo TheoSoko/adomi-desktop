@@ -8,7 +8,7 @@ const storageSettings = require('electron-settings');
 const requests_1 = require("./backend/requests");
 const path_1 = __importDefault(require("path"));
 const clientCreation_1 = require("./backend/clientCreation");
-const createWindow = () => {
+const createWindow = (connexion) => {
     ipcMain.handle('ping', () => 'pong');
     ipcMain.handle('localRessources', () => path_1.default.join(__dirname, "..", 'ressources'));
     ipcMain.handle('searchProfiles', requests_1.searchProfiles);
@@ -16,21 +16,18 @@ const createWindow = () => {
     ipcMain.handle('fetchProfileData', requests_1.fetchProfileData);
     ipcMain.handle("fetchMissions", requests_1.fetchMissions);
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1600,
+        height: 900,
         webPreferences: {
             preload: path_1.default.join(__dirname, 'preload.js')
         }
     });
-    win.loadFile('./html/home.html');
+    connexion
+        ? win.loadFile('./html/home.html')
+        : win.loadFile('./html/sign_in.html');
 };
 app.whenReady().then(() => {
-    createWindow();
     let connectionStatus = false;
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0)
-            createWindow();
-    });
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin')
             app.quit();
@@ -42,6 +39,7 @@ app.whenReady().then(() => {
                     storageSettings.unsetSync();
                     connectionStatus = true;
                     await storageSettings.set("user", { data: result });
+                    // storageSettings.get('user.data').then((profile:any)=>console.log(profile))
                     return true;
                 });
             }
@@ -50,10 +48,7 @@ app.whenReady().then(() => {
             }
         });
     });
-    if (storageSettings.has('user')) {
-        const profile = storageSettings.get('user.data').then((profile) => profile);
-        ipcMain.handle('getUserProfile', () => profile);
-    }
+    ipcMain.handle('getUserProfile', async () => await storageSettings.get('user.data'));
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie
     ipcMain.handle('connectionStatus', () => connectionStatus);
     //déconnexion
@@ -62,6 +57,23 @@ app.whenReady().then(() => {
             connectionStatus = false;
         });
     });
+    ipcMain.handle('getActors', () => {
+        return (0, requests_1.getMissionActors)().then((response) => {
+            return response;
+        });
+    });
+    ipcMain.handle('createNewMission', (event, arg) => {
+        storageSettings.get('user.data').then((user) => {
+            arg.idEmployee = user.id;
+            console.log(arg);
+            return (0, requests_1.createNewMission)(arg);
+        });
+    });
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0)
+            createWindow(connectionStatus);
+    });
+    createWindow(connectionStatus);
     ipcMain.handle('input-info', async (event, arg) => {
         return await (0, clientCreation_1.clientCreation)(arg);
     });

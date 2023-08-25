@@ -3,6 +3,7 @@
 <head>
     <script type="module" src="../js/frontend/scripts/header.js"></script>
     <script type="text/javascript"> var exports = {}; </script>
+    <script type="module" src="../js/frontend/scripts/credentials_check.js"></script>
     <title>Carer profile</title>
 </head>
 
@@ -14,6 +15,55 @@
         <p class="error_message"></p>
         <div id="mission_list" class="row justify-content-between ms-3 me-5 pe-5">
 
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Lundi</div>
+            <div class="div-cards" id="container-cards-lundi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Mardi</div>
+            <div class="div-cards" id="container-cards-mardi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Mercredi</div>
+            <div class="div-cards" id="container-cards-mercredi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Jeudi</div>
+            <div class="div-cards" id="container-cards-jeudi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Vendredi</div>
+            <div class="div-cards" id="container-cards-vendredi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Samedi</div>
+            <div class="div-cards" id="container-cards-samedi">
+
+            </div>
+        </div>
+
+        <div class="row row-missions">
+            <div class="text-center text-jours">Dimanche</div>
+            <div class="div-cards" id="container-cards-dimanche">
+
+            </div>
         </div>
     <div>
 
@@ -31,6 +81,16 @@
         3: "bi-mensuelle",
     }
 
+    const dayMap= {
+        1:"lundi",
+        2:"mardi",
+        3:"mercredi",
+        4:"jeudi",
+        5:"vendredi",
+        6:"samedi",
+        7:"dimanche"
+    }
+
     const profileId = new URLSearchParams(window.location.search).get("profileId")
     const role = new URLSearchParams(window.location.search).get("role")
 
@@ -44,31 +104,50 @@
     }
     if (res[0] == true){
         const missions = res[1]
-        for (const mission of missions){
-            document.getElementById("mission_list").insertAdjacentHTML('beforeend', `
-                <div class="col-3 mt-3 mb-3 ms-1 me-1 pt-4 pb-4 ps-5 pe-5 border border-dark border-4 align-items-center">
-                    <p> De : <span>${mission.startHour}</span></p>
-                    <p> À : <span>${mission.endHour}</span></p>
-                    <p> À partir du : <span>${mission.startDate}</span></p>
-                    <p> Validée : <span > ${mission.validated ? "oui": "non"}</span></p>
-                    <p> Client : <span >${mission.idClient}</span></p>
-                    <p> Employé assigné : <span >${mission.idEmployee}</span></p>
-                    <p> Auxiliaire de vie : <span >${mission.idCarer}</span></p>
-                    <p> Récurence : <span >${recurenceMap[mission.idRecurence]}</span></p>
-                </div>
 
-                <div class="col-3 mt-3 mb-3 ms-1 me-1 pt-4 pb-4 ps-5 pe-5 border border-dark border-4 align-items-center">
-                    <p> De : <span>${mission.startHour}</span></p>
-                    <p> À : <span>${mission.endHour}</span></p>
-                    <p> À partir du : <span>${mission.startDate}</span></p>
-                    <p> Validée : <span > ${mission.validated ? "oui": "non"}</span></p>
-                    <p> Client : <span >${mission.idClient}</span></p>
-                    <p> Employé assigné : <span >${mission.idEmployee}</span></p>
-                    <p> Auxiliaire de vie : <span >${mission.idCarer}</span></p>
-                    <p> Récurence : <span >${recurenceMap[mission.idRecurence]}</span></p>
+        for (const mission of missions){
+            // console.log(mission);
+
+            const d = new Date(mission.startDate);
+            const jour = dayMap[d.getDay()];
+            console.log(role);
+
+
+            let nom ="";
+            if(role == 'carer'){
+                nom = mission.client.first_name+" "+mission.client.last_name
+                console.log(nom)
+            }else if (role == 'client'){
+                nom = mission.carer.first_name+" "+mission.carer.last_name
+                console.log("ici client")
+            }
+
+            let adresse="";
+            let localite="";
+            if(mission.streetName == null ){
+                adresse = mission.client.street_number+" "+mission.client.street_name;
+                localite = mission.client.post_code+" "+mission.client.city;
+            }else{
+                adresse = mission.streetNumber+" "+mission.streetName;
+                localite = mission.postCode+" "+mission.city;
+
+            }
+
+            document.getElementById("container-cards-"+jour).insertAdjacentHTML('beforeend',`
+            <div class="missionCard shadow">
+                <p class="missionCardContributeur">Avec : <b>${nom}</b></p>
+                <p class="missionCardHoraire">De: ${mission.startHour} À: ${mission.endHour}</p>
+                <div class="missionCardAdresse">
+                    <p>${adresse}</p>
+                    <p>${localite}</p>
                 </div>
+                <div class="missionCardButton">
+                    <button class="btn btn-info">Voir</button>
+                </div>
+            </div>
             `)
         }
+        
     }
 
 </script>

@@ -22,8 +22,17 @@ contextBridge.exposeInMainWorld('exposeProfileData', {
     connectionStatus: () => ipcRenderer.invoke('connectionStatus')
 })
 
+
 contextBridge.exposeInMainWorld('userLogout', {
     logout: ()=>ipcRenderer.invoke('logout')
+})
+
+contextBridge.exposeInMainWorld('exposeActors', {
+    getActors: ()=> ipcRenderer.invoke('getActors')
+})
+
+contextBridge.exposeInMainWorld('createMission', {
+    createNewMission: (formData: (string | number)[])=> ipcRenderer.invoke('createNewMission', formData)
 })
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello")
