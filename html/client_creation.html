@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <script type="module" src="../js/frontend/scripts/header.js"></script>
@@ -9,44 +9,63 @@
 </head>
 
 <body>
-  <h1>Ajouter un client this one
-  </h1>
-  <div class="contanier d-flex">
-    <form for="Client-Form" class="row g-3">
+  <h1 class="text-center mt-4">Ajouter un client</h1>
+
+  <div class="container">
+  <div class="form-create-client shadow">
+    <form methodd="post" action="" id="Client-Form">
+      <div class="row g-3">
+
         <div class="col-md-6">
           <input type="text" class="form-control" id="Nom" name="nom" placeholder="Nom" aria-label="Nom" required />
         </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="Prenom" name="prenom" placeholder="Prenom" aria-label="Prenom" required />
-          </div>
-          <div class="col-md-6">
+
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="Prenom" name="prenom" placeholder="Prenom" aria-label="Prenom" required />
+        </div>
+
+        <div class="col-md-6">
           <input type="text" class="form-control" id="utilisateur" name="utilisateur" placeholder="Utilisateur" aria-label="Utilisateur" required />
         </div>
+
         <div class="col-md-6">
-          <input type="text" class="form-control" id="password" name="password" placeholder="Mot de passe" aria-label="Mot de passe"required />
+          <input type="text" class="form-control" id="password" name="password" placeholder="Mot de passe" aria-label="Mot de passe" required />
+          <small id="err_password" class="text-danger errmess" >doit contenir une lettre, un chiffre, un caractère spécial, et faire au moins 8 caractères</small>
         </div>
+
         <div class="col-12">
           <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" aria-label="E-mail" required />
+          <small id="err_email" class="text-danger errmess" >E-mail inccorect</small>
         </div>
+
         <div class="col-12">
           <input type="text" class="form-control" id="tele" name="tele" placeholder="Telephone" aria-label="Telephone" required />
+          <small id="err_tele" class="text-danger errmess" >Numero inccorect</small>
         </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="num" name="num" placeholder="Numero" aria-label="Numero" required />
-          </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" aria-label="Rue" required />
-          </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" aria-label="Ville" required />
-          </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" id="Codepostal" name="codepostal" placeholder="Code Postal" aria-label="Code Postal" required />
-      </div>
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">Créer le compte</button>
+
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="num" name="num" placeholder="Numero" aria-label="Numero" required />
+        </div>
+
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="rue" name="rue" placeholder="Rue" aria-label="Rue" required />
+        </div>
+
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" aria-label="Ville" required />
+        </div>
+
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="Codepostal" name="codepostal" placeholder="Code Postal" aria-label="Code Postal" required />
+          <small id="err_codepostal" class="text-danger errmess" >Saisir code à 5 chiffres !</small>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-success">Créer le compte</button>
+        </div>
       </div>
     </form>
+  </div>
   </div>
 </body>
 <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js"

@@ -332,3 +332,14 @@ legend{
     line-height: middle;
     padding: 0.5rem;
 }
+
+.form-create-client {
+    min-width: 600px;
+    max-width: 900px;
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: lightgray;
+    border-radius: 10px;
+}
