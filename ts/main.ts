@@ -18,7 +18,7 @@ import { userSignIn,
 
 import path from "path"
 
-interface UserProfile{
+interface UserProfile {
     first_name: string,
     last_name: string,
     user_name: string,
@@ -35,7 +35,7 @@ interface UserLog {
     password: string
 }
 
-interface Payload{
+interface Payload {
     status: number,
     data:{
         id: number,
@@ -43,7 +43,7 @@ interface Payload{
         message: string
     }
 }
-interface MissionInterface{
+interface MissionInterface {
     startDate: string,
     startHour: string
     endHour: string,

@@ -87,49 +87,6 @@ input[type="search"]::-webkit-clear-button {
     padding-bottom: 6.5px;
 }
 
-/*
-Pour override bootstrap
-*/
-
-.navbar-expand-lg #navbar_items_right {
-
-}
-
-
-@media (min-width: 800px){
-    #navbar_items_right{
-        margin-left: 450px;
-    }
-}
-
-@media  (min-width: 992px) {
-    .nav-item {
-        /* min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR  */
-    }
-    #navbar_items_right {
-        /* margin-left: 120px;  CA AUSSI  */
-
-    }
-}
-
-@media (min-width: 1170px){
-    #navbar_items_right {
-        /* margin-left: 300px; */
-    }
-}
-
-@media (min-width: 1280px){
-    #navbar_items_right {
-        /* margin-left: 420px; */
-    }
-}
-
-@media (min-width: 1430px){
-    #navbar_items_right {
-        /* margin-left: 500px; */
-    }
-}
-*/
 
 
 

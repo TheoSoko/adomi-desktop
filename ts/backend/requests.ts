@@ -259,6 +259,8 @@ export async function fetchOneGeneralRequest(event: wtf | unknown, id: number){
     console.log(res)
     return [true, res]
 
+}
+
 export async function getMissionData(event: Event, missionId: number){
 
     const data = await fetch(`http://localhost:8000/missions/${missionId}`)
