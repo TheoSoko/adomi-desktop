@@ -91,15 +91,18 @@ async function fillForm() {
 
 
         listeClients.forEach((data:any)=>{
-            if(data.id == mission.id){
+            if(data.id == mission.idClient){
                 idClientInput.insertAdjacentHTML("beforeend",`<option value="${data.id}" selected>${data.first_name} ${data.last_name}</option>`)
             }else{
                 idClientInput.insertAdjacentHTML("beforeend",`<option value="${data.id}">${data.first_name} ${data.last_name}</option>`)
             }
         })
 
+        console.log("carer id : "+ mission.idCarer)
         listeCarers.forEach((data:any)=>{
-            if(data.id == mission.id){
+            console.log("liste carer id : "+data.id);
+            
+            if(data.id == mission.idCarer){
                 idCarerInput.insertAdjacentHTML("beforeend",`<option value="${data.id}" selected>${data.first_name} ${data.last_name}</option>`)
             }else{
                 idCarerInput.insertAdjacentHTML("beforeend",`<option value="${data.id}">${data.first_name} ${data.last_name}</option>`)
