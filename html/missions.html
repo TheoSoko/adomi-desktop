@@ -4,7 +4,7 @@
     <script type="module" src="../js/frontend/scripts/header.js"></script>
     <script type="text/javascript"> var exports = {}; </script>
     <script type="module" src="../js/frontend/scripts/credentials_check.js"></script>
-    <title>Carer profile</title>
+    <title>Missions</title>
 </head>
 
 <body>
@@ -106,20 +106,17 @@
         const missions = res[1]
 
         for (const mission of missions){
-            // console.log(mission);
+            console.log(mission);
 
             const d = new Date(mission.startDate);
             const jour = dayMap[d.getDay()];
-            console.log(role);
 
 
             let nom ="";
             if(role == 'carer'){
                 nom = mission.client.first_name+" "+mission.client.last_name
-                console.log(nom)
             }else if (role == 'client'){
                 nom = mission.carer.first_name+" "+mission.carer.last_name
-                console.log("ici client")
             }
 
             let adresse="";
@@ -142,37 +139,12 @@
                     <p>${localite}</p>
                 </div>
                 <div class="missionCardButton">
-                    <button class="btn btn-info">Voir</button>
+                    <a class="btn btn-info" href="./mission.html?id=${mission.id}" id="mission${mission.id}">Voir</a>
                 </div>
             </div>
             `)
         }
         
-        // for (const mission of missions){
-        //     document.getElementById("mission_list").insertAdjacentHTML('beforeend', `
-        //         <div class="col-3 mt-3 mb-3 ms-1 me-1 pt-4 pb-4 ps-5 pe-5 border border-dark border-4 align-items-center">
-        //             <p> De : <span>${mission.startHour}</span></p>
-        //             <p> À : <span>${mission.endHour}</span></p>
-        //             <p> À partir du : <span>${mission.startDate}</span></p>
-        //             <p> Validée : <span > ${mission.validated ? "oui": "non"}</span></p>
-        //             <p> Client : <span >${mission.idClient}</span></p>
-        //             <p> Employé assigné : <span >${mission.idEmployee}</span></p>
-        //             <p> Auxiliaire de vie : <span >${mission.idCarer}</span></p>
-        //             <p> Récurence : <span >${recurenceMap[mission.idRecurence]}</span></p>
-        //         </div>
-
-        //         <div class="col-3 mt-3 mb-3 ms-1 me-1 pt-4 pb-4 ps-5 pe-5 border border-dark border-4 align-items-center">
-        //             <p> De : <span>${mission.startHour}</span></p>
-        //             <p> À : <span>${mission.endHour}</span></p>
-        //             <p> À partir du : <span>${mission.startDate}</span></p>
-        //             <p> Validée : <span > ${mission.validated ? "oui": "non"}</span></p>
-        //             <p> Client : <span >${mission.idClient}</span></p>
-        //             <p> Employé assigné : <span >${mission.idEmployee}</span></p>
-        //             <p> Auxiliaire de vie : <span >${mission.idCarer}</span></p>
-        //             <p> Récurence : <span >${recurenceMap[mission.idRecurence]}</span></p>
-        //         </div>
-        //     `)
-        // }
     }
 
 </script>

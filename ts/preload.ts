@@ -22,12 +22,26 @@ contextBridge.exposeInMainWorld('exposeProfileData', {
     connectionStatus: () => ipcRenderer.invoke('connectionStatus')
 })
 
+contextBridge.exposeInMainWorld('exposeMissionData',{
+    getMissionData: (missionId: number) => ipcRenderer.invoke('getMissionData',missionId)
+})
 
 contextBridge.exposeInMainWorld('userLogout', {
     logout: ()=>ipcRenderer.invoke('logout')
 })
 
+contextBridge.exposeInMainWorld('exposeActors', {
+    getActors: ()=> ipcRenderer.invoke('getActors')
+})
+
+contextBridge.exposeInMainWorld('createMission', {
+    createNewMission: (formData: (string | number)[])=> ipcRenderer.invoke('createNewMission', formData)
+})
 window.addEventListener('DOMContentLoaded', () => {
     const element = document.getElementById("hello")
     if (element) element.innerText = "Hello from the other side"
+})
+
+contextBridge.exposeInMainWorld('updateMission',{
+    updateMission: (formData:(string | number)[])=> ipcRenderer.invoke('updateMission',formData)
 })

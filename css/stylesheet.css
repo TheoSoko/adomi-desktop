@@ -95,7 +95,7 @@ Pour override bootstrap
 
 }
 
-/*
+
 @media (min-width: 800px){
     #navbar_items_right{
         margin-left: 450px;
@@ -104,29 +104,29 @@ Pour override bootstrap
 
 @media  (min-width: 992px) {
     .nav-item {
-        min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR 
+        /* min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR  */
     }
     #navbar_items_right {
-        margin-left: 120px;  CA AUSSI 
+        /* margin-left: 120px;  CA AUSSI  */
 
     }
 }
 
 @media (min-width: 1170px){
     #navbar_items_right {
-        margin-left: 300px;
+        /* margin-left: 300px; */
     }
 }
 
 @media (min-width: 1280px){
     #navbar_items_right {
-        margin-left: 420px;
+        /* margin-left: 420px; */
     }
 }
 
 @media (min-width: 1430px){
     #navbar_items_right {
-        margin-left: 620px;
+        /* margin-left: 500px; */
     }
 }
 */
@@ -334,3 +334,88 @@ Pour override bootstrap
     margin-inline: 1px;
 }
 
+
+
+.affiche-mission{
+    border: 1px solid darkgrey;
+    border-radius:10px;
+    padding:30px;
+    max-width:700px;
+    min-width:500px;
+    width:40%;
+    margin-bottom: 4rem;
+}
+
+.buttons-affiche{
+    margin: 4rem 0;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.buttons-affiche p{
+    margin:0;
+}
+
+.affiche-mission .text-center{
+    font-size:20px;
+}
+
+#missionForm{
+    width: 80%;
+    margin: 5rem auto 0rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: #eaeaea;
+    border-radius: 5px;
+}
+
+.form_bloc_coordonnees{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.errmess{
+    display: none;
+}
+
+#etatCivil{
+    box-shadow: -5px 5px 5px rgb(169, 169, 169);
+}
+
+#contact_details{
+    box-shadow: 5px 5px 5px rgb(169, 169, 169);
+}
+
+#etatCivil, #contact_details{
+    background-color: #f5f5f5;
+    border-radius: 8px;
+}
+
+legend{
+    border-bottom: solid 1px black;
+    margin-top: 10px;
+    width: 85%;
+}
+
+.datarow{
+    border-bottom: dotted 1px black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 4px;
+    padding-left: 0px;
+}
+
+.datarow p{
+    margin-bottom: 0px;
+    margin-top: 1rem;
+}
+
+.bloc_profil_btn a{
+    font-weight: bold;
+    line-height: middle;
+    padding: 0.5rem;
+}
