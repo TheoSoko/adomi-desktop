@@ -274,6 +274,32 @@ Pour override bootstrap
     display:flex;
 }
 
+
+.affiche-mission{
+    border: 1px solid darkgrey;
+    border-radius:10px;
+    padding:30px;
+    max-width:700px;
+    min-width:500px;
+    width:40%;
+    margin-bottom: 4rem;
+}
+
+.buttons-affiche{
+    margin: 4rem 0;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.buttons-affiche p{
+    margin:0;
+}
+
+.affiche-mission .text-center{
+    font-size:20px;
+}
+
 #missionForm{
     width: 80%;
     margin: 5rem auto 0rem auto;
