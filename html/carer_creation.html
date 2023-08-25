@@ -10,55 +10,52 @@
 
 <body>
     <h1>Ajouter un client</h1>
-    <div class="contanier d-flex justify-content-center">
-        <form for="Client-Form">
-            <div class="form-row justify-content-center">
-                <div class="form-group col-6">
-                    <label for="nom">Nom :</label>
-                    <input type="text" class="form-control" id="Nom" required />
-                    <div class="form-group col-md-6">
-                        <label for="prenom">Prenom :</label>
-                        <input type="text" class="form-control" id="Prenom" required />
-                    </div>
-                </div>
-                <div class="form-group justify-content-center">
-                    <label for="utilisateur">Nom d’utilisateur :</label>
-                    <input type="text" class="form-control" id="utilisateur" required />
-                </div>
-                <div class="form-group justify-content-center">
-                    <label for="email">Adresse mail :</label>
-                    <input type="text" class="form-control" id="email" required />
-                </div>
-                <div class="form-group justify-content-center">
-                    <label for="tele">Téléphone :</label>
-                    <input type="text" class="form-control" id="tele" required />
-                </div>
-                <div class="form-row justify-content-center">
-                    <div class="form-group col-md-6">
-                        <label for="num">Num :</label>
-                        <input type="text" class="form-control" id="Num" required />
-                    </div>
-                    <div class="form-group col-md-6 justify-content-center">
-                        <label for="rue">Rue :</label>
-                        <input type="text" class="form-control" id="rue" required />
-                    </div>
-                </div>
-                <div class="form-row justify-content-center">
-                    <div class="form-group col-md-6">
-                        <label for="ville">Ville :</label>
-                        <input type="text" class="form-control" id="ville" required />
-                    </div>
-                    <div class="form-group col-md-6 justify-content-center">
-                        <label for="Codepostal">Code postal :</label>
-                        <input type="text" class="form-control" id="Codepostal" required />
-                    </div>
-                </div>
-            </div>
-            <div class="justify-content-center">
-                <button type="submit" class="btn btn-primary">Créer le compte</button>
-            </div>
-        </form>
-    </div>
+    <section class="contanier">
+    <form class="row g-3 p-3">
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail4">
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Password</label>
+          <input type="password" class="form-control" id="inputPassword4">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Address</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Address 2</label>
+          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">City</label>
+          <input type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select id="inputState" class="form-select">
+            <option selected>Choose...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Zip</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <label class="form-check-label" for="gridCheck">
+              Check me out
+            </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+      </form>
+    </section>
 </body>
 
 <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>

@@ -1,9 +1,27 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
-import { userSignIn, userSignOut, getProfile, searchProfiles, fetchProfileData, fetchMissions, getMissionActors, createNewMission, getAgenciesList, getRolesList, updateEmployee} from './backend/requests'
-import path from "path"
+import { userSignIn, 
+        userSignOut, 
+        getProfile, 
+        searchProfiles,
+        fetchProfileData, 
+        fetchMissions, 
+        fetchGeneralRequests, 
+        fetchPendingMissions, 
+        fetchOneGeneralRequest,
+        getMissionActors, 
+        createNewMission,
+        getMissionData,
+        updateMission,
+        getAgenciesList, 
+        getRolesList, 
+        updateEmployee
+  } from './backend/requests'
 
-interface UserProfile{
+import path from "path"
+import {clientCreation} from './backend/clientCreation'
+
+interface UserProfile {
     first_name: string,
     last_name: string,
     user_name: string,
@@ -24,7 +42,7 @@ interface UserLog {
     password: string
 }
 
-interface Payload{
+interface Payload {
     status: number,
     data:{
         id: number,
@@ -32,7 +50,7 @@ interface Payload{
         message: string
     }
 }
-interface MissionInterface{
+interface MissionInterface {
     startDate: string,
     startHour: string
     endHour: string,
@@ -46,6 +64,21 @@ interface MissionInterface{
     idCarer?: number,
     idRecurence: number
 }
+
+interface UserProfileInterface{
+    first_name: string,
+    last_name: string,
+    user_name: string,
+    password: string,
+    email: string,
+    phone: string,
+    street_name: string,
+    street_number: number,
+    post_code: string,
+    city: string,
+    id_agency: number,
+}
+
 const createWindow = (connexion: boolean) => {
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
@@ -53,6 +86,10 @@ const createWindow = (connexion: boolean) => {
     ipcMain.handle('mainDirPath', () => __dirname)
     ipcMain.handle('fetchProfileData', fetchProfileData)
     ipcMain.handle("fetchMissions", fetchMissions)
+    ipcMain.handle("fetchGeneralRequests", fetchGeneralRequests)
+    ipcMain.handle("fetchPendingMissions", fetchPendingMissions)
+    ipcMain.handle("fetchOneGeneralRequest", fetchOneGeneralRequest)
+    ipcMain.handle("getMissionData",getMissionData)
     
     const win = new BrowserWindow({
         width: 1600,
@@ -94,7 +131,7 @@ app.whenReady().then(() => {
         })
     })
 
-    ipcMain.handle('getUserProfile', async ()=>await storageSettings.get('user.data'))
+    ipcMain.handle('getUserProfile', async () => await storageSettings.get('user.data'))
 
 
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie
@@ -133,10 +170,17 @@ app.whenReady().then(() => {
         })
     })
 
+
     ipcMain.handle('updateProfile', (event:any, arg:UserProfile)=>{
         storageSettings.get('user.data').then((user:any)=>{
         console.log(arg)
             return updateEmployee(user.id, arg);
+
+    ipcMain.handle('updateMission',(event:any, arg:MissionInterface)=>{
+        storageSettings.get('user.data').then((user:any)=>{
+            arg.idEmployee = user.id;
+            console.log(arg)
+            return updateMission(arg);
         })
     })
 
@@ -144,5 +188,9 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow(connectionStatus)
     })
     createWindow(connectionStatus)
+
+    ipcMain.handle('input-info', async (event:any,arg:UserProfileInterface)=>{
+        return await clientCreation(arg)
+    })
 })
 
