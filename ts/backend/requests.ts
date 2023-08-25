@@ -149,3 +149,67 @@ export async function fetchMissions(event: wtf, userId: string, role: "client"|"
         }
         return [true, await data.json()]
 }
+
+export async function fetchGeneralRequests(){
+    const data = await fetch(`http://localhost:8000/general-requests`)
+        .catch(err => {
+            console.log(err)
+            return null
+        })
+    
+    if (!data){
+        return Promise.reject("Erreur à la requête HTTP")
+    }
+
+    const res = await data.json()
+
+    if (data.status != 200){
+        console.log("ERR at fetchGeneralRequests, status code is ", data.status, "res is ", res)
+        return  [false, res]
+    }
+
+    console.log(res)
+    return [true, res]
+}
+
+export async function fetchPendingMissions(){
+    const data = await fetch(`http://localhost:8000/missions?filter=validated&value=0`)
+        .catch(err => {
+            console.log(err)
+            return null
+        })
+    
+    if (!data){
+        return Promise.reject("Erreur à la requête HTTP")
+    }
+
+    const res = await data.json()
+
+    if (data.status != 200){
+        return  [false, res]
+    }
+
+    return [true, res]
+}
+
+export async function fetchOneGeneralRequest(event: wtf | unknown, id: number){
+    const data = await fetch(`http://localhost:8000/general-requests/${id}`)
+        .catch(err => {
+            console.log(err)
+            return null
+        })
+    
+    if (!data){
+        return Promise.reject("Erreur à la requête HTTP")
+    }
+
+    const res = await data.json()
+
+    if (data.status != 200){
+        console.log("ERR at fetchOneGeneralRequest, status code is ", data.status, "res is ", res)
+        return  [false, res]
+    }
+
+    console.log(res)
+    return [true, res]
+}
