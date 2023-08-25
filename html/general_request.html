@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script type="module" src="../js/frontend/scripts/header.js"></script>
+    <script type="text/javascript"> var exports = {}; </script>
+    <script type="module" src="../js/frontend/scripts/credentials_check.js"></script>
+</head>
+
+<body>
+    <div id="main_div">
+        <h2 class="mt-3 py-5" id="intro_message"> Demande n°</h2>
+
+        <div class="big_ass_card py-3 px-3">
+            
+        </div>
+
+    </div>
+
+
+</body>
+
+<script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
+<script type="module" src="../js/frontend/scripts/navbar_include.js"></script>
+<script type="module">
+    const query = new URLSearchParams(window.location.search)
+    const id = query.get("id")
+    document.getElementById("intro_message").innerText = "Demande n°"+id
+
+    const req = await window.exposed.fetchOneGeneralRequest(id)
+    if (req    [0] == false) {
+        document.getElementById("error_message").innerText = "http code " + req[1].statusCode + " - " + req[1].message
+    }
+    if (req    [0] == true) {
+        document.getElementsByClassName("big_ass_card")[0].insertAdjacentHTML('beforeend', `
+            <p class="search_result_text pt-1 my-1"> Utilisateur : ${req[1].user ? req[1].user.first_name + " " + req[1].user.last_name : "non-inscrit"} </p>
+            <p class="search_result_text py-1 my-1"> Envoyée le ${req[1].created_at} </p>
+            <p class="search_result_text py-1 mt-3"> Message :  </p>
+            <p class="search_result_text py-1 mb-3"> ${req[1].request_string} </p> 
+
+            <p class="search_result_text pt-1 my-1"> Référent : ${req[1].referrer ? req[1].referrer.first_name + " " + req[1].referrer.last_name : "aucun"} </p>
+            <p class="search_result_text py-1 my-1"> Complétée : ${req[1].done} </p>
+        `)
+    }
+
+</script>
+
+
+</html>

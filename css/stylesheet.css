@@ -87,49 +87,6 @@ input[type="search"]::-webkit-clear-button {
     padding-bottom: 6.5px;
 }
 
-/*
-Pour override bootstrap
-*/
-
-.navbar-expand-lg #navbar_items_right {
-
-}
-
-
-@media (min-width: 800px){
-    #navbar_items_right{
-        margin-left: 450px;
-    }
-}
-
-@media  (min-width: 992px) {
-    .nav-item {
-        /* min-width: 120px;  A CHANGER QUAND ON AJOUTE UN MACHIN A LA NAVBAR  */
-    }
-    #navbar_items_right {
-        /* margin-left: 120px;  CA AUSSI  */
-
-    }
-}
-
-@media (min-width: 1170px){
-    #navbar_items_right {
-        /* margin-left: 300px; */
-    }
-}
-
-@media (min-width: 1280px){
-    #navbar_items_right {
-        /* margin-left: 420px; */
-    }
-}
-
-@media (min-width: 1430px){
-    #navbar_items_right {
-        /* margin-left: 500px; */
-    }
-}
-*/
 
 
 
@@ -190,12 +147,12 @@ Pour override bootstrap
 
 .search_result {
     border: 2px solid  black;
-    margin-block: 17px;
+    margin-block: 30px;
     padding-top: 8.5px;
     padding-bottom: 8.5px;
     font-size: 15px;
     border-radius: 5px;
-    margin-inline: 5px;
+    margin-inline: 1px;
     text-align: center;
 }
 
@@ -274,6 +231,93 @@ Pour override bootstrap
     display:flex;
 }
 
+.link-button {
+    display: inline-block;
+    font-weight: 600;
+    margin-top: 33px;
+    margin-bottom: 16px;
+    color: white;
+    background-color: #9EDEF3;
+    border-color: #9EDEF3;
+    font-size: 17px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    padding: 5.5px 15px;
+    border-radius: 7px;
+    border: 2px solid #9EDEF3;  
+     /*transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;*/
+}
+
+.link-button:hover {
+    color: white;
+    background-color: #7ab6ca;
+    border-color: #7eb9cc;
+ }
+  
+
+.big_ass_card {
+    border: 2px solid  black;
+    margin-block: 30px;
+    padding-top: 8.5px;
+    padding-bottom: 8.5px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-inline: 1px;
+    text-align: center;
+    width: 50%;
+    margin-inline: auto
+
+}
+
+.dash_card_text {
+    padding-block: 5px;
+    margin-block: 1px;
+}
+
+#short_text{
+    height: 82px;
+    text-align: left !important;
+    margin-inline: 13px;
+}
+
+.dashboard_card {
+    border: 2px solid  black;
+    margin-block: 30px;
+    padding-top: 8.5px;
+    padding-bottom: 8.5px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-inline: 1px;
+}
+
+
+
+.affiche-mission{
+    border: 1px solid darkgrey;
+    border-radius:10px;
+    padding:30px;
+    max-width:700px;
+    min-width:500px;
+    width:40%;
+    margin-bottom: 4rem;
+}
+
+.buttons-affiche{
+    margin: 4rem 0;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.buttons-affiche p{
+    margin:0;
+}
+
+.affiche-mission .text-center{
+    font-size:20px;
+}
+
 #missionForm{
     width: 80%;
     margin: 5rem auto 0rem auto;
@@ -333,6 +377,7 @@ legend{
     padding: 0.5rem;
 }
 
+
 .form-create-client {
     min-width: 600px;
     max-width: 900px;
@@ -343,3 +388,4 @@ legend{
     background-color: lightgray;
     border-radius: 10px;
 }
+

@@ -1,10 +1,25 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
-import { userSignIn, userSignOut, getProfile, searchProfiles, fetchProfileData, fetchMissions, getMissionActors, createNewMission} from './backend/requests'
+import { userSignIn, 
+        userSignOut, 
+        getProfile, 
+        searchProfiles,
+        fetchProfileData, 
+        fetchMissions, 
+        fetchGeneralRequests, 
+        fetchPendingMissions, 
+        fetchOneGeneralRequest,
+        getMissionActors, 
+        createNewMission,
+        getMissionData,
+        updateMission,
+  } from './backend/requests'
+
+
 import path from "path"
 import {clientCreation} from './backend/clientCreation'
 
-interface UserProfile{
+interface UserProfile {
     first_name: string,
     last_name: string,
     user_name: string,
@@ -21,7 +36,7 @@ interface UserLog {
     password: string
 }
 
-interface Payload{
+interface Payload {
     status: number,
     data:{
         id: number,
@@ -29,7 +44,7 @@ interface Payload{
         message: string
     }
 }
-interface MissionInterface{
+interface MissionInterface {
     startDate: string,
     startHour: string
     endHour: string,
@@ -65,6 +80,10 @@ const createWindow = (connexion: boolean) => {
     ipcMain.handle('mainDirPath', () => __dirname)
     ipcMain.handle('fetchProfileData', fetchProfileData)
     ipcMain.handle("fetchMissions", fetchMissions)
+    ipcMain.handle("fetchGeneralRequests", fetchGeneralRequests)
+    ipcMain.handle("fetchPendingMissions", fetchPendingMissions)
+    ipcMain.handle("fetchOneGeneralRequest", fetchOneGeneralRequest)
+    ipcMain.handle("getMissionData",getMissionData)
     
     const win = new BrowserWindow({
         width: 1600,
@@ -106,7 +125,7 @@ app.whenReady().then(() => {
         })
     })
 
-    ipcMain.handle('getUserProfile', async ()=>await storageSettings.get('user.data'))
+    ipcMain.handle('getUserProfile', async () => await storageSettings.get('user.data'))
 
 
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie
@@ -130,6 +149,14 @@ app.whenReady().then(() => {
             arg.idEmployee = user.id;
             console.log(arg)
             return createNewMission(arg);
+        })
+    })
+
+    ipcMain.handle('updateMission',(event:any, arg:MissionInterface)=>{
+        storageSettings.get('user.data').then((user:any)=>{
+            arg.idEmployee = user.id;
+            console.log(arg)
+            return updateMission(arg);
         })
     })
 

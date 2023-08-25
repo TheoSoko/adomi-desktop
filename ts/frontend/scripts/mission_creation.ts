@@ -5,6 +5,7 @@ interface Window {
 }
 
 interface MissionInterface{
+    id?:number,
     startDate: string,
     startHour: string
     endHour: string,
