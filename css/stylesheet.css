@@ -339,11 +339,11 @@ input[type="search"]::-webkit-clear-button {
 }
 
 #etatCivil{
-    box-shadow: -5px 5px 5px rgb(169, 169, 169);
+    box-shadow: -5px 5px 5px rgb(187, 187, 187);
 }
 
 #contact_details{
-    box-shadow: 5px 5px 5px rgb(169, 169, 169);
+    box-shadow: 5px 5px 5px rgb(187, 187, 187);
 }
 
 #etatCivil, #contact_details{
@@ -377,6 +377,18 @@ legend{
     padding: 0.5rem;
 }
 
+.bloc_edit_btn{
+    display:flex;
+    justify-content: center;
+}
+
+#profil_form_edit{
+    background-color: #f0f0f0;
+    border-radius: 7px;
+    padding: 0.5rem;
+    display: none;
+    margin-top: 5rem;
+}
 
 .form-create-client {
     min-width: 600px;

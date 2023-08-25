@@ -13,8 +13,10 @@ import { userSignIn,
         createNewMission,
         getMissionData,
         updateMission,
+        getAgenciesList, 
+        getRolesList, 
+        updateEmployee
   } from './backend/requests'
-
 
 import path from "path"
 import {clientCreation} from './backend/clientCreation'
@@ -28,7 +30,11 @@ interface UserProfile {
     street_name: string,
     street_number: number,
     post_code: string,
-    city: string
+    city: string,
+    id_role: number,
+    id_agency: number
+    role: {label:string},
+    agency: {name: string, adress: string}
 }
 
 interface UserLog {
@@ -144,6 +150,18 @@ app.whenReady().then(() => {
         })
     })
 
+    ipcMain.handle('getRoles', ()=>{
+        return getRolesList().then((response)=>{
+            return response
+        })
+    })
+
+    ipcMain.handle('getAgencies', ()=>{
+        return getAgenciesList().then((response)=>{
+            return response
+        })
+    })
+
     ipcMain.handle('createNewMission', (event:any, arg:MissionInterface)=>{
         storageSettings.get('user.data').then((user:any)=>{
             arg.idEmployee = user.id;
@@ -151,6 +169,12 @@ app.whenReady().then(() => {
             return createNewMission(arg);
         })
     })
+
+
+    ipcMain.handle('updateProfile', (event:any, arg:UserProfile)=>{
+        storageSettings.get('user.data').then((user:any)=>{
+        console.log(arg)
+            return updateEmployee(user.id, arg);
 
     ipcMain.handle('updateMission',(event:any, arg:MissionInterface)=>{
         storageSettings.get('user.data').then((user:any)=>{

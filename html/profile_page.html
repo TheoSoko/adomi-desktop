@@ -8,36 +8,100 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row justify-content-center p-4">
-            <h1 class="text-center mt-5">Mon profil</h1>
+    <h1 class="text-center mt-5" id="profil_page_title">Mon profil</h1>
 
-            <!-- card etat civile -->
-            <!-- card coordonnées -->
-            <!-- card contact -->
-            <!-- <table class='table table-striped' id="userTable">
-                <tbody id="userTableBody">
+    <div id="profil_synthese" class="row justify-content-center p-4">
 
-                </tbody>
-            </table> -->
-            <!-- <p></p> -->
-
-            <div id="etatCivil" class="col-5 mt-5 mx-3">
-                <legend>Etat civil</legend>
-                <div id="bloc_etat_civil" class="col-12 row justify-content-around p-4"></div>
-            </div>
-
-            <div id="contact_details" class="col-5 mt-5 mx-3">
-                <legend>Coordonnées</legend>
-                <div id="bloc_contact" class="col-12 row justify-content-around p-4"></div>
-            </div>
-
-        <div class="mt-5 row justify-content-around bloc_profil_btn">
-                <a href='#' class="btn btn-warning col-2 mx-auto">Modifier mes informations</a>
+        <div id="etatCivil" class="col-5 mt-5 mx-3">
+            <legend>Etat civil</legend>
+            <div id="bloc_etat_civil" class="col-12 row justify-content-around p-4"></div>
         </div>
 
+        <div id="contact_details" class="col-5 mt-5 mx-3">
+            <legend>Coordonnées</legend>
+            <div id="bloc_contact" class="col-12 row justify-content-around p-4"></div>
         </div>
+
+       <div class="mt-5 row justify-content-around bloc_profil_btn">
+            <a href='#' class="btn btn-warning col-2 mx-auto" id="profil_btn">Modifier mes informations</a>
+       </div>
+
     </div>
+
+    <form id="profil_form_edit" action="" method="post" class="col-8 mx-auto row justify-content-around">
+    
+        <div class="col-5">
+            <div class="form-group my-2">
+                <label for="first_name">Nom</label>
+                <input type="text" name='first_name' id="first_name" class="form-control" maxlength="30" required>
+                <small id="err_nom" class="errmess text-danger">Nom invalide !</small>
+            </div>
+
+            <div class="form-group my-2">
+                <label for="last_name">Prénom</label>
+                <input type="text" name='last_name' id="last_name" class="form-control" maxlength="30" required>
+                <small id="err_prenom" class="errmess text-danger">Prénom invalide !</small>
+            </div>
+
+            <div class="form-group my-2">
+                <label for="user_name">Pseudo</label>
+                <input type="text" name='user_name' id="user_name" class="form-control" maxlength="30" required>
+            </div>
+
+            <div class="form-group my-2">
+                <label for="email">Email</label>
+                <input type="email" name='email' id="email" class="form-control" maxlength="50" required>
+            </div>
+
+            <div class="form-group my-2">
+                <label for="phone">Téléphone</label>
+                <input type="text" name='phone' id="phone" class="form-control" maxlength="10" required>
+                <small id="err_phone" class="errmess text-danger">Saisir un numéro à 10 chiffres</small>
+            </div>
+        </div>
+
+        <div class="col-5">
+            <div class="my-2 row justify-content-around">
+                <div class="form-group col-4 mr-3">
+                    <label for="street_number">N° de rue</label>
+                    <input type="text" name='street_number' id="street_number" class="form-control" maxlength="5" required>
+                    <small id="err_street_nb" class="errmess text-danger">N° invalide !</small>
+                </div>
+
+                <div class="form-group col-8">
+                    <label for="street_name">Nom de rue</label>
+                    <input type="text" name='street_name' id="street_name" class="form-control" maxlength="60" required>
+                    <small id="err_street" class="errmess text-danger">Nom de rue invalide !</small>
+                </div>
+            </div>
+
+            <div class="form-group my-2">
+                <label for="city">Ville</label>
+                <input type="text" name='city' id="city" class="form-control" maxlength="30" required>
+            </div>
+
+            <div class="form-group my-2">
+                <label for="poste_code">Code postal</label>
+                <input type="text" name='poste_code' id="post_code" class="form-control" maxlength="5" required>
+                <small id="err_postal" class="errmess text-danger">Saisir code à 5 chiffres !</small>
+            </div>
+
+            <div class="form-group my-2">
+                <label for="id_role">Statut</label>
+                <select name="id_role" id="id_role" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
+                <label for="id_agency">Agence</label>
+                <select name="id_agency" id="id_agency" class="form-control"></select>
+            </div>
+        </div>
+
+        <div class="bloc_edit_btn">
+            <button class="btn btn-info col-2 mx-3 mt-4" id="btn_edit_submit">Modifier</button> 
+            <a href="#" class="btn btn-danger col-2 mt-4 d-block" id="btn_cancel_edit">Annuler</a>
+        </div>
+    </form>
 </body>
 
 <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>

@@ -47,6 +47,7 @@ interface Payload{
 }
 
 interface UserProfile{
+    id?:number,
     first_name: string,
     last_name: string,
     user_name: string,
@@ -150,6 +151,17 @@ export async function userSignOut() {
     return true
 }
 
+export async function updateEmployee(id:number, profileData:UserProfile){
+    try{
+        console.log(profileData)
+        return axios.patch('http://localhost:8000/employees/'+id, profileData).then((response:any)=>{
+        }).catch((err:any)=>console.log(err))
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
 export async function getMissionActors(){
     return axios.get('http://localhost:8000/customers').then(async (response:any)=>{
         let actorsList:any = []
@@ -164,6 +176,18 @@ export async function getMissionActors(){
         }).catch((err:any)=>console.warn(err))
 
     }).catch((err:any)=>{console.warn(err)})
+}
+
+export async function getAgenciesList(){
+    return axios.get('http://localhost:8000/agencies').then(async (response:any)=>{
+        return response.data
+    }).catch((err:any)=>console.log(err))
+}
+
+export async function getRolesList(){
+    return axios.get('http://localhost:8000/roles').then(async (response:any)=>{
+        return response.data
+    }).catch((err:any)=>console.log(err))
 }
 
 export async function createNewMission(mission:MissionInterface){
