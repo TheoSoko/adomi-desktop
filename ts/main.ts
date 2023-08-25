@@ -17,6 +17,7 @@ import { userSignIn,
 
 
 import path from "path"
+import {clientCreation} from './backend/clientCreation'
 
 interface UserProfile {
     first_name: string,
@@ -57,6 +58,21 @@ interface MissionInterface {
     idCarer?: number,
     idRecurence: number
 }
+
+interface UserProfileInterface{
+    first_name: string,
+    last_name: string,
+    user_name: string,
+    password: string,
+    email: string,
+    phone: string,
+    street_name: string,
+    street_number: number,
+    post_code: string,
+    city: string,
+    id_agency: number,
+}
+
 const createWindow = (connexion: boolean) => {
     ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('localRessources', () => path.join(__dirname, "..",  'ressources'))
@@ -148,5 +164,9 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow(connectionStatus)
     })
     createWindow(connectionStatus)
+
+    ipcMain.handle('input-info', async (event:any,arg:UserProfileInterface)=>{
+        return await clientCreation(arg)
+    })
 })
 

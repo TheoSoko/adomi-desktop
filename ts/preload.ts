@@ -42,6 +42,24 @@ window.addEventListener('DOMContentLoaded', () => {
     if (element) element.innerText = "Hello from the other side"
 })
 
+
+interface UserProfileInterface{
+    first_name: string,
+    last_name: string,
+    user_name: string,
+    password: string,
+    email: string,
+    phone: string,
+    street_name: string,
+    street_number: number,
+    post_code: string,
+    city: string,
+    id_agency: number,
+}
+
+contextBridge.exposeInMainWorld('submitInfo', {
+    createCustomer: (inputInfo: UserProfileInterface) => ipcRenderer.invoke('input-info', inputInfo),
+    // createCustomer: (inputInfo: UserProfileInterface) => console.log(inputInfo),
+
 contextBridge.exposeInMainWorld('updateMission',{
     updateMission: (formData:(string | number)[])=> ipcRenderer.invoke('updateMission',formData)
-})
