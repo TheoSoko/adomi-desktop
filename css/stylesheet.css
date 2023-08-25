@@ -190,12 +190,12 @@ Pour override bootstrap
 
 .search_result {
     border: 2px solid  black;
-    margin-block: 17px;
+    margin-block: 30px;
     padding-top: 8.5px;
     padding-bottom: 8.5px;
     font-size: 15px;
     border-radius: 5px;
-    margin-inline: 5px;
+    margin-inline: 1px;
     text-align: center;
 }
 
@@ -273,6 +273,67 @@ Pour override bootstrap
 .container-flex {
     display:flex;
 }
+
+.link-button {
+    display: inline-block;
+    font-weight: 600;
+    margin-top: 33px;
+    margin-bottom: 16px;
+    color: white;
+    background-color: #9EDEF3;
+    border-color: #9EDEF3;
+    font-size: 17px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    padding: 5.5px 15px;
+    border-radius: 7px;
+    border: 2px solid #9EDEF3;  
+     /*transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;*/
+}
+
+.link-button:hover {
+    color: white;
+    background-color: #7ab6ca;
+    border-color: #7eb9cc;
+ }
+  
+
+.big_ass_card {
+    border: 2px solid  black;
+    margin-block: 30px;
+    padding-top: 8.5px;
+    padding-bottom: 8.5px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-inline: 1px;
+    text-align: center;
+    width: 50%;
+    margin-inline: auto
+
+}
+
+.dash_card_text {
+    padding-block: 5px;
+    margin-block: 1px;
+}
+
+#short_text{
+    height: 82px;
+    text-align: left !important;
+    margin-inline: 13px;
+}
+
+.dashboard_card {
+    border: 2px solid  black;
+    margin-block: 30px;
+    padding-top: 8.5px;
+    padding-bottom: 8.5px;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-inline: 1px;
+}
+
 
 
 .affiche-mission{

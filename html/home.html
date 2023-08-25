@@ -11,33 +11,25 @@
         <h1 class="mt-4 pt-4" id="vorld">Bienvenue</h1>
         <h2 class="mt-3 pt-1" id="intro_message">Monsieur employé</h2>
         <p class="mt-5 mb-4 pt-2 fs-5">Ci dessous les dernières demandes : </p>
-        <p class="mt-3 mb-4 fs-6" id="intro_2"> </p>
-
+        <p class="mt-3 mb-4 fs-6" id="intro_2"></p>
     </div>
-    <div class="row" id="client_list">
-        <div class="col-3 search_result">
-            <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
-            <p class="search_result_text">${client.phone}</p>
-            <p class="search_result_text">${client.post_code} ${client.city}</p>
-            <a id="client_profile_link" href="./client_profile.html?profileId=1">Profile</a>
+
+    <div class="text-center">
+        <h2 class="mt-5 mb-4">Missions en attente</h2>
+        <div class="row justify-content-evenly" id="missions_list">
+        
         </div>
-        <div class="col-3 search_result">
-            <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
-            <p class="search_result_text">${client.phone}</p>
-            <p class="search_result_text">${client.post_code} ${client.city}</p>
-            <a id="client_profile_link" href="./client_profile.html?profileId=1">Profile</a>
-        </div>
-        <div class="col-3 search_result">
-            <p class="search_result_text"> ${client.first_name} ${client.last_name} </p>
-            <p class="search_result_text">${client.phone}</p>
-            <p class="search_result_text">${client.post_code} ${client.city}</p>
-            <a id="client_profile_link" href="./client_profile.html?profileId=1">Profile</a>
-        </div>
+    
+        <h2 class="mt-5 mb-4"">Dernières Requêtes</h2>
+        <div class="row justify-content-evenly" id="requests_list">
+        
+        </div>    
     </div>
 </body>
 
 <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
 <script type="module" src="../js/frontend/scripts/home.js"></script>
 <script type="module" src="../js/frontend/scripts/navbar_include.js"></script>
+
 
 </html>

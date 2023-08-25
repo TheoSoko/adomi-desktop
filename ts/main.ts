@@ -1,6 +1,21 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
-import { userSignIn, userSignOut, getProfile, searchProfiles, fetchProfileData, fetchMissions, getMissionActors, createNewMission, getMissionData, updateMission} from './backend/requests'
+import { userSignIn, 
+        userSignOut, 
+        getProfile, 
+        searchProfiles,
+        fetchProfileData, 
+        fetchMissions, 
+        fetchGeneralRequests, 
+        fetchPendingMissions, 
+        fetchOneGeneralRequest,
+        getMissionActors, 
+        createNewMission,
+        getMissionData,
+        updateMission,
+  } from './backend/requests'
+
+
 import path from "path"
 
 interface UserProfile{
@@ -49,6 +64,9 @@ const createWindow = (connexion: boolean) => {
     ipcMain.handle('mainDirPath', () => __dirname)
     ipcMain.handle('fetchProfileData', fetchProfileData)
     ipcMain.handle("fetchMissions", fetchMissions)
+    ipcMain.handle("fetchGeneralRequests", fetchGeneralRequests)
+    ipcMain.handle("fetchPendingMissions", fetchPendingMissions)
+    ipcMain.handle("fetchOneGeneralRequest", fetchOneGeneralRequest)
     ipcMain.handle("getMissionData",getMissionData)
     
     const win = new BrowserWindow({
@@ -91,7 +109,7 @@ app.whenReady().then(() => {
         })
     })
 
-    ipcMain.handle('getUserProfile', async ()=>await storageSettings.get('user.data'))
+    ipcMain.handle('getUserProfile', async () => await storageSettings.get('user.data'))
 
 
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie
