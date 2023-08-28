@@ -15,6 +15,10 @@ const createWindow = (connexion) => {
     ipcMain.handle('mainDirPath', () => __dirname);
     ipcMain.handle('fetchProfileData', requests_1.fetchProfileData);
     ipcMain.handle("fetchMissions", requests_1.fetchMissions);
+    ipcMain.handle("fetchGeneralRequests", requests_1.fetchGeneralRequests);
+    ipcMain.handle("fetchPendingMissions", requests_1.fetchPendingMissions);
+    ipcMain.handle("fetchOneGeneralRequest", requests_1.fetchOneGeneralRequest);
+    ipcMain.handle("getMissionData", requests_1.getMissionData);
     const win = new BrowserWindow({
         width: 1600,
         height: 900,
@@ -39,7 +43,6 @@ app.whenReady().then(() => {
                     storageSettings.unsetSync();
                     connectionStatus = true;
                     await storageSettings.set("user", { data: result });
-                    // storageSettings.get('user.data').then((profile:any)=>console.log(profile))
                     return true;
                 });
             }
@@ -62,11 +65,42 @@ app.whenReady().then(() => {
             return response;
         });
     });
+    ipcMain.handle('getRoles', () => {
+        return (0, requests_1.getRolesList)().then((response) => {
+            return response;
+        });
+    });
+    ipcMain.handle('getAgencies', () => {
+        return (0, requests_1.getAgenciesList)().then((response) => {
+            return response;
+        });
+    });
     ipcMain.handle('createNewMission', (event, arg) => {
         storageSettings.get('user.data').then((user) => {
             arg.idEmployee = user.id;
             console.log(arg);
             return (0, requests_1.createNewMission)(arg);
+        });
+    });
+    ipcMain.handle('updateProfile', async (event, arg) => {
+        storageSettings.get('user.data').then((user) => {
+            return (0, requests_1.updateEmployee)(user.id, arg).then(async (response) => {
+                if (response[0] === true) {
+                    return (0, requests_1.userSignOut)().then(() => {
+                        connectionStatus = false;
+                    });
+                }
+                else {
+                    console.log('erreur requete : ', response);
+                }
+            });
+        });
+    });
+    ipcMain.handle('updateMission', (event, arg) => {
+        storageSettings.get('user.data').then((user) => {
+            arg.idEmployee = user.id;
+            console.log(arg);
+            return (0, requests_1.updateMission)(arg);
         });
     });
     app.on('activate', () => {
