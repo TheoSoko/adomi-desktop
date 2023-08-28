@@ -119,8 +119,6 @@ app.whenReady().then(() => {
                     storageSettings.unsetSync();
                     connectionStatus = true;
                     await storageSettings.set("user", {data: result})
-
-                    // storageSettings.get('user.data').then((profile:any)=>console.log(profile))
                     
                     return true
                 })
@@ -171,10 +169,21 @@ app.whenReady().then(() => {
     })
 
 
-    ipcMain.handle('updateProfile', (event:any, arg:UserProfile)=>{
+    ipcMain.handle('updateProfile', async (event:any, arg:UserProfile)=>{
         storageSettings.get('user.data').then((user:any)=>{
-        console.log(arg)
-            return updateEmployee(user.id, arg);
+            return updateEmployee(user.id, arg).then(async (response:[boolean, (UserProfile | string)])=>{
+                if(response[0] === true){
+                    return userSignOut().then(()=>{
+                        connectionStatus = false;
+                    })  
+                    
+                }
+                else{
+                    console.log('erreur requete : ', response)
+                }
+            });
+        })
+    })
 
     ipcMain.handle('updateMission',(event:any, arg:MissionInterface)=>{
         storageSettings.get('user.data').then((user:any)=>{
@@ -193,4 +202,4 @@ app.whenReady().then(() => {
         return await clientCreation(arg)
     })
 })
-
+    

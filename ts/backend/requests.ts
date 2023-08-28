@@ -119,6 +119,7 @@ export async function getProfile() {
             console.log("err at getProfile / fetchProfileData", profile[1])
             return false
         }
+        console.log(profile[1])
         return profile[1]
     } else {
         console.log('err storage')
@@ -140,7 +141,6 @@ export async function fetchProfileData(event: wtf, userId: string): Promise<[boo
     if (data.status != 200){
         return [false, await data.json()]
     }
-
     return [true, await data.json()]
 }
   
@@ -153,8 +153,16 @@ export async function userSignOut() {
 
 export async function updateEmployee(id:number, profileData:UserProfile){
     try{
-        console.log(profileData)
-        return axios.patch('http://localhost:8000/employees/'+id, profileData).then((response:any)=>{
+        return axios.patch('http://localhost:8000/employees/'+id, profileData).then(async (response:any)=>{
+            if(!response){
+                return [false, 'erreur requête API']
+            }
+            if(response.status != 200){
+                return [false, await response.statusMessage]
+
+            }
+            return [true, await response.data]
+
         }).catch((err:any)=>console.log(err))
     }
     catch(err){

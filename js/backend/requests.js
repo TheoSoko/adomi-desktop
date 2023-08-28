@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchMissions = exports.createNewMission = exports.getMissionActors = exports.userSignOut = exports.fetchProfileData = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
+exports.updateMission = exports.getMissionData = exports.fetchOneGeneralRequest = exports.fetchPendingMissions = exports.fetchGeneralRequests = exports.fetchMissions = exports.createNewMission = exports.getRolesList = exports.getAgenciesList = exports.getMissionActors = exports.updateEmployee = exports.userSignOut = exports.fetchProfileData = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
 const axios = require('axios');
 const storageSettings = require('electron-settings');
 const apiBase = "http://localhost:8000";
@@ -66,6 +66,7 @@ async function getProfile() {
             console.log("err at getProfile / fetchProfileData", profile[1]);
             return false;
         }
+        console.log(profile[1]);
         return profile[1];
     }
     else {
@@ -94,6 +95,23 @@ async function userSignOut() {
     return true;
 }
 exports.userSignOut = userSignOut;
+async function updateEmployee(id, profileData) {
+    try {
+        return axios.patch('http://localhost:8000/employees/' + id, profileData).then(async (response) => {
+            if (!response) {
+                return [false, 'erreur requête API'];
+            }
+            if (response.status != 200) {
+                return [false, await response.statusMessage];
+            }
+            return [true, await response.data];
+        }).catch((err) => console.log(err));
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+exports.updateEmployee = updateEmployee;
 async function getMissionActors() {
     return axios.get('http://localhost:8000/customers').then(async (response) => {
         let actorsList = [];
@@ -107,6 +125,18 @@ async function getMissionActors() {
     }).catch((err) => { console.warn(err); });
 }
 exports.getMissionActors = getMissionActors;
+async function getAgenciesList() {
+    return axios.get('http://localhost:8000/agencies').then(async (response) => {
+        return response.data;
+    }).catch((err) => console.log(err));
+}
+exports.getAgenciesList = getAgenciesList;
+async function getRolesList() {
+    return axios.get('http://localhost:8000/roles').then(async (response) => {
+        return response.data;
+    }).catch((err) => console.log(err));
+}
+exports.getRolesList = getRolesList;
 async function createNewMission(mission) {
     try {
         // console.log(mission)
@@ -134,3 +164,84 @@ async function fetchMissions(event, userId, role) {
     return [true, await data.json()];
 }
 exports.fetchMissions = fetchMissions;
+async function fetchGeneralRequests() {
+    const data = await fetch(`http://localhost:8000/general-requests`)
+        .catch(err => {
+        console.log(err);
+        return null;
+    });
+    if (!data) {
+        return Promise.reject("Erreur à la requête HTTP");
+    }
+    const res = await data.json();
+    if (data.status != 200) {
+        console.log("ERR at fetchGeneralRequests, status code is ", data.status, "res is ", res);
+        return [false, res];
+    }
+    console.log(res);
+    return [true, res];
+}
+exports.fetchGeneralRequests = fetchGeneralRequests;
+async function fetchPendingMissions() {
+    const data = await fetch(`http://localhost:8000/missions?filter=validated&value=0`)
+        .catch(err => {
+        console.log(err);
+        return null;
+    });
+    if (!data) {
+        return Promise.reject("Erreur à la requête HTTP");
+    }
+    const res = await data.json();
+    if (data.status != 200) {
+        return [false, res];
+    }
+    return [true, res];
+}
+exports.fetchPendingMissions = fetchPendingMissions;
+async function fetchOneGeneralRequest(event, id) {
+    const data = await fetch(`http://localhost:8000/general-requests/${id}`)
+        .catch(err => {
+        console.log(err);
+        return null;
+    });
+    if (!data) {
+        return Promise.reject("Erreur à la requête HTTP");
+    }
+    const res = await data.json();
+    if (data.status != 200) {
+        console.log("ERR at fetchOneGeneralRequest, status code is ", data.status, "res is ", res);
+        return [false, res];
+    }
+    console.log(res);
+    return [true, res];
+}
+exports.fetchOneGeneralRequest = fetchOneGeneralRequest;
+async function getMissionData(event, missionId) {
+    const data = await fetch(`http://localhost:8000/missions/${missionId}`)
+        .catch(err => {
+        console.log("erreur caught");
+        console.log(err);
+        return null;
+    });
+    if (!data) {
+        return Promise.reject("Erreur à la requête HTTP");
+    }
+    if (data.status != 200) {
+        return [false, await data.json()];
+    }
+    return [true, await data.json()];
+}
+exports.getMissionData = getMissionData;
+async function updateMission(mission) {
+    console.log("passe dans updateMission desktop");
+    try {
+        // console.log(mission)
+        return axios.patch('http://localhost:8000/missions/' + mission.id, mission).then((response) => {
+            console.log('update réussie');
+        }).catch((err) => console.log(err));
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+exports.updateMission = updateMission;

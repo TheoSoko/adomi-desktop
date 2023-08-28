@@ -32,10 +32,9 @@ interface UserProfile{
 }
 
 (<any>window).submitForm.getUserProfile().then(async (profile:UserProfile) => {
-
     const civilCardText = addProfileData([profile.first_name, profile.last_name, profile.user_name, profile.role.label], ['Nom', 'Prénom', 'Pseudo', 'Statut'])
 
-    const contactCardText = addProfileData([profile.email, profile.street_number + ', ' + profile.street_name, profile.city + ' '+ profile.post_code, profile.phone, profile.agency.name + ', '+ profile.agency.adress], ['Email', 'Adresse','Ville', 'Téléphone', 'Agence'])
+    const contactCardText = addProfileData([profile.email, profile.street_number + ', ' + profile.street_name, profile.city + ' '+ profile.post_code, profile.phone, profile.agency.name + ', '+ profile.agency.adress], ['Email', 'Adresse', 'Ville', 'Téléphone', 'Agence'])
 
     etatCivilCard.innerHTML = civilCardText;
     contactCard.innerHTML = contactCardText;
@@ -54,10 +53,13 @@ interface UserProfile{
         displayProfileForm(profile, agencies, roles)
 
         profilEditForm.addEventListener('change', profileFormControl);
+    })
 
-        btn_submit.addEventListener('click', ()=>{
-            (<any>window).exposeProfileData.updateProfile()
-        })
+    btn_submit.addEventListener('click', ()=>{
+
+        let editedProfile:any = {first_name: profile_first_nameInput.value, last_name: profile_last_nameInput.value, user_name: profile_user_nameInput.value, email: profile_emailInput.value, phone: profile_phoneInput.value, street_name: profile_street_nameInput.value, street_number: profile_street_numberInput.value, post_code: profile_post_codeInput.value, city: profile_city_Input.value, id_role: profile_id_roleList.value, id_agency: profile_id_agencyList.value};
+
+        return (<any>window).exposeProfileData.updateProfile(editedProfile)
     })
 
     btn_cancelEdit.addEventListener('click', ()=>{

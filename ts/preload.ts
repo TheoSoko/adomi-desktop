@@ -20,7 +20,7 @@ contextBridge.exposeInMainWorld('submitForm', {
 contextBridge.exposeInMainWorld('exposeProfileData', {
     profileData: () => ipcRenderer.invoke('profileData'),
     connectionStatus: () => ipcRenderer.invoke('connectionStatus'),
-    updateProfile : (formData: (string | number)[])=> ipcRenderer.invoke('updateProfile', formData)
+    updateProfile : (formData: string[])=> ipcRenderer.invoke('updateProfile', formData)
 })
 
 contextBridge.exposeInMainWorld('exposeMissionData',{
@@ -63,6 +63,7 @@ interface UserProfileInterface{
 contextBridge.exposeInMainWorld('submitInfo', {
     createCustomer: (inputInfo: UserProfileInterface) => ipcRenderer.invoke('input-info', inputInfo),
     // createCustomer: (inputInfo: UserProfileInterface) => console.log(inputInfo),
-
+})
 contextBridge.exposeInMainWorld('updateMission',{
     updateMission: (formData:(string | number)[])=> ipcRenderer.invoke('updateMission',formData)
+})
