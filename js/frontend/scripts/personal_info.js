@@ -1,21 +1,21 @@
 "use strict";
-const nomInput = document.querySelector("[name='nom']");
-const prenomInput = document.querySelector("[name='prenom']");
-const utilisateurInput = document.querySelector("[name='utilisateur']");
-const passWordInput = document.querySelector("[name='password']");
-const emailInput = document.querySelector("[name='email']");
-const teleInput = document.querySelector("[name='tele']");
-const numInput = document.querySelector("[name='num']");
-const rueInput = document.querySelector("[name='rue']");
-const villeInput = document.querySelector("[name='ville']");
-const codePostalInput = document.querySelector("[name='codepostal']");
-const submitButton = document.querySelector("[type='submit']");
+const nomCarerInput = document.querySelector("[name='nom']");
+const prenomCarerInput = document.querySelector("[name='prenom']");
+const utilisateurCarerInput = document.querySelector("[name='utilisateur']");
+const passWordCarerInput = document.querySelector("[name='password']");
+const emailCarerInput = document.querySelector("[name='email']");
+const teleCarerInput = document.querySelector("[name='tele']");
+const numCarerInput = document.querySelector("[name='num']");
+const rueCarerInput = document.querySelector("[name='rue']");
+const villeCarerInput = document.querySelector("[name='ville']");
+const codePostalCarerInput = document.querySelector("[name='codepostal']");
+const submitCarerButton = document.querySelector("[type='submit']");
 submitButton.addEventListener('click', function (e) {
     e.preventDefault();
-    console.log(nomInput.value);
-    if (nomInput.value.length && prenomInput.value.length && utilisateurInput.value.length && emailInput.value.length && teleInput.value.length && rueInput.value.length && villeInput.value.length && codePostalInput.value.length) {
+    console.log(nomCarerInput.value);
+    if (nomCarerInput.value.length && prenomCarerInput.value.length && utilisateurCarerInput.value.length && emailCarerInput.value.length && teleCarerInput.value.length && rueCarerInput.value.length && villeCarerInput.value.length && codePostalCarerInput.value.length) {
         console.log('condition ok');
-        let inputInfo = { first_name: prenomInput.value, last_name: nomInput.value, user_name: utilisateurInput.value, password: passWordInput.value, email: emailInput.value, phone: teleInput.value, street_name: rueInput.value, street_number: parseInt(numInput.value), post_code: codePostalInput.value, city: villeInput.value };
+        let inputInfo = { first_name: prenomCarerInput.value, last_name: nomCarerInput.value, user_name: utilisateurCarerInput.value, password: passWordCarerInput.value, email: emailCarerInput.value, phone: teleCarerInput.value, street_name: rueCarerInput.value, street_number: parseInt(numCarerInput.value), post_code: codePostalCarerInput.value, city: villeCarerInput.value };
         console.log(inputInfo.first_name);
         window.submitInfo.createCustomer(inputInfo).catch((err) => { console.log(err); });
     }
@@ -25,10 +25,10 @@ submitButton.addEventListener('click', function (e) {
 });
 document.getElementById("Client-Form")?.addEventListener('change', creationFrom);
 function creationFrom() {
-    let passwordVal = passWordInput.value;
-    let emailVal = emailInput.value;
-    let teleVal = teleInput.value;
-    let codePostalVal = codePostalInput.value;
+    let passwordVal = passWordCarerInput.value;
+    let emailVal = emailCarerInput.value;
+    let teleVal = teleCarerInput.value;
+    let codePostalVal = codePostalCarerInput.value;
     const err_password = document.getElementById('err_password');
     const err_email = document.getElementById('err_email');
     const err_tele = document.getElementById('err_tele');

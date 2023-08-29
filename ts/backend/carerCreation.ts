@@ -22,7 +22,7 @@ interface UserProfile{
     id_agency?: number
 }
 
-export async function clientCreation (personal_info:UserProfile) {
+export async function carerCreation (personal_info:UserProfile) {
     console.log(personal_info)
     let agency = await storageSettings.get('user.data').then((user:any)=>{
         console.log(user);
@@ -34,5 +34,5 @@ export async function clientCreation (personal_info:UserProfile) {
     // data = agency.concat(personal_info)
     console.log(agency);
     
-    return axios.post('http://localhost:8000/customers', personal_info).then(() =>console.log('ok'))
+    return axios.post('http://localhost:8000/carers', personal_info).then(() =>console.log('ok'))
 }
