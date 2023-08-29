@@ -27,7 +27,7 @@ export async function clientCreation (personal_info:UserProfile) {
     let agency = await storageSettings.get('user.data').then((user:any)=>{
         console.log(user);
         
-        return user[1].id_agency
+        return user.id_agency
     } )
     personal_info.id_agency = agency;
     // var data:UserProfile[] = []
