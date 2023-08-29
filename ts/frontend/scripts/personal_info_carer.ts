@@ -1,14 +1,14 @@
-const nomCarerInput = document.querySelector("[name='nom']") as HTMLInputElement;
-const prenomCarerInput = document.querySelector("[name='prenom']") as HTMLInputElement;
-const utilisateurCarerInput = document.querySelector("[name='utilisateur']") as HTMLInputElement;
-const passWordCarerInput = document.querySelector("[name='password']") as HTMLInputElement;
-const emailCarerInput = document.querySelector("[name='email']") as HTMLInputElement;
-const teleCarerInput = document.querySelector("[name='tele']") as HTMLInputElement;
-const numCarerInput = document.querySelector("[name='num']") as HTMLInputElement;
-const rueCarerInput = document.querySelector("[name='rue']") as HTMLInputElement;
-const villeCarerInput = document.querySelector("[name='ville']") as HTMLInputElement;
-const codePostalCarerInput = document.querySelector("[name='codepostal']") as HTMLInputElement;
-const submitCarerButton = document.querySelector("[type='submit']") as HTMLInputElement;
+const nomInput = document.querySelector("[name='nom']") as HTMLInputElement;
+const prenomInput = document.querySelector("[name='prenom']") as HTMLInputElement;
+const utilisateurInput = document.querySelector("[name='utilisateur']") as HTMLInputElement;
+const passWordInput = document.querySelector("[name='password']") as HTMLInputElement;
+const emailInput = document.querySelector("[name='email']") as HTMLInputElement;
+const teleInput = document.querySelector("[name='tele']") as HTMLInputElement;
+const numInput = document.querySelector("[name='num']") as HTMLInputElement;
+const rueInput = document.querySelector("[name='rue']") as HTMLInputElement;
+const villeInput = document.querySelector("[name='ville']") as HTMLInputElement;
+const codePostalInput = document.querySelector("[name='codepostal']") as HTMLInputElement;
+const submitButton = document.querySelector("[type='submit']") as HTMLInputElement;
 
 interface UserProfileInterfaces{
     first_name: string,
@@ -30,10 +30,10 @@ interface Window {
 
 submitButton.addEventListener('click', function(e){
     e.preventDefault();
-    console.log(nomCarerInput.value);
-    if(nomCarerInput.value.length && prenomCarerInput.value.length && utilisateurCarerInput.value.length && emailCarerInput.value.length && teleCarerInput.value.length && rueCarerInput.value.length && villeCarerInput.value.length && codePostalCarerInput.value.length){
+    console.log(nomInput.value);
+    if(nomInput.value.length && prenomInput.value.length && utilisateurInput.value.length && emailInput.value.length && teleInput.value.length && rueInput.value.length && villeInput.value.length && codePostalInput.value.length){
         console.log('condition ok')
-        let inputInfo:UserProfileInterfaces = {first_name: prenomCarerInput.value, last_name: nomCarerInput.value, user_name:utilisateurCarerInput.value,password:passWordCarerInput.value, email: emailCarerInput.value, phone: teleCarerInput.value, street_name:rueCarerInput.value, street_number:parseInt(numCarerInput.value) ,post_code:codePostalCarerInput.value, city:villeCarerInput.value};
+        let inputInfo:UserProfileInterfaces = {first_name: prenomInput.value, last_name: nomInput.value, user_name:utilisateurInput.value,password:passWordInput.value, email: emailInput.value, phone: teleInput.value, street_name:rueInput.value, street_number:parseInt(numInput.value) ,post_code:codePostalInput.value, city:villeInput.value};
         console.log(inputInfo.first_name)
         window.submitInfo.createCustomer(inputInfo).catch((err:any)=>{console.log(err)})
     }else{
@@ -41,14 +41,14 @@ submitButton.addEventListener('click', function(e){
     }
 })
 
-document.getElementById("Client-Form")?.addEventListener('change', creationFrom)
+document.getElementById("Carer-Form")?.addEventListener('change', creationFrom)
 
-function creationFrom() {
+function creationFromCarer() {
     
-    let passwordVal =   passWordCarerInput.value;
-    let emailVal = emailCarerInput.value;
-    let teleVal = teleCarerInput.value;
-    let codePostalVal = codePostalCarerInput.value;
+    let passwordVal =   passWordInput.value;
+    let emailVal = emailInput.value;
+    let teleVal = teleInput.value;
+    let codePostalVal = codePostalInput.value;
 
     const err_password = document.getElementById('err_password') as HTMLInputElement;
     const err_email = document.getElementById('err_email') as HTMLInputElement;
