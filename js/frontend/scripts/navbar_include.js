@@ -47,7 +47,7 @@ function modalForNav() {
     let ismallWindow = window.innerWidth < 992;
     const profileSearchPos = document.querySelector('#create_profile')?.getBoundingClientRect().left;
     modal.style.left = profileSearchPos + (isBigWindow ? 0 : 0) + "px";
-    modal.style.top = (isBigWindow ? "79px" : "79px");
+    modal.style.top = (isBigWindow ? "96px" : "96px");
     modal.style.display = "block";
     const profileCreatePos = document.querySelector('#create_profile')?.getBoundingClientRect().left;
 }

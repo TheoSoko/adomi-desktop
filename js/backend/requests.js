@@ -1,51 +1,51 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMission = exports.getMissionData = exports.fetchOneGeneralRequest = exports.fetchPendingMissions = exports.fetchGeneralRequests = exports.fetchMissions = exports.createNewMission = exports.getRolesList = exports.getAgenciesList = exports.getMissionActors = exports.updateEmployee = exports.userSignOut = exports.fetchProfileData = exports.getProfile = exports.userSignIn = exports.searchProfiles = void 0;
+exports.updateMission = exports.getMissionData = exports.fetchOneGeneralRequest = exports.fetchPendingMissions = exports.fetchGeneralRequests = exports.fetchMissions = exports.createNewMission = exports.getRolesList = exports.getAgenciesList = exports.getMissionActors = exports.updateEmployee = exports.userSignOut = exports.fetchProfileData = exports.userSignIn = exports.searchProfiles = void 0;
 const axios = require('axios');
 const storageSettings = require('electron-settings');
-const apiBase = "http://localhost:8000";
+const apiBase = "https://adomi-api.onrender.com";
+const authHeader = async () => ({ "Authorization": "bearer " + await storageSettings.get('token.data') });
+/**
+    Retourne une promesse de [booléen, réponse]
+    Le booléen indique si la requête HTTP a fonctionné normalement
+    Le deuxième élément, est un tableau d'users OU un objet d'erreur standard
+    Le booléen indique ce qu'il se trouve dans l'autre élément.
+*/
 const searchProfiles = async (event, role, query, page) => {
-    //console.log("query to send : ", "http://localhost:8000/customers/search?q="+query+"&page="+page)
-    let res = await fetch(apiBase + "/" + role + "/search?q=" + query + "&page=" + page)
+    let res = await fetch(apiBase + "/" + role + "/search?q=" + query + "&page=" + page, { headers: { ...await authHeader() } })
         .catch(err => {
         console.log("err from fetch", err);
     });
-    if (!res) {
+    if (!res)
         return Promise.reject("err from fetch");
-    }
-    /*
-        Retourne une promesse de [booléen, réponse]
-        Le booléen indique si la requête HTTP a fonctionné normalement
-        Le deuxième élément, est un tableau d'users OU un objet d'erreur standard
-        Le booléen indique ce qu'il se trouve dans l'autre élément.
-    */
-    if (res.status < 200 || res.status > 299) {
-        //console.log('http err, resolve with array')
+    if (!res.ok)
         return Promise.resolve([false, await res.json()]);
-    }
-    return Promise.resolve([true, await res.json()]);
+    else
+        return Promise.resolve([true, await res.json()]);
 };
 exports.searchProfiles = searchProfiles;
 async function userSignIn(login) {
-    return axios.post('http://localhost:8000/sign-in', login)
-        .then((response) => {
-        if (response.status >= 200 || response.status <= 299) {
-            return setDataStorage(response.data.id.toString(), response.data.token, true).
-                then(() => {
-                return response;
-            })
-                .catch((err) => {
-                console.warn(err);
-            });
-        }
-        else {
-            return response;
-        }
+    const res = await fetch(apiBase + '/sign-in', {
+        method: 'POST',
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(login)
     })
-        .catch((err) => {
-        const errObj = { status: err.response.status, statusText: err.response.statusText, message: err.response.data.message };
-        return errObj;
-    });
+        .catch((err) => { console.log("err at sign-in", err); });
+    if (!res)
+        return Promise.reject("Une erreur inconnue est survenue");
+    if (res.status == 401) {
+        let json = await res.json();
+        return Promise.reject(json.message);
+    }
+    if (!res.ok) {
+        console.log("res.status, res.message", (res.status, '\n', await res.json()).message);
+        return Promise.reject("Une erreur inconnue est survenue");
+    }
+    let json = await res.json().catch(err => { console.log(err); return null; });
+    if (!json)
+        return Promise.reject("Une erreur inconnue est survenue");
+    await setDataStorage(json.id.toString(), json.token, true);
+    return Promise.resolve();
 }
 exports.userSignIn = userSignIn;
 async function setDataStorage(id, token, connectStatus) {
@@ -58,25 +58,12 @@ async function setDataStorage(id, token, connectStatus) {
     storageSettings.get('token.data').then((value) => storageObj.token = value);
     return storageObj;
 }
-async function getProfile() {
-    if (storageSettings.has('id') && storageSettings.has('token')) {
-        const id = await storageSettings.get('id.data');
-        const profile = await fetchProfileData(0, id);
-        if (profile[0] == false) {
-            console.log("err at getProfile / fetchProfileData", profile[1]);
-            return false;
-        }
-        console.log(profile[1]);
-        return profile[1];
-    }
-    else {
-        console.log('err storage');
-        return false;
-    }
-}
-exports.getProfile = getProfile;
 async function fetchProfileData(event, userId) {
-    const data = await fetch(`http://localhost:8000/users/${userId}`)
+    const data = await fetch(`${apiBase}/users/${userId}`, {
+        headers: {
+            ...await authHeader()
+        }
+    })
         .catch(err => {
         console.log(err);
     });
@@ -113,34 +100,33 @@ async function updateEmployee(id, profileData) {
 }
 exports.updateEmployee = updateEmployee;
 async function getMissionActors() {
-    return axios.get('http://localhost:8000/customers').then(async (response) => {
-        let actorsList = [];
-        const clientList = response.data;
-        actorsList.push(clientList);
-        return axios.get('http://localhost:8000/carers').then(async (response) => {
-            const CarerList = response.data;
-            actorsList.push(CarerList);
-            return actorsList;
-        }).catch((err) => console.warn(err));
-    }).catch((err) => { console.warn(err); });
+    let actorsList = [];
+    const customers = await fetch(apiBase + '/customers', { headers: { ...await authHeader() } })
+        .catch((err) => { console.log("err at getMissionActors when fetching customers"); });
+    const carers = await fetch(apiBase + '/carers', { headers: { ...await authHeader() } })
+        .catch((err) => { console.log("err at getMissionActors when fetching carers"); });
+    actorsList.push(await customers.json());
+    actorsList.push(await carers.json());
+    console.log(actorsList);
+    return actorsList;
 }
 exports.getMissionActors = getMissionActors;
 async function getAgenciesList() {
-    return axios.get('http://localhost:8000/agencies').then(async (response) => {
-        return response.data;
-    }).catch((err) => console.log(err));
+    return fetch(apiBase + '/agencies', { headers: await authHeader() })
+        .then((response) => response.data).
+        catch((err) => { console.log(err); });
 }
 exports.getAgenciesList = getAgenciesList;
 async function getRolesList() {
-    return axios.get('http://localhost:8000/roles').then(async (response) => {
-        return response.data;
-    }).catch((err) => console.log(err));
+    return fetch(apiBase + '/roles', { headers: await authHeader() })
+        .then((response) => response.data).
+        catch((err) => { console.log(err); });
 }
 exports.getRolesList = getRolesList;
 async function createNewMission(mission) {
     try {
         // console.log(mission)
-        return axios.post('http://localhost:8000/missions', mission).then((response) => {
+        return axios.post(apiBase + '/missions', mission).then((response) => {
             console.log('insertion réussie');
         }).catch((err) => console.log(err));
     }
@@ -150,7 +136,11 @@ async function createNewMission(mission) {
 }
 exports.createNewMission = createNewMission;
 async function fetchMissions(event, userId, role) {
-    const data = await fetch(`http://localhost:8000/users/${userId}/missions?role=${role}`)
+    const data = await fetch(`${apiBase}/users/${userId}/missions?role=${role}`, {
+        headers: {
+            ...await authHeader()
+        }
+    })
         .catch(err => {
         console.log(err);
         return null;
@@ -165,7 +155,9 @@ async function fetchMissions(event, userId, role) {
 }
 exports.fetchMissions = fetchMissions;
 async function fetchGeneralRequests() {
-    const data = await fetch(`http://localhost:8000/general-requests`)
+    const data = await fetch(`${apiBase}/general-requests`, {
+        headers: { ...await authHeader() }
+    })
         .catch(err => {
         console.log(err);
         return null;
@@ -183,7 +175,9 @@ async function fetchGeneralRequests() {
 }
 exports.fetchGeneralRequests = fetchGeneralRequests;
 async function fetchPendingMissions() {
-    const data = await fetch(`http://localhost:8000/missions?filter=validated&value=0`)
+    const data = await fetch(`${apiBase}/missions?filter=validated&value=0`, {
+        headers: { ...await authHeader() }
+    })
         .catch(err => {
         console.log(err);
         return null;
@@ -199,17 +193,17 @@ async function fetchPendingMissions() {
 }
 exports.fetchPendingMissions = fetchPendingMissions;
 async function fetchOneGeneralRequest(event, id) {
-    const data = await fetch(`http://localhost:8000/general-requests/${id}`)
+    const res = await fetch(`${apiBase}/general-requests/${id}`, { headers: { ...await authHeader() } })
         .catch(err => {
         console.log(err);
         return null;
     });
-    if (!data) {
+    if (!res) {
         return Promise.reject("Erreur à la requête HTTP");
     }
-    const res = await data.json();
-    if (data.status != 200) {
-        console.log("ERR at fetchOneGeneralRequest, status code is ", data.status, "res is ", res);
+    const json = await res.json();
+    if (!res.ok) {
+        console.log("ERR at fetchOneGeneralRequest, status code is ", json.status, "res is ", res);
         return [false, res];
     }
     console.log(res);
@@ -217,31 +211,22 @@ async function fetchOneGeneralRequest(event, id) {
 }
 exports.fetchOneGeneralRequest = fetchOneGeneralRequest;
 async function getMissionData(event, missionId) {
-    const data = await fetch(`http://localhost:8000/missions/${missionId}`)
+    const res = await fetch(`${apiBase}/missions/${missionId}`, { headers: { ...await authHeader() } })
         .catch(err => {
-        console.log("erreur caught");
-        console.log(err);
-        return null;
+        console.log("err à getMissionData", err);
     });
-    if (!data) {
+    if (!res) {
         return Promise.reject("Erreur à la requête HTTP");
     }
-    if (data.status != 200) {
-        return [false, await data.json()];
+    if (!res.ok) {
+        return [false, await res.json()];
     }
-    return [true, await data.json()];
+    return [true, await res.json()];
 }
 exports.getMissionData = getMissionData;
 async function updateMission(mission) {
-    console.log("passe dans updateMission desktop");
-    try {
-        // console.log(mission)
-        return axios.patch('http://localhost:8000/missions/' + mission.id, mission).then((response) => {
-            console.log('update réussie');
-        }).catch((err) => console.log(err));
-    }
-    catch (err) {
-        console.log(err);
-    }
+    const res = await fetch(apiBase + '/missions', { headers: { ...await authHeader() } })
+        .catch((err) => { console.log("err dans updateMission", err); });
+    return await res.json();
 }
 exports.updateMission = updateMission;

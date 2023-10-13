@@ -7,7 +7,8 @@ loginFormBtn.addEventListener('click', function (e) {
     e.preventDefault();
     if (usernameInput.value.length && passwordInput.value.length) {
         let formData = { username: usernameInput.value, password: passwordInput.value };
-        window.submitForm.sendFormData(formData).then((data) => {
+        window.submitForm.sendFormData(formData)
+            .then((data) => {
             if (typeof data == "string") {
                 errMess.innerText = data;
             }
@@ -15,10 +16,9 @@ loginFormBtn.addEventListener('click', function (e) {
                 errMess.innerText = "";
                 window.location.href = "../html/profile_page.html";
             }
-            // return true
         }).catch((err) => { console.log(err); });
     }
     else {
-        console.log("renseignez tous les champs");
+        alert("Veuillez renseignez tous les champs, svp");
     }
 });

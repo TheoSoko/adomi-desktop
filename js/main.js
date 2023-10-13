@@ -36,19 +36,22 @@ app.whenReady().then(() => {
         if (process.platform !== 'darwin')
             app.quit();
     });
-    ipcMain.handle('form-data', async (event, arg) => {
-        return (0, requests_1.userSignIn)(arg).then((response) => {
-            if (response.statusText === "OK") {
-                return (0, requests_1.getProfile)().then(async (result) => {
-                    storageSettings.unsetSync();
-                    connectionStatus = true;
-                    await storageSettings.set("user", { data: result });
-                    return true;
-                });
+    ipcMain.handle('form-data', async (event, loginInfo) => {
+        return await (0, requests_1.userSignIn)(loginInfo)
+            .then(async () => {
+            const id = await storageSettings.get('id.data');
+            const profileRes = await (0, requests_1.fetchProfileData)(null, id);
+            if (profileRes[0] == false) {
+                console.log("error when fetching profile data", profileRes[1]);
+                return false;
             }
-            else {
-                return response.message;
-            }
+            connectionStatus = true;
+            await storageSettings.set("user", { data: profileRes[1] });
+            return true;
+        })
+            .catch((err) => {
+            console.log("erreur dans form-data", err);
+            return err;
         });
     });
     ipcMain.handle('getUserProfile', async () => await storageSettings.get('user.data'));
