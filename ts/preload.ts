@@ -19,7 +19,8 @@ contextBridge.exposeInMainWorld('submitForm', {
 
 contextBridge.exposeInMainWorld('exposeProfileData', {
     profileData: () => ipcRenderer.invoke('profileData'),
-    connectionStatus: () => ipcRenderer.invoke('connectionStatus')
+    connectionStatus: () => ipcRenderer.invoke('connectionStatus'),
+    updateProfile : (formData: string[])=> ipcRenderer.invoke('updateProfile', formData)
 })
 
 contextBridge.exposeInMainWorld('exposeMissionData',{
@@ -31,7 +32,9 @@ contextBridge.exposeInMainWorld('userLogout', {
 })
 
 contextBridge.exposeInMainWorld('exposeActors', {
-    getActors: ()=> ipcRenderer.invoke('getActors')
+    getActors: ()=> ipcRenderer.invoke('getActors'),
+    getAgencies: ()=> ipcRenderer.invoke('getAgencies'),
+    getRoles: ()=> ipcRenderer.invoke('getRoles')
 })
 
 contextBridge.exposeInMainWorld('createMission', {
@@ -42,6 +45,25 @@ window.addEventListener('DOMContentLoaded', () => {
     if (element) element.innerText = "Hello from the other side"
 })
 
+
+interface UserProfileInterface{
+    first_name: string,
+    last_name: string,
+    user_name: string,
+    password: string,
+    email: string,
+    phone: string,
+    street_name: string,
+    street_number: number,
+    post_code: string,
+    city: string,
+    id_agency: number,
+}
+
+contextBridge.exposeInMainWorld('submitInfo', {
+    createCustomer: (inputInfo: UserProfileInterface) => ipcRenderer.invoke('input-info', inputInfo),
+    // createCustomer: (inputInfo: UserProfileInterface) => console.log(inputInfo),
+})
 contextBridge.exposeInMainWorld('updateMission',{
     updateMission: (formData:(string | number)[])=> ipcRenderer.invoke('updateMission',formData)
 })

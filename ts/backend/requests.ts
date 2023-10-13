@@ -19,6 +19,7 @@ type Payload = {
 }
 
 interface UserProfile{
+    id?:number,
     first_name: string,
     last_name: string,
     user_name: string,
@@ -139,7 +140,6 @@ export async function fetchProfileData(event: unknown, userId: string): Promise<
     if (data.status != 200) {
         return [false, await data.json()]
     }
-
     return [true, await data.json()]
 }
   
@@ -148,6 +148,25 @@ export async function userSignOut() {
     //On vide totalement le localStorage
     await storageSettings.unsetSync();
     return true
+}
+
+export async function updateEmployee(id:number, profileData:UserProfile){
+    try{
+        return axios.patch('http://localhost:8000/employees/'+id, profileData).then(async (response:any)=>{
+            if(!response){
+                return [false, 'erreur requête API']
+            }
+            if(response.status != 200){
+                return [false, await response.statusMessage]
+
+            }
+            return [true, await response.data]
+
+        }).catch((err:any)=>console.log(err))
+    }
+    catch(err){
+        console.log(err);
+    }
 }
 
 export async function getMissionActors() {
@@ -164,6 +183,19 @@ export async function getMissionActors() {
 
     console.log(actorsList)
     return actorsList
+}
+
+
+export async function getAgenciesList() {
+    return fetch(apiBase + '/agencies', {headers: await authHeader()})
+    .then((response:any) =>  response.data).
+    catch((err:any) => { console.log(err) })
+}
+
+export async function getRolesList() {
+    return fetch(apiBase + '/roles', {headers: await authHeader()})
+    .then((response:any) =>  response.data).
+    catch((err:any) => { console.log(err) })
 }
 
 
