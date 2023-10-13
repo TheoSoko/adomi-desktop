@@ -1,18 +1,21 @@
 "use strict";
-const startDateInput = document.getElementById('startDate');
-const startHourInput = document.getElementById('startHour');
-const endHourInput = document.getElementById('endHour');
-const streetNameInput = document.getElementById('streetName');
-const streetNumberInput = document.getElementById('streetNumber');
-const postCodeInput = document.getElementById('postCode');
-const cityInput = document.getElementById('city');
-const validatedInput = document.querySelector("[name='validated']");
-const idClientInput = document.getElementById('idClient');
-const recurrenceInput = document.getElementById('recurrence');
+const _startDateInput = document.getElementById('startDate');
+const _startHourInput = document.getElementById('startHour');
+const _endHourInput = document.getElementById('endHour');
+const _streetNameInput = document.getElementById('streetName');
+const _streetNumberInput = document.getElementById('streetNumber');
+const _postCodeInput = document.getElementById('postCode');
+const _cityInput = document.getElementById('city');
+const _validatedInput = document.querySelector("[name='validated']");
+const _idClientInput = document.getElementById('idClient');
+const _recurrenceInput = document.getElementById('recurrence');
 const ValidationBtn = document.getElementById('btn_mission');
 const list = window.exposeActors.getActors().then((response) => {
     let clientInputList = document.getElementById('idClient');
     let carerInputList = document.getElementById('idCarer');
+    if (!response) {
+        console.log("getActors response is " + typeof response);
+    }
     response[0].forEach((data) => {
         clientInputList.innerHTML = `<option value=${data.id}>${data.first_name}</option>`;
     });
@@ -20,16 +23,16 @@ const list = window.exposeActors.getActors().then((response) => {
         carerInputList.innerHTML = `<option value=${data.id}>${data.first_name}</option>`;
     });
     ValidationBtn.addEventListener('click', async () => {
-        let startDateVal = startDateInput.value;
-        let startHourVal = startHourInput.value;
-        let endHourVal = endHourInput.value;
-        let streetNameVal = streetNameInput.value;
-        let streetNumberVal = parseInt(streetNumberInput.value);
-        let postCodeVal = postCodeInput.value;
-        let cityVal = cityInput.value;
-        let validatedVal = parseInt(validatedInput.value);
-        let idClientVal = parseInt(idClientInput.value);
-        let idRecurrenceVal = parseInt(recurrenceInput.value);
+        let startDateVal = _startDateInput.value;
+        let startHourVal = _startHourInput.value;
+        let endHourVal = _endHourInput.value;
+        let streetNameVal = _streetNameInput.value;
+        let streetNumberVal = parseInt(_streetNumberInput.value);
+        let postCodeVal = _postCodeInput.value;
+        let cityVal = _cityInput.value;
+        let validatedVal = parseInt(_validatedInput.value);
+        let idClientVal = parseInt(_idClientInput.value);
+        let idRecurrenceVal = parseInt(_recurrenceInput.value);
         const mission = { startDate: startDateVal, startHour: startHourVal, endHour: endHourVal, streetName: streetNameVal, streetNumber: streetNumberVal, postCode: postCodeVal, city: cityVal, validated: validatedVal, idClient: idClientVal, idRecurence: idRecurrenceVal };
         window.createMission.createNewMission(mission).then(() => {
             window.location.href = "../html/home.html";
@@ -40,13 +43,13 @@ const list = window.exposeActors.getActors().then((response) => {
 document.getElementById("missionForm")?.addEventListener('change', missionFormControl);
 //WIP
 function missionFormControl() {
-    let startDateVal = startDateInput.value;
-    let startHourVal = startHourInput.value;
-    let endHourVal = endHourInput.value;
-    let streetNameVal = streetNameInput.value;
-    let streetNumberVal = streetNumberInput.value;
-    let postCodeVal = postCodeInput.value;
-    let cityVal = cityInput.value;
+    let startDateVal = _startDateInput.value;
+    let startHourVal = _startHourInput.value;
+    let endHourVal = _endHourInput.value;
+    let streetNameVal = _streetNameInput.value;
+    let streetNumberVal = _streetNumberInput.value;
+    let postCodeVal = _postCodeInput.value;
+    let cityVal = _cityInput.value;
     const err_hour = document.getElementById('err_hour');
     const err_rue = document.getElementById('err_rue');
     const err_ville = document.getElementById('err_ville');

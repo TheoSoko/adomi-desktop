@@ -19,51 +19,37 @@
 
         <div class="row row-missions">
             <div class="text-center text-jours">Lundi</div>
-            <div class="div-cards" id="container-cards-lundi">
-
-            </div>
+            <div class="div-cards" id="container-cards-lundi"></div>
         </div>
 
         <div class="row row-missions">
             <div class="text-center text-jours">Mardi</div>
-            <div class="div-cards" id="container-cards-mardi">
-
-            </div>
+            <div class="div-cards" id="container-cards-mardi"></div>
         </div>
 
         <div class="row row-missions">
             <div class="text-center text-jours">Mercredi</div>
-            <div class="div-cards" id="container-cards-mercredi">
-
-            </div>
+            <div class="div-cards" id="container-cards-mercredi"></div>
         </div>
 
         <div class="row row-missions">
             <div class="text-center text-jours">Jeudi</div>
-            <div class="div-cards" id="container-cards-jeudi">
-
-            </div>
+            <div class="div-cards" id="container-cards-jeudi"></div>
         </div>
 
         <div class="row row-missions">
             <div class="text-center text-jours">Vendredi</div>
-            <div class="div-cards" id="container-cards-vendredi">
-
-            </div>
+            <div class="div-cards" id="container-cards-vendredi"></div>
         </div>
 
         <div class="row row-missions">
             <div class="text-center text-jours">Samedi</div>
-            <div class="div-cards" id="container-cards-samedi">
-
-            </div>
+            <div class="div-cards" id="container-cards-samedi"></div>
         </div>
 
         <div class="row row-missions">
             <div class="text-center text-jours">Dimanche</div>
-            <div class="div-cards" id="container-cards-dimanche">
-
-            </div>
+            <div class="div-cards" id="container-cards-dimanche"></div>
         </div>
     <div>
 
@@ -99,13 +85,13 @@
 
     const res = await window.exposed.fetchMissions(profileId, role)
 
-    if (res[0] == false){
+    if (res[0] == false) {
         document.getElementsByClassName("error_message")[0].innerText = "Erreur " + res[1].statusCode + ", " + res[1].message;
     }
-    if (res[0] == true){
+    if (res[0] == true) {
         const missions = res[1]
 
-        for (const mission of missions){
+        for (const mission of missions) {
             console.log(mission);
 
             const d = new Date(mission.startDate);
@@ -146,6 +132,14 @@
         }
         
     }
+
+
+    document.querySelectorAll(".div-cards").forEach((e) => {
+        if (!e.childNodes || !e.childNodes[0]) {
+            //console.log("!e.hasChildNodes")
+            e.parentNode.remove()
+        }
+    })
 
 </script>
 

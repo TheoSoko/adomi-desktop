@@ -2,7 +2,7 @@ export {}
 
 const userData = await (window as any).submitForm.getUserProfile()
 
-document.getElementById("intro_message")!.innerText = `Monsieur.dame employé.ée (${userData.first_name})`
+document.getElementById("intro_message")!.innerText = `${userData.first_name} ${userData.last_name}`
 
 document.getElementById("intro_2")!.innerText = `Bon courage ${userData.first_name} !`;
 
@@ -24,11 +24,11 @@ if (pendingMissions[0] == true) {
 
         list.insertAdjacentHTML("beforeend", `
             <div class="col-3 dashboard_card py-3 px-3">
-                <p class="dash_card_text py-1 my-1"> Client : ${mission.client.first_name + " " + mission.client.last_name}  </p>
-                <p class="dash_card_text py-1 my-1"> Commence le : ${mission.startdate}  </p>
-                <p class="dash_card_text py-1 my-1"> De : ${mission.startHour} à ${mission.endHour} </p>
-                <p class="dash_card_text py-1 my-1"> Lieu : ${street_number}  ${street_name}</p>
-                <p class="dash_card_text py-1 my-1"> ${post_code}, ${city}</p>
+                <p class="dash_card_text py-1 my-1"> Client : <span class="fw-lighter"> ${mission.client.first_name + " " + mission.client.last_name} </span> </p>
+                <p class="dash_card_text py-1 my-1"> Commence le : <span class="fw-lighter"> ${mission.startDate} </span> </p>
+                <p class="dash_card_text py-1 my-1"> De : <span class="fw-lighter">${mission.startHour}</span> à <span class="fw-lighter">${mission.endHour}</span> </p>
+                <p class="dash_card_text py-1 my-1"> Lieu : <span class="fw-lighter">${street_number}  ${street_name} </span> </p>
+                <p class="dash_card_text py-1 my-1"> <span class="fw-lighter"> ${post_code}, ${city} </span></p>
                 <p class="link-button"> <a href="./mission.html?id=${mission.id}" class="text-white text-decoration-none"> Voir la mission </a> </p>
             `)
     }
@@ -40,7 +40,7 @@ if (generalRequests[0] == false) {
     console.log(generalRequests[1])
 }
 if (generalRequests[0] == true) {
-    console.log(generalRequests[1])
+    //console.log(generalRequests[1])
     let list = document.getElementById("requests_list") as HTMLElement
     for (const req of generalRequests[1]) {
         let shortText = (req.request_string as string).slice(0, 103)

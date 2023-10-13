@@ -13,10 +13,14 @@
             <h1 class="title">Infos de l'auxiliaire</h1>
             <p>Id : <span id="profileId"></span></p>
             <p class="error_message"></p>
+            <p>Prénom : <span class="info_item"></span></p>
+            <p>Nom : <span class="info_item"></span></p>
+            <p>username : <span class="info_item"></span></p>
+            <p>email : <span class="info_item"></span></p>
+            <p>phone : <span class="info_item"></span></p>
         </div>
         <a class="btn btn-primary btn-lg mt-5" id="missions_button" href="#"> Missions </a>
-    <div>
-
+    </div>
 </body>
 
 <script type="text/javascript" src="../ressources\bootstrap-5.0.2-dist\js/bootstrap.bundle.js" crossorigin="anonymous"></script>
@@ -35,14 +39,19 @@
         document.getElementsByClassName("error_message")[0].innerText = "Erreur " + res[1].statusCode + ", " + res[1].message;
     }
     if (res[0] == true){
-        const profile = res[1]
-        document.getElementById("profileInfo").insertAdjacentHTML('beforeend', `
+        let profile = res[1]
+        profile = Object.values(profile)
+        console.log("profile", profile)
+        document.querySelectorAll(".info_item").forEach((e, i) => {
+            e.innerText = profile[i]
+        })
+        /*document.querySelector("#profileInfo").insertAdjacentHTML('beforeend', `
             <p>Prénom : <span>${profile.first_name}</span></p>
             <p>Nom : <span>${profile.last_name}</span></p>
             <p>username : <span>${profile.user_name}</span></p>
             <p>email : <span >${profile.email}</span></p>
             <p>phone : <span >${profile.phone}</span></p>
-        `)
+        `)*/
     }
 
 </script>

@@ -2,7 +2,6 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const storageSettings = require('electron-settings');
 import { userSignIn, 
         userSignOut, 
-        getProfile, 
         searchProfiles,
         fetchProfileData, 
         fetchMissions, 
@@ -30,7 +29,7 @@ interface UserProfile {
     city: string
 }
 
-interface UserLog {
+type UserLog = {
     username: string,
     password: string
 }
@@ -89,23 +88,22 @@ app.whenReady().then(() => {
         if (process.platform !== 'darwin') app.quit()
     })
 
-    ipcMain.handle('form-data', async (event:any, arg:UserLog) => {
-        return userSignIn(arg).then((response: Payload | any) => {
-            if (response.statusText === "OK") {
-
-                return getProfile().then(async (result) => {
-                    storageSettings.unsetSync();
-                    connectionStatus = true;
-                    await storageSettings.set("user", {data: result})
-
-                    // storageSettings.get('user.data').then((profile:any)=>console.log(profile))
-                    
-                    return true
-                })
+    ipcMain.handle('form-data', async (event:any, loginInfo: UserLog) => {
+        return await userSignIn(loginInfo)
+        .then(async () => {
+            const id = await storageSettings.get('id.data')
+            const profileRes = await fetchProfileData(null, id)
+            if (profileRes[0] == false) {
+                console.log("error when fetching profile data", profileRes[1])
+                return false
             }
-            else {
-                return response.message
-            }
+            connectionStatus = true;
+            await storageSettings.set("user", {data: profileRes[1]})
+            return true
+        })
+        .catch((err) => {
+            console.log("erreur dans form-data", err)
+            return err
         })
     })
 
@@ -113,7 +111,7 @@ app.whenReady().then(() => {
 
 
     //La valeur de connectionStatus change passe de false à true si la connexion est réussie
-    ipcMain.handle('connectionStatus', ()=>connectionStatus)
+    ipcMain.handle('connectionStatus', () => connectionStatus)
 
     //déconnexion
     ipcMain.handle('logout', async ()=>{

@@ -64,7 +64,7 @@ function modalForNav(){
     const profileSearchPos = document.querySelector('#create_profile')?.getBoundingClientRect().left as number
 
     modal.style.left = profileSearchPos + (isBigWindow ? 0 : 0 ) + "px"
-    modal.style.top = (isBigWindow ? "79px" : "79px")
+    modal.style.top = (isBigWindow ? "96px" : "96px")
 
     modal.style.display = "block"
 

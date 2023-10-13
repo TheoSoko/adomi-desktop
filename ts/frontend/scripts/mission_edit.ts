@@ -1,9 +1,12 @@
-interface Window{
-    exposeMissionData: any,
-    updateMission:any
+interface Window {
+    exposeActors: any
+    createMission: any
+    exposeMissionData: any
+    updateMission: any
 }
 
-interface dayMapInterface {
+
+interface DayMapInterface {
     [key: number]: string;
 }
 
@@ -13,7 +16,7 @@ const recurenceMap = [
     [3,"bi-mensuelle"],
 ]
 
-const dayMap : dayMapInterface= {
+const dayMap : DayMapInterface= {
     1:"lundi",
     2:"mardi",
     3:"mercredi",
@@ -58,9 +61,11 @@ const missionIDInput = document.getElementById('missionId') as HTMLInputElement
 const missionId = new URLSearchParams(window.location.search).get("id")
 console.log("mission Id : "+missionId)
 
+const win = window as Window
+
 async function fillForm() {
 
-    const resultatMission = await window.exposeMissionData.getMissionData(missionId);
+    const resultatMission = await win.exposeMissionData.getMissionData(missionId);
     console.log(resultatMission)
 
     if(resultatMission[0] == false){
@@ -69,7 +74,7 @@ async function fillForm() {
     if(resultatMission[0] == true){
 
         const mission = resultatMission[1]
-        const resultatListeActors = await window.exposeActors.getActors();
+        const resultatListeActors = await win.exposeActors.getActors();
     
         const listeClients = resultatListeActors[0]
         const listeCarers = resultatListeActors[1]
@@ -138,16 +143,14 @@ async function fillForm() {
 
             const mission: MissionInterface = {id: idVal,startDate: startDateVal, startHour: startHourVal, endHour: endHourVal, streetName: streetNameVal, streetNumber: streetNumberVal,postCode: postCodeVal, city: cityVal, validated: validatedVal, idClient: idClientVal,idCarer: idCarerVal, idRecurence: idRecurrenceVal}
 
-            window.updateMission.updateMission(mission).then(()=>{
-                window.location.href = "./mission.html?id="+idVal
+            win.updateMission.updateMission(mission).then(()=>{
+                win.location.href = "./mission.html?id="+idVal
                 return true;
             })
         })
     
     }
     
-    
-
 }
 
 fillForm();

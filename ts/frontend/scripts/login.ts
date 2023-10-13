@@ -23,21 +23,21 @@ interface UserLog {
 loginFormBtn.addEventListener('click', function(e){
     e.preventDefault();
 
-    if(usernameInput.value.length && passwordInput.value.length){
+    if (usernameInput.value.length && passwordInput.value.length) {
         let formData:UserLog = {username: usernameInput.value, password: passwordInput.value};
-        (<any>window).submitForm.sendFormData(formData).then((data: boolean | string) => {
 
-            if(typeof data == "string"){
-                errMess.innerText = data
-            }
-            else{
-                errMess.innerText = "";
-                (<any>window).location.href = "../html/profile_page.html";
-            }
-            // return true
-        }).catch((err:any)=>{console.log(err)})
+        (<any>window).submitForm.sendFormData(formData)
+            .then((data: boolean | string) => {
+                if (typeof data == "string") {
+                    errMess.innerText = data
+                }
+                else {
+                    errMess.innerText = "";
+                    (<any>window).location.href = "../html/profile_page.html";
+                }
+            }).catch((err:any)=>{console.log(err)})
     }
-    else{
-        console.log("renseignez tous les champs");
+    else {
+        alert("Veuillez renseignez tous les champs, svp");
     }
 });

@@ -3,6 +3,7 @@
 <head>
     <script type="module" src="../js/frontend/scripts/header.js"></script>
     <script type="text/javascript"> var exports = {}; </script>
+    <script type="module" src="../js/frontend/scripts/credentials_check.js"></script>
     <title>Fiche mission</title>
 </head>
 
@@ -65,34 +66,30 @@
     }
 
     const missionId = new URLSearchParams(window.location.search).get("id")
+
     const res = await window.exposeMissionData.getMissionData(missionId)
 
-    console.log(res)
-    if (res[0] == false){
+    if (res[0] == false) {
         document.getElementsByClassName("error_message")[0].innerText = "Erreur " + res[1].statusCode + ", " + res[1].message;
     }
-    if (res[0] == true){
+    if (res[0] == true) {
         const mission = res[1]
 
-        console.log(mission)
         let d = new Date(mission.startdate)
         let jour = dayMap[d.getDay()]
 
         let validated = mission.validated ? "Validé" : "Non validé";
         let validatedColor = ""
-        if(mission.validated){
+        if (mission.validated) {
             validatedColor="green"
-        }else{
+        } else {
             validatedColor = "red"
         }
-
-        
-
 
         document.getElementById("missionInfo").insertAdjacentHTML("beforeend",`
             <div class="affiche-mission shadow">
                 <p class="text-center">Mission de ${mission.client.first_name} ${mission.client.last_name}</p>
-                <p>le ${jour}</p>
+                <p>le ${new Date(mission.startDate).getDay()}</p>
                 <p>de ${mission.startHour} à ${mission.endHour}</p>
                 <p id="adresseMission"></p>
                 <p> recurence : ${recurenceMap[mission.recurence.id]}
