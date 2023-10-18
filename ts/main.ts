@@ -110,7 +110,6 @@ app.whenReady().then(() => {
         if (process.platform !== 'darwin') app.quit()
     })
 
-<<<<<<< HEAD
     ipcMain.handle('form-data', async (event:any, loginInfo: UserLog) => {
         return await userSignIn(loginInfo)
         .then(async () => {
@@ -119,22 +118,6 @@ app.whenReady().then(() => {
             if (profileRes[0] == false) {
                 console.log("error when fetching profile data", profileRes[1])
                 return false
-=======
-    ipcMain.handle('form-data', async (event:any, arg:UserLog) => {
-        return userSignIn(arg).then((response: Payload | any) => {
-            if (response.statusText === "OK") {
-
-                return getProfile().then(async (result) => {
-                    storageSettings.unsetSync();
-                    connectionStatus = true;
-                    await storageSettings.set("user", {data: result})
-                    
-                    return true
-                })
-            }
-            else {
-                return response.message
->>>>>>> ae391fe56d657614c2d60c858fb10ba78eccc2f2
             }
             connectionStatus = true;
             await storageSettings.set("user", {data: profileRes[1]})
@@ -177,12 +160,10 @@ app.whenReady().then(() => {
         })
     })
 
-    ipcMain.handle('createNewMission', (event:any, arg:MissionInterface)=>{
-        storageSettings.get('user.data').then((user:any)=>{
-            arg.idEmployee = user.id;
-            console.log(arg)
-            return createNewMission(arg);
-        })
+    ipcMain.handle('createNewMission', async (event:any, arg:MissionInterface) => {
+        let user = await storageSettings.get('user.data')
+        arg.idEmployee = user.id;
+        return await createNewMission(arg);
     })
 
 

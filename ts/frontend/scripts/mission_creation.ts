@@ -1,3 +1,5 @@
+console.log("HEOHEO HEO HEO")
+
 interface Window {
     exposeActors: any
     createMission: any
@@ -30,6 +32,7 @@ const _validatedInput = document.querySelector("[name='validated']") as HTMLInpu
 const _idClientInput = document.getElementById('idClient') as HTMLInputElement
 const _recurrenceInput = document.getElementById('recurrence') as HTMLInputElement
 const ValidationBtn = document.getElementById('btn_mission') as HTMLElement;
+const _errCreation = document.querySelector(".err_creation_global") as HTMLParagraphElement
 
 const list = window.exposeActors.getActors().then((response:any)=>{
     let clientInputList = document.getElementById('idClient') as HTMLElement
@@ -62,11 +65,16 @@ const list = window.exposeActors.getActors().then((response:any)=>{
 
         const mission: MissionInterface = {startDate: startDateVal, startHour: startHourVal, endHour: endHourVal, streetName: streetNameVal, streetNumber: streetNumberVal,postCode: postCodeVal, city: cityVal, validated: validatedVal, idClient: idClientVal, idRecurence: idRecurrenceVal}
 
-        window.createMission.createNewMission(mission).then(()=>{
-
-            window.location.href = "../html/home.html"
-            return true;
-        }).catch((err:any) =>console.log(err))
+        window.createMission.createNewMission(mission).then((res: [boolean, unknown]) => {
+            console.log("res[1] ", res[1])
+            if (res[0] == false) {
+                _errCreation.innerText = res[1] as string
+            }
+            else {
+                window.location.href = "../../../html/home.html"
+            }
+        })
+        .catch(() => _errCreation.innerText = "Désolé, une erreur inconue est survenue")
     })
 
 

@@ -9,15 +9,19 @@ const numCarerInput = document.querySelector("[name='num']");
 const rueCarerInput = document.querySelector("[name='rue']");
 const villeCarerInput = document.querySelector("[name='ville']");
 const codePostalCarerInput = document.querySelector("[name='codepostal']");
-const submitCarerButton = document.querySelector("[type='submit']");
-submitButton.addEventListener('click', function (e) {
+const submitEmployeeButton = document.querySelector("[type='submit']");
+submitEmployeeButton.addEventListener('click', async function (e) {
     e.preventDefault();
     console.log(nomCarerInput.value);
     if (nomCarerInput.value.length && prenomCarerInput.value.length && utilisateurCarerInput.value.length && emailCarerInput.value.length && teleCarerInput.value.length && rueCarerInput.value.length && villeCarerInput.value.length && codePostalCarerInput.value.length) {
         console.log('condition ok');
         let inputInfo = { first_name: prenomCarerInput.value, last_name: nomCarerInput.value, user_name: utilisateurCarerInput.value, password: passWordCarerInput.value, email: emailCarerInput.value, phone: teleCarerInput.value, street_name: rueCarerInput.value, street_number: parseInt(numCarerInput.value), post_code: codePostalCarerInput.value, city: villeCarerInput.value };
-        console.log(inputInfo.first_name);
-        window.submitInfo.createCustomer(inputInfo).catch((err) => { console.log(err); });
+        const res = await window.submitInfo.createCustomer(inputInfo);
+        if (res[0] == false) {
+            document.querySelector(".err_creation_global").innerText = res[1];
+        }
+        else {
+        }
     }
     else {
         console.log("something went wrong");
@@ -103,9 +107,9 @@ function creationFrom() {
         errCodePostal = false;
     }
     if (!errPassword && !errCodePostal && !errTele && !errEmail) {
-        submitButton.removeAttribute("disabled");
+        submitEmployeeButton.removeAttribute("disabled");
     }
     else {
-        submitButton.setAttribute('disabled', 'true');
+        submitEmployeeButton.setAttribute('disabled', 'true');
     }
 }

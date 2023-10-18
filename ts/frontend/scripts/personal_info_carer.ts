@@ -35,13 +35,19 @@ submitButton.addEventListener('click', function(e){
         console.log('condition ok')
         let inputInfo:UserProfileInterfaces = {first_name: prenomInput.value, last_name: nomInput.value, user_name:utilisateurInput.value,password:passWordInput.value, email: emailInput.value, phone: teleInput.value, street_name:rueInput.value, street_number:parseInt(numInput.value) ,post_code:codePostalInput.value, city:villeInput.value};
         console.log(inputInfo.first_name)
-        window.submitInfo.createCustomer(inputInfo).catch((err:any)=>{console.log(err)})
-    }else{
+        const res = window.submitInfo.createCustomer(inputInfo)
+        if (res[0] == false) {
+            (document.querySelector(".err_creation_global") as HTMLParagraphElement).innerText = res[1]
+        }
+        else {
+
+        }
+    } else {
         console.log("something went wrong");
     }
 })
 
-document.getElementById("Carer-Form")?.addEventListener('change', creationFrom)
+document.getElementById("Carer-Form")?.addEventListener('change', creationFromCarer)
 
 function creationFromCarer() {
     

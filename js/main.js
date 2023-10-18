@@ -78,12 +78,10 @@ app.whenReady().then(() => {
             return response;
         });
     });
-    ipcMain.handle('createNewMission', (event, arg) => {
-        storageSettings.get('user.data').then((user) => {
-            arg.idEmployee = user.id;
-            console.log(arg);
-            return (0, requests_1.createNewMission)(arg);
-        });
+    ipcMain.handle('createNewMission', async (event, arg) => {
+        let user = await storageSettings.get('user.data');
+        arg.idEmployee = user.id;
+        return await (0, requests_1.createNewMission)(arg);
     });
     ipcMain.handle('updateProfile', async (event, arg) => {
         storageSettings.get('user.data').then((user) => {

@@ -61,6 +61,7 @@ async function setDataStorage(id, token, connectStatus) {
 async function fetchProfileData(event, userId) {
     const data = await fetch(`${apiBase}/users/${userId}`, {
         headers: {
+            "content-type": "application/json",
             ...await authHeader()
         }
     })
@@ -84,7 +85,7 @@ async function userSignOut() {
 exports.userSignOut = userSignOut;
 async function updateEmployee(id, profileData) {
     try {
-        return axios.patch('http://localhost:8000/employees/' + id, profileData).then(async (response) => {
+        return axios.patch(apiBase + '/employees/' + id, profileData).then(async (response) => {
             if (!response) {
                 return [false, 'erreur requête API'];
             }
@@ -107,8 +108,7 @@ async function getMissionActors() {
         .catch((err) => { console.log("err at getMissionActors when fetching carers"); });
     actorsList.push(await customers.json());
     actorsList.push(await carers.json());
-    console.log(actorsList);
-    return actorsList;
+    return [true, actorsList];
 }
 exports.getMissionActors = getMissionActors;
 async function getAgenciesList() {
@@ -125,13 +125,24 @@ async function getRolesList() {
 exports.getRolesList = getRolesList;
 async function createNewMission(mission) {
     try {
-        // console.log(mission)
-        return axios.post(apiBase + '/missions', mission).then((response) => {
-            console.log('insertion réussie');
-        }).catch((err) => console.log(err));
+        const res = await fetch(apiBase + '/missions', {
+            method: 'POST',
+            headers: {
+                "content-type": "application/json",
+                ...await authHeader(),
+            },
+            body: JSON.stringify(mission)
+        });
+        if (!res.ok) {
+            const json = await res.json();
+            return [false, json.message || json.errorMessages && json.errorMessages[0] || "Une erreur inconnue est survenue"];
+        }
+        console.log("createNewMission res : ", await res.json());
+        return [true, undefined];
     }
     catch (err) {
         console.log(err);
+        Promise.reject();
     }
 }
 exports.createNewMission = createNewMission;
@@ -170,7 +181,6 @@ async function fetchGeneralRequests() {
         console.log("ERR at fetchGeneralRequests, status code is ", data.status, "res is ", res);
         return [false, res];
     }
-    console.log(res);
     return [true, res];
 }
 exports.fetchGeneralRequests = fetchGeneralRequests;
@@ -204,10 +214,9 @@ async function fetchOneGeneralRequest(event, id) {
     const json = await res.json();
     if (!res.ok) {
         console.log("ERR at fetchOneGeneralRequest, status code is ", json.status, "res is ", res);
-        return [false, res];
+        return [false, json];
     }
-    console.log(res);
-    return [true, res];
+    return [true, json];
 }
 exports.fetchOneGeneralRequest = fetchOneGeneralRequest;
 async function getMissionData(event, missionId) {
@@ -225,7 +234,7 @@ async function getMissionData(event, missionId) {
 }
 exports.getMissionData = getMissionData;
 async function updateMission(mission) {
-    const res = await fetch(apiBase + '/missions', { headers: { ...await authHeader() } })
+    const res = await fetch(apiBase + '/missions', { headers: { ...await authHeader(), "content-type": "application/json" } })
         .catch((err) => { console.log("err dans updateMission", err); });
     return await res.json();
 }

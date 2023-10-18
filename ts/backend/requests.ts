@@ -3,6 +3,10 @@ import { User, apiError } from "../types"
 const axios = require('axios');
 const storageSettings = require('electron-settings');
 
+const apiBase = "https://adomi-api.onrender.com"
+const authHeader = async () => ( {"Authorization": "bearer " + await storageSettings.get('token.data') } )
+
+
 type UserLog = {
     username: string,
     password: string
@@ -55,10 +59,6 @@ type stdError = {
     message: string,
 }
 
-
-
-const apiBase = "https://adomi-api.onrender.com"
-const authHeader = async () => ( {"Authorization": "bearer " + await storageSettings.get('token.data') } )
 
 
 /**
@@ -126,6 +126,7 @@ async function setDataStorage(id:string, token:string, connectStatus: boolean) {
 export async function fetchProfileData(event: unknown, userId: string): Promise<[boolean, (User | apiError)]> {
     const data = await fetch(`${apiBase}/users/${userId}`, {
         headers: {
+            "content-type": "application/json",
             ... await authHeader()
         }
     })
@@ -152,7 +153,7 @@ export async function userSignOut() {
 
 export async function updateEmployee(id:number, profileData:UserProfile){
     try{
-        return axios.patch('http://localhost:8000/employees/'+id, profileData).then(async (response:any)=>{
+        return axios.patch(apiBase+'/employees/'+id, profileData).then(async (response:any)=>{
             if(!response){
                 return [false, 'erreur requête API']
             }
@@ -181,8 +182,7 @@ export async function getMissionActors() {
     actorsList.push(await customers!.json())
     actorsList.push(await carers!.json())
 
-    console.log(actorsList)
-    return actorsList
+    return [true, actorsList]
 }
 
 
@@ -200,14 +200,26 @@ export async function getRolesList() {
 
 
 export async function createNewMission(mission:MissionInterface){
-    try{
-        // console.log(mission)
-        return axios.post(apiBase+'/missions', mission).then((response:any)=>{
-            console.log('insertion réussie')
-        }).catch((err:any)=>console.log(err))
+    try  {
+        const res = await fetch(apiBase+'/missions', {
+            method: 'POST',
+            headers: {
+                "content-type": "application/json",
+                ...
+                await authHeader(),
+            },
+            body: JSON.stringify(mission)
+        })
+        if (!res.ok) {
+            const json = await res.json()
+            return [false, json.message || json.errorMessages && json.errorMessages[0] || "Une erreur inconnue est survenue"]
+        }
+        console.log("createNewMission res : ", await res.json())
+        return [true, undefined]
     }
-    catch(err){
-        console.log(err);
+    catch (err) {
+        console.log(err)
+        Promise.reject()
     }
 }
 
@@ -252,7 +264,6 @@ export async function fetchGeneralRequests(){
         return  [false, res]
     }
 
-    console.log(res)
     return [true, res]
 }
 
@@ -293,11 +304,10 @@ export async function fetchOneGeneralRequest(event: unknown | unknown, id: numbe
 
     if (!res.ok) {
         console.log("ERR at fetchOneGeneralRequest, status code is ", json.status, "res is ", res)
-        return  [false, res]
+        return  [false, json]
     }
 
-    console.log(res)
-    return [true, res]
+    return [true, json]
 
 }
 
@@ -319,7 +329,7 @@ export async function getMissionData(event: Event, missionId: number) {
 }
 
 export async function updateMission(mission:MissionInterface) {
-    const res = await fetch(apiBase+'/missions', { headers: {... await authHeader() } })
+    const res = await fetch(apiBase+'/missions', { headers: {... await authHeader(), "content-type": "application/json" } })
         .catch((err) => {console.log("err dans updateMission", err)})
 
     return await res!.json()

@@ -8,7 +8,7 @@ const numCarerInput = document.querySelector("[name='num']") as HTMLInputElement
 const rueCarerInput = document.querySelector("[name='rue']") as HTMLInputElement;
 const villeCarerInput = document.querySelector("[name='ville']") as HTMLInputElement;
 const codePostalCarerInput = document.querySelector("[name='codepostal']") as HTMLInputElement;
-const submitCarerButton = document.querySelector("[type='submit']") as HTMLInputElement;
+const submitEmployeeButton = document.querySelector("[type='submit']") as HTMLInputElement;
 
 interface UserProfileInterfaces{
     first_name: string,
@@ -28,15 +28,20 @@ interface Window {
 }
 
 
-submitButton.addEventListener('click', function(e){
+submitEmployeeButton.addEventListener('click', async function(e){
     e.preventDefault();
     console.log(nomCarerInput.value);
     if(nomCarerInput.value.length && prenomCarerInput.value.length && utilisateurCarerInput.value.length && emailCarerInput.value.length && teleCarerInput.value.length && rueCarerInput.value.length && villeCarerInput.value.length && codePostalCarerInput.value.length){
         console.log('condition ok')
         let inputInfo:UserProfileInterfaces = {first_name: prenomCarerInput.value, last_name: nomCarerInput.value, user_name:utilisateurCarerInput.value,password:passWordCarerInput.value, email: emailCarerInput.value, phone: teleCarerInput.value, street_name:rueCarerInput.value, street_number:parseInt(numCarerInput.value) ,post_code:codePostalCarerInput.value, city:villeCarerInput.value};
-        console.log(inputInfo.first_name)
-        window.submitInfo.createCustomer(inputInfo).catch((err:any)=>{console.log(err)})
-    }else{
+        const res = await window.submitInfo.createCustomer(inputInfo)
+        if (res[0] == false) {
+            (document.querySelector(".err_creation_global") as HTMLParagraphElement).innerText = res[1]
+        }
+        else {
+
+        }
+    } else {
         console.log("something went wrong");
     }
 })
@@ -127,9 +132,9 @@ else{
 }
 
 if(!errPassword && !errCodePostal && !errTele && !errEmail){
-    submitButton.removeAttribute("disabled");
+    submitEmployeeButton.removeAttribute("disabled");
 }else{
-    submitButton.setAttribute('disabled','true');
+    submitEmployeeButton.setAttribute('disabled','true');
 }
 
 }

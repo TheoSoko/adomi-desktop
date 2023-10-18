@@ -1,4 +1,5 @@
 "use strict";
+console.log("HEOHEO HEO HEO");
 const _startDateInput = document.getElementById('startDate');
 const _startHourInput = document.getElementById('startHour');
 const _endHourInput = document.getElementById('endHour');
@@ -10,6 +11,7 @@ const _validatedInput = document.querySelector("[name='validated']");
 const _idClientInput = document.getElementById('idClient');
 const _recurrenceInput = document.getElementById('recurrence');
 const ValidationBtn = document.getElementById('btn_mission');
+const _errCreation = document.querySelector(".err_creation_global");
 const list = window.exposeActors.getActors().then((response) => {
     let clientInputList = document.getElementById('idClient');
     let carerInputList = document.getElementById('idCarer');
@@ -34,10 +36,16 @@ const list = window.exposeActors.getActors().then((response) => {
         let idClientVal = parseInt(_idClientInput.value);
         let idRecurrenceVal = parseInt(_recurrenceInput.value);
         const mission = { startDate: startDateVal, startHour: startHourVal, endHour: endHourVal, streetName: streetNameVal, streetNumber: streetNumberVal, postCode: postCodeVal, city: cityVal, validated: validatedVal, idClient: idClientVal, idRecurence: idRecurrenceVal };
-        window.createMission.createNewMission(mission).then(() => {
-            window.location.href = "../html/home.html";
-            return true;
-        }).catch((err) => console.log(err));
+        window.createMission.createNewMission(mission).then((res) => {
+            console.log("res[1] ", res[1]);
+            if (res[0] == false) {
+                _errCreation.innerText = res[1];
+            }
+            else {
+                window.location.href = "../../../html/home.html";
+            }
+        })
+            .catch(() => _errCreation.innerText = "Désolé, une erreur inconue est survenue");
     });
 });
 document.getElementById("missionForm")?.addEventListener('change', missionFormControl);

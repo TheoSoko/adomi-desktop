@@ -23,9 +23,9 @@ if (pendingMissions[0] == true) {
                 :  [mission.client.street_number, mission.client.street_name, mission.client.post_code, mission.client.city] // Sinon
 
         list.insertAdjacentHTML("beforeend", `
-            <div class="col-3 dashboard_card py-3 px-3">
+            <div class="col-3 dashboard_card">
                 <p class="dash_card_text py-1 my-1"> Client : <span class="fw-lighter"> ${mission.client.first_name + " " + mission.client.last_name} </span> </p>
-                <p class="dash_card_text py-1 my-1"> Commence le : <span class="fw-lighter"> ${mission.startDate} </span> </p>
+                <p class="dash_card_text py-1 my-1"> Commence le : <span class="fw-lighter"> ${new Date(mission.startDate).toLocaleDateString()} </span> </p>
                 <p class="dash_card_text py-1 my-1"> De : <span class="fw-lighter">${mission.startHour}</span> à <span class="fw-lighter">${mission.endHour}</span> </p>
                 <p class="dash_card_text py-1 my-1"> Lieu : <span class="fw-lighter">${street_number}  ${street_name} </span> </p>
                 <p class="dash_card_text py-1 my-1"> <span class="fw-lighter"> ${post_code}, ${city} </span></p>
@@ -40,19 +40,33 @@ if (generalRequests[0] == false) {
     console.log(generalRequests[1])
 }
 if (generalRequests[0] == true) {
-    //console.log(generalRequests[1])
     let list = document.getElementById("requests_list") as HTMLElement
     for (const req of generalRequests[1]) {
         let shortText = (req.request_string as string).slice(0, 103)
         if (shortText != req.request_string) shortText += "..."
         list.insertAdjacentHTML("beforeend", `
-            <div class="col-3 dashboard_card py-3 px-3">
-                <p class="dash_card_text py-1 my-1"> Utilisateur : ${req.user ? req.user.first_name + " " + req.user.last_name : "non inscrit"}  </p>
-                <p class="dash_card_text py-1 my-1"> Créée à : ${req.created_at} </p>
-                <p class="dash_card_text py-1 my-1"> Référent : ${req.referrer ? req.referrer.first_name + " " + req.referrer.last_name : "aucun" }  </p>
+            <div class="col-4 dashboard_card">
+                <p class="dash_card_text py-1 my-1"> 
+                    Utilisateur : 
+                    <span class="fw-normal">
+                        ${req.user ? req.user.first_name + " " + req.user.last_name : "non inscrit"}  
+                    </span>
+                </p>
+                <p class="dash_card_text py-1 my-1"> 
+                    Créée le :
+                    <span class="fw-normal">
+                         ${new Date(req.created_at).toLocaleDateString()} 
+                    </span>
+                </p>
+                <p class="dash_card_text py-1 my-1"> 
+                    Référent : 
+                    <span class="fw-normal">
+                        ${req.referrer ? req.referrer.first_name + " " + req.referrer.last_name : "aucun" }  
+                    </span>
+                </p>
                 <p class="dash_card_text pt-2 my-2"> Demande: </p>
-                <p class="dash_card_text pt-1 my-1" id="short_text"> ${shortText} </p>
-                <p class="link-button"> <a href="./general_request.html?id=${req.id}" class="text-white text-decoration-none"> Voir la demande </a> </p>
+                <p class="dash_card_text pt-1 my-1 fw-normal" id="short_text"> ${shortText} </p>
+                <p class="link-button p-2 px-3"> <a href="./general_request.html?id=${req.id}" class="text-white text-decoration-none"> Voir la demande </a> </p>
             </div>
         `)
     }
